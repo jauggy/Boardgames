@@ -10,6 +10,7 @@ namespace Tzolkien.Models
     {
         public void Execute(Worker worker, Wheel wheel)
         {
+            wheel.AddWorker(worker);
         }
     }
 }

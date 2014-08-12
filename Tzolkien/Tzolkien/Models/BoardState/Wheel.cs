@@ -7,6 +7,8 @@ namespace Tzolkien.Models.BoardState
 {
     public class Wheel
     {
+        public List<Location> Locations { get; set; }
+
         public void Rotate()
         {
         }
@@ -24,6 +26,11 @@ namespace Tzolkien.Models.BoardState
         public bool IsFull()
         {
             return false;
+        }
+
+        public List<Worker> GetWorkersOwnedByPlayer(Player player)
+        {
+            return null;
         }
     }
 }

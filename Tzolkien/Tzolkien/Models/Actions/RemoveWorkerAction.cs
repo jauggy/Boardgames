@@ -7,5 +7,12 @@ namespace Tzolkien.Models
 {
     public class RemoveWorkerAction
     {
+        public void Execute(Worker worker)
+        {
+            if (!worker.IsOnBoard)
+            {
+                throw new NotImplementedException();
+            }
+        }
     }
 }

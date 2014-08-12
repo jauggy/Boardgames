@@ -1,7 +1,7 @@
 ﻿using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartupAttribute(typeof(Tzolkien.Startup))]
+//[assembly: OwinStartupAttribute(typeof(Tzolkien.Startup))]
 namespace Tzolkien
 {
     public partial class Startup {

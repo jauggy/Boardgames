@@ -12,12 +12,17 @@ namespace Tzolkien.Models
     /// </summary>
     public class Worker
     {
+        public bool IsOnBoard { get; private set; }
+        public Player Owner { get; set; }
+
         public void AddToBoard()
         {
+            IsOnBoard = true;
         }
 
         public void RemoveFromBoard()
         {
+            IsOnBoard = false;
         }
     }
 }
