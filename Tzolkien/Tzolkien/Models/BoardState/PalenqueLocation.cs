@@ -10,49 +10,92 @@ namespace Tzolkien.Models.BoardState
         public int WoodTokens { get; set; }
         public int CornTokens { get; set; }
 
-        public bool IsFishing { get; set; }
-        public bool IsAnyChoice { get; set; } //the last two spots on the wheel.
-        public bool IsZero { get; set; }
-        public bool IsUnique { get { return !IsAnyChoice; } }
+        public bool IsUnique { get; set; }
 
         public int WoodPayoff { get; set; }
         public int CornPayoff { get; set; }
+        public int Index { get; set; }
+
+        public void PalenqueLocation(int index)
+        {
+            PossibleActions = new List<PlayerAction>();
+            if (index == 0)
+            {
+            }
+            else if (index == 1)
+            {
+
+            }
+            else if (index > 1)
+            {
+                WoodTokens = BoardState.GetInstance().NumberOfPlayers;
+                CornTokens = BoardState.GetInstance().NumberOfPlayers;
+
+
+            }
+        }
 
         public List<PlayerAction> GetPossibleActions()
         {
             var result = new List<PlayerAction>();
-            if (IsZero)
+            //if index between certain range
+            if (WoodTokens > 0)
             {
-                //nothing
+                result.Add(GetWoodTokenAction());
             }
-            else if (IsFishing)
-            {
-                //get three corn
-                var a = new PlayerAction((p)=>
-                    {
-                        p.AddResource(Resource.Corn, 3);
-                    });
-                result.Add(a);
-            }
-            else if (IsAnyChoice)
-            {
-                //we need to get the possible actions from PalenqueWheel
-                return BoardState.GetInstance().PalenqueWheel.GetUniquePlayerActions();
-            }
-            else
-            {
-                if (WoodTokens > 0)
-                {
-                }
-                if (CornTokens > 0)
-                {
-                }
-            }
-          
 
+            if (WoodTokens == CornTokens && CornTokens > 0)
+            {
+                result.Add(GetCornTokenBurnAction());
+            }
+            else if (CornTokens > 0)
+            {
+                result.Add(GetCornTokenAction());
+            }
 
-            return null;
-            
+            return result;
         }
+
+        public PlayerAction GetCornTokenAction()
+        {
+
+            var a= new PlayerAction((p) =>
+                {
+                    p.AddResource(Resource.Corn, CornPayoff);
+                    CornTokens--;
+                });
+
+            return a;
+        }
+
+        public PlayerAction GetWoodTokenAction()
+        {
+
+            var a = new PlayerAction((p) =>
+            {
+                p.AddResource(Resource.Wood, WoodPayoff);
+                WoodTokens--;
+            });
+
+            return a;
+        }
+
+
+        public PlayerAction GetCornTokenBurnAction()
+        {
+
+            var a = new PlayerAction((p) =>
+            {
+                p.AddResource(Resource.Corn, CornPayoff);
+                CornTokens--;
+            });
+            a.AddAngerGodsSubAction();
+
+            return a;
+        }
+
+        public List<PlayerAction> PossibleActions { get; set; }
+
+
     }
 }
