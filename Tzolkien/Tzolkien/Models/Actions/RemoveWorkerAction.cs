@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Tzolkien.Models.BoardState;
 
 namespace Tzolkien.Models
 {
@@ -13,6 +14,12 @@ namespace Tzolkien.Models
             {
                 throw new NotImplementedException();
             }
+        }
+
+        public List<Location> RemoveLocations()
+        {
+            //a list of locations where removal of worker is possible
+            return null;
         }
     }
 }

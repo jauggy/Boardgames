@@ -7,5 +7,11 @@ namespace Tzolkien.Models.BoardState
 {
     public class BoardState
     {
+        public PalenqueWheel PalenqueWheel { get; set; }
+
+        public static BoardState GetInstance()
+        {
+            return null;
+        }
     }
 }

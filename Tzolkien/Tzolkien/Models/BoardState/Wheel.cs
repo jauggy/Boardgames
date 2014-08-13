@@ -32,5 +32,10 @@ namespace Tzolkien.Models.BoardState
         {
             return null;
         }
+
+        public List<PlayerAction> GetUniquePlayerActions()
+        {
+            return null;
+        }
     }
 }

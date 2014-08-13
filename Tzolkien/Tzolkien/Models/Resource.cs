@@ -8,7 +8,7 @@ namespace Tzolkien.Models
     public enum Resource
     {
         Gold,
-        Wheat,
+        Corn,
         Wood,
         Silver,
         Bronze
