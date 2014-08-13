@@ -231,11 +231,14 @@
     <Compile Include="Models\Actions\AddWorkerAction.cs" />
     <Compile Include="Models\BoardState\BoardState.cs" />
     <Compile Include="Models\BoardState\Location.cs" />
+    <Compile Include="Models\BoardState\PalenqueLocation.cs" />
+    <Compile Include="Models\BoardState\PalenqueWheel.cs" />
     <Compile Include="Models\BoardState\Position.cs" />
     <Compile Include="Models\BoardState\Wheel.cs" />
     <Compile Include="Models\BoardState\WheelFactory.cs" />
     <Compile Include="Models\Actions\PlayerAction.cs" />
     <Compile Include="Models\Actions\RemoveWorkerAction.cs" />
+    <Compile Include="Models\BoardState\YaxLocation.cs" />
     <Compile Include="Models\Player.cs" />
     <Compile Include="Models\Resource.cs" />
     <Compile Include="Models\Worker.cs" />
