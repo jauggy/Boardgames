@@ -16,7 +16,7 @@ namespace Tzolkien.Models.BoardState
         public int CornPayoff { get; set; }
         public int Index { get; set; }
 
-        public void PalenqueLocation(int index)
+        public PalenqueLocation(int index)
         {
             PossibleActions = new List<PlayerAction>();
             Index = index;

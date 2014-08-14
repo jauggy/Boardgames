@@ -10,6 +10,10 @@ namespace Tzolkien.Models.BoardState
         public Worker Worker { get; set; }
         public Action<Worker> LocationAction { get; set; }
 
+        public bool IsUnique { get; set; }
+        public int Index { get; set; }
+
+
         public void RemoveWorker()
         {
             if (Worker != null)

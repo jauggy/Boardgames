@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Tzolkien.Models.BoardState
 {
-    public class YaxLocation
+    public class YaxLocation:Location
     {
         /*
          * 1 wood
@@ -14,49 +14,77 @@ namespace Tzolkien.Models.BoardState
          * skull
          * gold stone 2 corn
          * 
-         * /
-        public bool IsUnique { get; set; }
-        public int Index { get; set; }
+         */
+
 
         public void PalenqueLocation(int index)
         {
-            
             Index = index;
-            IsUnique = index > 0 && index < 6;
-
-            if (index > 1 && index < 6)
-            {
-                WoodTokens = BoardState.GetInstance().NumberOfPlayers;
-                CornTokens = BoardState.GetInstance().NumberOfPlayers;
-
-                if (index == 2)
-                {
-                    CornPayoff = 4;
-                }
-                else if (index == 3)
-                {
-                    CornPayoff = 5;
-                    WoodPayoff = 2;
-                }
-                else if (index == 4)
-                {
-                    CornPayoff = 7;
-                    WoodPayoff = 3;
-                }
-                else if (index == 6)
-                {
-                    CornPayoff = 9;
-                    WoodPayoff = 4;
-                }
-
-            }
         }
 
         public List<PlayerAction> GetPossibleActions()
         {
-            var result = new List<PlayerAction>();
+            var list = new List<PlayerAction>();
 
+            var result = new List<PlayerAction>();
+            switch (Index)
+            {
+                case 1:
+                    list.Add(
+                        new PlayerAction((p) =>
+                        {
+                            p.AddResource(Resource.Wood, 1);
+                        })
+                        );
+                    break;
+                case 2:
+                        list.Add(
+                        new PlayerAction((p) =>
+                        {
+                            p.AddResource(Resource.Stone, 1);
+                            p.AddResource(Resource.Corn, 1);
+                        })
+                        );
+                    break;
+                case 3:
+                    list.Add(
+                    new PlayerAction((p) =>
+                    {
+                        p.AddResource(Resource.Gold, 1);
+                        p.AddResource(Resource.Corn, 2);
+                    })
+                    );
+                    break;
+                case 4:
+                    list.Add(
+                    new PlayerAction((p) =>
+                    {
+                        p.AddResource(Resource.Skull, 1);
+
+                    })
+                    );
+                    break;
+                case 5:
+                    list.Add(
+                    new PlayerAction((p) =>
+                    {
+                        p.AddResource(Resource.Gold, 1);
+                        p.AddResource(Resource.Stone, 1);
+                        p.AddResource(Resource.Corn, 2);
+                    })
+                    );
+                    break;
+
+            }
+            if (Index == 1)
+            {
+
+            }
+
+            return list;
         }
+
+
 
  
     }

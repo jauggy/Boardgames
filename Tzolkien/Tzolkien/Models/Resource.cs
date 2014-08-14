@@ -10,7 +10,7 @@ namespace Tzolkien.Models
         Gold,
         Corn,
         Wood,
-        Silver,
-        Bronze
+        Stone,
+        Skull
     }
 }
