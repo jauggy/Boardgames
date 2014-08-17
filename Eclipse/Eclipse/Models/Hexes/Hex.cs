@@ -12,13 +12,74 @@ namespace Eclipse.Models.Hexes
         public Point PointLocation { get; set; }
         public Dictionary<Compass, Hex> Neighbours { get; set; }
         public bool IsPlaceholder { get; set; }
-
+        public int RingLevel { get; set; }
+        public List<HexSide> Sides { get; set; }
         public Hex()
         {
 
         }
 
+        public Hex(int x, int y) : base()
+        {
+            PointLocation = new Point(x, y);
+        }
 
+        public void InitSides()
+        {
+            var points =  GetNeighbourPoints();
+            Sides = points.Select(x => new HexSide(x)).ToList();
+        }
+
+        public void AddWormHoles(int number)
+        {
+            var randomSides = Sides.GetRandom(number);
+            randomSides.ForEach(x => x.HasWormHole = true);
+        }
+
+        public void Rotate()
+        {
+            var temp = Sides[0].HasWormHole;
+
+            for(int i = 0; i<Sides.Count-1;i++)
+            {
+                Sides[i].HasWormHole = Sides[i + 1].HasWormHole;
+            }
+
+            Sides[Sides.Count - 1].HasWormHole = temp;
+        }
+
+        public Point GetRelativePoint(Compass compass, int distance)
+        {
+            var point = new Point(0,0);
+            if(compass==Compass.N)
+            {
+                point = new Point(0, -1);
+            }
+            else if(compass==Compass.S)
+            {
+                point = new Point(0, 1);
+            }
+            else if(compass==Compass.NE)
+            {
+                point = new Point(1, -1);
+            }
+            else if (compass == Compass.SE)
+            {
+                point = new Point(1, 0);
+            }
+            else if (compass == Compass.SW)
+            {
+                point = new Point(-1, 1);
+            }
+            else if(compass==Compass.NW)
+            {
+                point = new Point(-1, 0);
+            }
+
+            var adjustedPoint = new Point(point.X * distance, point.Y * distance);
+            adjustedPoint.Offset(this.PointLocation);
+            return adjustedPoint;
+        }
 
         public void Explore(Compass direction)
         {
