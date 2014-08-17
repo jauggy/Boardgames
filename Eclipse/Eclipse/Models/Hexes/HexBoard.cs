@@ -29,6 +29,16 @@ namespace Eclipse.Models.Hexes
 
         }
 
+        public static HexBoard GetInstance()
+        {
+            return null;
+        }
+
+        public List<Hex> GetHexes(IEnumerable<Point> p)
+        {
+            return null;
+        }
+
         private void PopulateHex(Hex hex)
         {
             //Populates hex based on the level

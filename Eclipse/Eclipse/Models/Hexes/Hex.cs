@@ -8,7 +8,6 @@ namespace Eclipse.Models.Hexes
 {
     public class Hex
     {
-        public List<Point> WormholeLocations { get; set; }
         public Point PointLocation { get; set; }
         public Dictionary<Compass, Hex> Neighbours { get; set; }
         public bool IsPlaceholder { get; set; }
@@ -34,6 +33,29 @@ namespace Eclipse.Models.Hexes
         {
             var randomSides = Sides.GetRandom(number);
             randomSides.ForEach(x => x.HasWormHole = true);
+        }
+
+        public List<Hex> GetAccessibleHexes()
+        {
+            var directions = Sides.Where(x => x.HasWormHole).Select(x => x.Direction).ToList();
+            var neighbourPoints = directions.Select(x => x.AddPoint(this.PointLocation));
+            var neighbourHexes = HexBoard.GetInstance().GetHexes(neighbourPoints);
+            var list = new List<Hex>();
+            for (int i = 0; i < directions.Count; i++)
+            {
+                var opp = directions[i].Opposite();
+                var hex = neighbourHexes[i];
+                if(hex.HasWormHoleAtDirection(opp))
+                {
+                    list.Add(hex);
+                }
+            }
+            return list;
+        }
+
+        public bool HasWormHoleAtDirection(Point p)
+        {
+            return false;
         }
 
         public void Rotate()
