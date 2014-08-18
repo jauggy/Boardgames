@@ -9,23 +9,51 @@ namespace Eclipse.Models.Hexes
     public class Hex
     {
         public Point PointLocation { get; set; }
-        public Dictionary<Compass, Hex> Neighbours { get; set; }
         public bool IsPlaceholder { get; set; }
-        public int RingLevel { get; set; }
+      
         public List<HexSide> Sides { get; set; }
         public Hex()
         {
 
         }
 
-        public Hex(int x, int y) : base()
+        public Hex(Point p):this()
         {
-            PointLocation = new Point(x, y);
+            PointLocation = p;
+        }
+
+        public Hex(int x, int y)
+            : this(new Point(x, y))
+        {
+            
+        }
+
+        public int GetRingLevel()
+        {
+            return this.PointLocation.GetDistanceToCenter();
+        }
+
+
+        public Hex Copy()
+        {
+            var hex = new Hex();
+            hex.PointLocation = this.PointLocation;
+            hex.IsPlaceholder = this.IsPlaceholder;
+            hex.Sides = this.Sides;
+
+            return hex;
+        }
+
+        public Hex CopyAndRotate()
+        {
+            var result = this.Copy();
+            result.Rotate();
+            return result;
         }
 
         public void InitSides()
         {
-            var points =  GetNeighbourPoints();
+            var points = Direction.GetDirectionsAsPoints();
             Sides = points.Select(x => new HexSide(x)).ToList();
         }
 
@@ -70,37 +98,10 @@ namespace Eclipse.Models.Hexes
             Sides[Sides.Count - 1].HasWormHole = temp;
         }
 
-        public Point GetRelativePoint(Compass compass, int distance)
+        public Hex GetRelativeHex(Compass compass, int distance)
         {
-            var point = new Point(0,0);
-            if(compass==Compass.N)
-            {
-                point = new Point(0, -1);
-            }
-            else if(compass==Compass.S)
-            {
-                point = new Point(0, 1);
-            }
-            else if(compass==Compass.NE)
-            {
-                point = new Point(1, -1);
-            }
-            else if (compass == Compass.SE)
-            {
-                point = new Point(1, 0);
-            }
-            else if (compass == Compass.SW)
-            {
-                point = new Point(-1, 1);
-            }
-            else if(compass==Compass.NW)
-            {
-                point = new Point(-1, 0);
-            }
-
-            var adjustedPoint = new Point(point.X * distance, point.Y * distance);
-            adjustedPoint.Offset(this.PointLocation);
-            return adjustedPoint;
+            Point p = compass.ToPoint();
+            return HexBoard.GetInstance().GetHex(p.AddPoint(this.PointLocation));
         }
 
         public void Explore(Compass direction)
@@ -112,32 +113,9 @@ namespace Eclipse.Models.Hexes
         {
         }
 
-        public List<Compass> GetExplorableDirections()
-        {
-            var result = Neighbours.Where(x => x.Value == null).Select(x => x.Key).ToList();
-            return result;
-        }
-
-        public List<Point> GetNeighbourPoints()
-        {
-            /*neighbors = [
-   [+1,  0], [+1, -1], [ 0, -1],
-   [-1,  0], [-1, +1], [ 0, +1]*/
-            var list = new List<Point>();
-            list.Add(new Point(1, 0));
-            list.Add(new Point(1, -1));
-            list.Add(new Point(0, -1));
-            list.Add(new Point(-1, 0));
-            list.Add(new Point(-1, 1));
-            list.Add(new Point(0, 1));
-
-
-            return list;
-        }
-
         private List<Point> GetNeighbourPoints(Point p)
         {
-            var points = GetNeighbourPoints();
+            var points = Direction.GetDirectionsAsPoints();
 
             points.Select(x => AddPoint(x, p));
 

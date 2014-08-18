@@ -62,11 +62,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\Hexes\Compass.cs" />
+    <Compile Include="Models\Hexes\Direction.cs" />
     <Compile Include="Models\Hexes\Hex.cs" />
-    <Compile Include="Models\Hexes\HexBlueprint.cs" />
+    <Compile Include="Models\Hexes\HexFactory.cs" />
     <Compile Include="Models\Hexes\HexBoard.cs" />
     <Compile Include="Models\Hexes\HexSide.cs" />
     <Compile Include="Models\Hexes\PointExtension.cs" />
+    <Compile Include="Models\Player.cs" />
+    <Compile Include="Models\PlayerClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
