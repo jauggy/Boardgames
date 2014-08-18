@@ -187,5 +187,25 @@ namespace Eclipse.Models.Hexes
             return rings[level];
 
         }
+
+        public void AddOrangePlanet(int size = 1, int advanced=0)
+        {
+
+        }
+
+        public void AddBrownPlanet(int size = 1, int advanced=0)
+        {
+
+        }
+
+        public void AddPinkPlanet(int size =1, int advanced=0)
+        {
+
+        }
+
+        public void AddGrayPlanet(int size = 1, int advanced = 0)
+        {
+
+        }
     }
 }
