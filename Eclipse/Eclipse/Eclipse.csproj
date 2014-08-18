@@ -70,7 +70,7 @@
     <Content Include="WebService1.asmx" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Hexes\CanvasViewModel.cs" />
+    <Compile Include="Models\Hexes\CanvasHelper.cs" />
     <Compile Include="Models\Hexes\Compass.cs" />
     <Compile Include="Models\Hexes\Direction.cs" />
     <Compile Include="Models\Hexes\Hex.cs" />

@@ -13,7 +13,7 @@ namespace Eclipse.Models.Hexes
         public void Setup()
         {
             var startHex = new Hex();
-            startHex.PointLocation = new Point(0, 0);
+            startHex.AxialCoordinates = new Point(0, 0);
             var firstRing = startHex.GetRing(1).ToHex();
 
             var secondRing = startHex.GetRing(2).ToHex();
@@ -36,7 +36,7 @@ namespace Eclipse.Models.Hexes
             for (int i = 0; i < 6; i++)
             {
                 if (hex == null)
-                    hex = CreateNewHex(approachHex.PointLocation.AddPoint(direction));
+                    hex = CreateNewHex(approachHex.AxialCoordinates.AddPoint(direction));
                 else
                     hex = hex.CopyAndRotate();
 
@@ -67,7 +67,7 @@ namespace Eclipse.Models.Hexes
 
         public Hex GetHex(Point p)
         {
-            return Hexes.FirstOrDefault(x => x.PointLocation.Equals(p));
+            return Hexes.FirstOrDefault(x => x.AxialCoordinates.Equals(p));
         }
 
 

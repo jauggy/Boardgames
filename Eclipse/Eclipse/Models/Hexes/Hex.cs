@@ -8,7 +8,16 @@ namespace Eclipse.Models.Hexes
 {
     public class Hex
     {
-        public Point PointLocation { get; set; }
+        private Point _axialCordinates;
+        public Point AxialCoordinates
+        {
+            get { return _axialCordinates; }
+            set { 
+                _axialCordinates = value;
+                CanvasLocation = CanvasHelper.HexToCanvasPoint(this);
+            }
+        }
+        public Point CanvasLocation { get; private set; }
         public bool IsPlaceholder { get; set; }
       
         public List<HexSide> Sides { get; set; }
@@ -19,7 +28,7 @@ namespace Eclipse.Models.Hexes
 
         public Hex(Point p):this()
         {
-            PointLocation = p;
+            AxialCoordinates = p;
         }
 
         public Hex(int x, int y)
@@ -30,14 +39,14 @@ namespace Eclipse.Models.Hexes
 
         public int GetRingLevel()
         {
-            return this.PointLocation.GetDistanceToCenter();
+            return this.AxialCoordinates.GetDistanceToCenter();
         }
 
 
         public Hex Copy()
         {
             var hex = new Hex();
-            hex.PointLocation = this.PointLocation;
+            hex.AxialCoordinates = this.AxialCoordinates;
             hex.IsPlaceholder = this.IsPlaceholder;
             hex.Sides = this.Sides;
 
@@ -66,7 +75,7 @@ namespace Eclipse.Models.Hexes
         public List<Hex> GetAccessibleHexes()
         {
             var directions = Sides.Where(x => x.HasWormHole).Select(x => x.Direction).ToList();
-            var neighbourPoints = directions.Select(x => x.AddPoint(this.PointLocation));
+            var neighbourPoints = directions.Select(x => x.AddPoint(this.AxialCoordinates));
             var neighbourHexes = HexBoard.GetInstance().GetHexes(neighbourPoints);
             var list = new List<Hex>();
             for (int i = 0; i < directions.Count; i++)
@@ -101,7 +110,7 @@ namespace Eclipse.Models.Hexes
         public Hex GetRelativeHex(Compass compass, int distance)
         {
             Point p = compass.ToPoint();
-            return HexBoard.GetInstance().GetHex(p.AddPoint(this.PointLocation));
+            return HexBoard.GetInstance().GetHex(p.AddPoint(this.AxialCoordinates));
         }
 
         public void Explore(Compass direction)
@@ -166,7 +175,7 @@ namespace Eclipse.Models.Hexes
             for (int i = 0; i <= level; i++)
             {
                 if (i == 0)
-                    rings[0] = new List<Point> { this.PointLocation };
+                    rings[0] = new List<Point> { this.AxialCoordinates };
                 else
                 {
                     //get neighbours of previous set
