@@ -8,8 +8,9 @@ namespace Eclipse.Models.Hexes
 {
     public class HexFactory
     {
-        public static void CreateHex(Point p)
+        public static Hex CreateHex(Point p)
         {
+            return null;
         }
 
         public static Hex CreateCenterHex()
@@ -22,7 +23,7 @@ namespace Eclipse.Models.Hexes
             return hex;
         }
 
-        public static void CreateHex(Point p, int startingHexNumber)
+        public static Hex CreateStartingHex(int startingHexNumber)
         {
             //Starting players have a certain hex number
             var hex = new Hex();
@@ -63,6 +64,8 @@ namespace Eclipse.Models.Hexes
                     hex.AddPinkPlanet(2, 1);
                     break;
             }
+
+            return hex;
         }
     }
 }

@@ -22,11 +22,13 @@ namespace Eclipse.Models.Hexes
       
         public List<HexSide> Sides { get; set; }
         public Hex()
+            : this(new Point(0,0))
         {
 
         }
 
-        public Hex(Point p):this()
+        //Base constructor
+        public Hex(Point p)
         {
             AxialCoordinates = p;
         }

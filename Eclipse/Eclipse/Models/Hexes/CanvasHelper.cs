@@ -17,6 +17,12 @@ namespace Eclipse.Models.Hexes
             throw new NotImplementedException();
         }
 
+        public static Size GetCanvasDimensions()
+        {
+            return new Size(900, 900);
+
+        }
+
         public static Point HexToCanvasPoint(Hex hex)
         {
             var point = GetCenterCanvasPoint();

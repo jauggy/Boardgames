@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
+using Eclipse.Models.Hexes;
 
 namespace Eclipse
 {
@@ -18,9 +20,21 @@ namespace Eclipse
     {
 
         [WebMethod(true)]//use true to use session variables
-        public string HelloWorld()
+        public Hex HelloWorld()
         {
-            return "Hello World";
+            return new Hex();
+        }
+
+        [WebMethod(true)]
+        public Size GetCanvasDimensions()
+        {
+            return CanvasHelper.GetCanvasDimensions();
+        }
+
+        [WebMethod(true)]
+        public void Init()
+        {
+            HexBoard.GetInstance().Setup();
         }
 
     }

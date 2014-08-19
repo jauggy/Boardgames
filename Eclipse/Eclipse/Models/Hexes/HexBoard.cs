@@ -10,6 +10,8 @@ namespace Eclipse.Models.Hexes
     {
         public List<Hex> Hexes { get; set; }
         public Hex CenterHex { get; set; }
+
+        
         public void Setup()
         {
             var startHex = new Hex();
@@ -25,6 +27,39 @@ namespace Eclipse.Models.Hexes
 
 
             
+        }
+
+        public void AddStartingPlayerHex(Player player)
+        {
+            var hex = player.UniqueMethods.CreateStartingHex();
+            Hexes.Add(hex);
+            hex.AxialCoordinates = GetFreeStartingPoint();
+        }
+
+        private Point GetFreeStartingPoint()
+        {
+            var list = GetStartingPoints();
+            foreach (var point in list)
+            {
+                if (!Hexes.Any(x => x.AxialCoordinates.Equals(point)))
+                {
+                    return point;
+                   
+                }
+
+            }
+
+            throw new NotImplementedException();
+        }
+
+        private List<Point> GetStartingPoints()
+        {
+            var numPlayers = GameState.GetInstance().NumberPlayers;
+            if (numPlayers == 1)
+            {
+            }
+
+            return null;
         }
 
         public List<Hex> GetExplorableHexVariants(Hex approachHex, Point direction)

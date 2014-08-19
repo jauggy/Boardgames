@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
-        <script src="../Scripts/jquery-1.10.2.js" type="text/javascript"></script>
+        <script src="Scripts/jquery-2.0.3.min.js" type="text/javascript"></script>
       <script type="text/javascript">
           function DrawHex(hex) {
               var ctx = GetCanvasContext();
@@ -36,25 +36,27 @@
           function MoveToCenter(ctx) {
           }
 
-          function GetThresholdSettings(graphSegmentId) {
-              var dataObject = { 'graphSegmentId': graphSegmentId }
+          function TestService() {
+            
               $.ajax({
-                  url: "UserProfileService.asmx/GetThresholdPopupModel",
-                  data: JSON.stringify(dataObject),
+                  url: "EclipseService.asmx/HelloWorld",
+                  data: '{}',
                   dataType: "json",
                   type: "POST",
                   contentType: 'application/json; charset=utf-8',
                   success: function (data) {
                       var model = data["d"];
-                      PopulateThresholdSettings(model.Thresholds, graphSegmentId);
-                      PopulateThresholdHistory(model.ThresholdHistory, graphSegmentId);
-                      ShowModal('currentTabView', graphSegmentId);
+                     
                   },
                   error: function (xmlHttpRequest, textStatus, errorThrown) {
                       alert(errorThrown);
                   }
               });
           }
+
+          $(document).ready(function () {
+              TestService();
+          });
 
           </script>
 </head>
