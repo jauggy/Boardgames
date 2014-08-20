@@ -34,8 +34,6 @@ namespace Eclipse.Models
             }
         }
 
-
-
         public void AddRandomPlayer()
         {
             var player = new Player();
@@ -45,6 +43,10 @@ namespace Eclipse.Models
 
         public int NumberPlayers { get; set; }
 
+        public void CopyBoardState()
+        {
+
+        }
        
     }
 }

@@ -70,6 +70,8 @@
     <Content Include="EclipseService.asmx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\AI.cs" />
+    <Compile Include="Models\Box.cs" />
     <Compile Include="Models\GameState.cs" />
     <Compile Include="Models\Hexes\CanvasHelper.cs" />
     <Compile Include="Models\Hexes\Compass.cs" />
