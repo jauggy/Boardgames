@@ -27,7 +27,24 @@ namespace Eclipse.Models
         }
 
         //If order doesn't matter it is a combination
-         
+        public List<GameState> GetPossibleGameStatesOnMove(Player player)
+        {
+            var list = new List<GameState>();
+            
+            var numShips = player.UniqueMethods.GetNumberMovableShips();
+            player.GetShips().ForEach(x => x.ResetLastHex());
+            for (int i = 0; i < numShips; i++)
+            {
+                foreach (var ship in player.GetShips())
+                {
+          
+                    var gameStates = ship.GetAllGameStatesOnMove(true);
+                    list.AddRange(gameStates);
+                }
+            }
+            
+            return null;
+        }
 
     }
 }

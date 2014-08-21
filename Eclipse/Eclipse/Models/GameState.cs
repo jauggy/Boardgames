@@ -10,6 +10,10 @@ namespace Eclipse.Models
     {
         private Box Box { get; set; }
         public List<Player> CurrentPlayers { get; set; }
+        public List<Ship> Ships { get; set; }
+        List<Planet> Planets { get; set; }
+
+        public HexBoard HexBoard { get; set; }
 
         public static GameState GetInstance()
         {
@@ -23,6 +27,19 @@ namespace Eclipse.Models
         private GameState()
         {
             CurrentPlayers = new List<Player>();
+        }
+
+        //I think args should be we copy only hexboard
+        public static GameState SetCopyAsInstance()
+        {
+            //When copying, the hexboard and ships are copied. The cubes need to be copied... The players need to be copied>......
+            //Minimize references to classes????
+            return null;
+        }
+
+        public static void RevertInstanceToOriginal()
+        {
+
         }
 
         public void Init(int numPlayers)
@@ -43,9 +60,14 @@ namespace Eclipse.Models
 
         public int NumberPlayers { get; set; }
 
-        public void CopyBoardState()
+        public GameState Copy()
         {
+            return null;
+        }
 
+        public Ship GetShips(Ship ship)
+        {
+            return null;
         }
        
     }

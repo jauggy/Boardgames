@@ -8,6 +8,8 @@ namespace Eclipse.Models.Hexes
 {
     public class Hex
     {
+        public List<int> ShipIds { get; set; }
+        public List<int> PlanetIds { get; set; }
         private Point _axialCordinates;
         public Point AxialCoordinates
         {
@@ -21,6 +23,17 @@ namespace Eclipse.Models.Hexes
         public bool IsPlaceholder { get; set; }
       
         public List<HexSide> Sides { get; set; }
+
+        public Hex Copy()
+        {
+            var hex = new Hex(this.AxialCoordinates);
+            hex.CanvasLocation = this.CanvasLocation;
+            hex.IsPlaceholder = this.IsPlaceholder;
+            hex.ShipIds = this.ShipIds;
+
+            return hex;
+        }
+
         public Hex()
             : this(new Point(0,0))
         {
@@ -44,6 +57,10 @@ namespace Eclipse.Models.Hexes
             return this.AxialCoordinates.GetDistanceToCenter();
         }
 
+        public List<Ship> GetShips()
+        {
+            return GameState.GetInstance().Ships.Where(x => ShipIds.Contains(x.Id)).ToList();
+        }
 
         public Hex Copy()
         {

@@ -20,7 +20,9 @@ namespace Eclipse.Models
         //GetTradeRate
         //InitStartingStorage
 
-
-        
+        public virtual int GetNumberMovableShips()
+        {
+            return 2;
+        }
     }
 }

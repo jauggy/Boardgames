@@ -20,5 +20,10 @@ namespace Eclipse.Models
         {
             
         }
+
+        public List<Ship> GetShips()
+        {
+            return null;
+        }
     }
 }

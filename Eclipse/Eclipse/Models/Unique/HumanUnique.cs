@@ -12,5 +12,10 @@ namespace Eclipse.Models.Unique
         {
             return HexFactory.CreateStartingHex(-1);
         }
+
+        public override int GetNumberMovableShips()
+        {
+            return 3;
+        }
     }
 }

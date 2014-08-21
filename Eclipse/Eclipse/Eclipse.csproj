@@ -57,6 +57,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Models\Architecture.txt" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery-1.8.3.min.js" />
     <Content Include="Scripts\jquery-2.0.3.min.js" />
@@ -82,9 +83,13 @@
     <Compile Include="Models\Hexes\HexSide.cs" />
     <Compile Include="Models\Hexes\PointExtension.cs" />
     <Compile Include="Models\InfluenceTrack.cs" />
+    <Compile Include="Models\ListExtensions.cs" />
+    <Compile Include="Models\Planet.cs" />
     <Compile Include="Models\Player.cs" />
     <Compile Include="Models\PlayerBoard.cs" />
+    <Compile Include="Models\PopulationSquare.cs" />
     <Compile Include="Models\PopulationTrack.cs" />
+    <Compile Include="Models\Ship.cs" />
     <Compile Include="Models\SupplyBoard.cs" />
     <Compile Include="Models\Unique\DracoUnique.cs" />
     <Compile Include="Models\Unique\EridaniUnique.cs" />

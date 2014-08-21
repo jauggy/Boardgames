@@ -1,0 +1,14 @@
+﻿GameState copies:
+HexBoard
+Players
+
+
+Player copyies
+Playerboard
+
+Hex copies
+Ships
+
+Lets say someone has a reference to a ship. When the ship gets copied then 
+that object needs to update its reference to the ship>>>????
+

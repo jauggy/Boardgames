@@ -92,7 +92,7 @@ namespace Eclipse.Models.Hexes
 
         public static HexBoard GetInstance()
         {
-            return null;
+            return GameState.GetInstance().HexBoard;
         }
 
         public List<Hex> GetHexes(IEnumerable<Point> p)
