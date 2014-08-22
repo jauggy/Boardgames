@@ -10,9 +10,6 @@ namespace Eclipse.Models
     {
         private Box Box { get; set; }
         public List<Player> CurrentPlayers { get; set; }
-        public List<Ship> Ships { get; set; }
-        List<Planet> Planets { get; set; }
-
         public HexBoard HexBoard { get; set; }
 
         public static GameState GetInstance()

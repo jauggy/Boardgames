@@ -9,12 +9,22 @@ namespace Eclipse.Models
 {
     public class Ship
     {
-        public int Id { get; set; }
+
         public Point CurrentCoordinates { get; set; }
         private Point LastCoordinates { get; set; }
+        public int OwnerId { get; set; }
         public void ResetLastHex()
         {
             LastCoordinates = null;
+        }
+
+        public Ship Copy()
+        {
+            var ship = new Ship();
+            ship.CurrentCoordinates = this.CurrentCoordinates;
+            ship.LastCoordinates = this.LastCoordinates;
+            ship.OwnerId = this.OwnerId;
+            return ship;
         }
 
         public Hex GetCurrentHex()

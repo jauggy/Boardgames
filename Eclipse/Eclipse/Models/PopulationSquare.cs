@@ -7,7 +7,7 @@ namespace Eclipse.Models
 {
     public enum PopulationType
     {
-        Money, Science, Production
+        Money, Science, Materials
     }
 
     public class PopulationSquare
@@ -15,5 +15,10 @@ namespace Eclipse.Models
         public bool IsOccupied { get; set; }
         public int PlayerId { get; set; }
         public PopulationType Type { get; set; }
+
+        public PopulationSquare Copy()
+        {
+            return null;
+        }
     }
 }

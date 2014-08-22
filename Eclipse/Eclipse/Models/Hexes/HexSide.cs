@@ -16,5 +16,12 @@ namespace Eclipse.Models.Hexes
             Direction = p;
             HasWormHole = false;
         }
+
+        public HexSide Copy()
+        {
+            var hexSide = new HexSide(Direction);
+            hexSide.HasWormHole = HasWormHole;
+            return hexSide;
+        }
     }
 }

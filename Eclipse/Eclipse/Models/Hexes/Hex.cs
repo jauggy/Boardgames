@@ -8,8 +8,9 @@ namespace Eclipse.Models.Hexes
 {
     public class Hex
     {
-        public List<int> ShipIds { get; set; }
-        public List<int> PlanetIds { get; set; }
+        public List<Ship> Ships { get; set; }
+        public List<Planet> Planets { get; set; }
+
         private Point _axialCordinates;
         public Point AxialCoordinates
         {
@@ -29,8 +30,9 @@ namespace Eclipse.Models.Hexes
             var hex = new Hex(this.AxialCoordinates);
             hex.CanvasLocation = this.CanvasLocation;
             hex.IsPlaceholder = this.IsPlaceholder;
-            hex.ShipIds = this.ShipIds;
-
+            hex.Ships = Ships.Select(x => x.Copy()).ToList();
+            hex.Planets = Planets.Select(x => x.Copy()).ToList();
+            hex.Sides = Sides.Select(x => x.Copy()).ToList();
             return hex;
         }
 
@@ -55,21 +57,6 @@ namespace Eclipse.Models.Hexes
         public int GetRingLevel()
         {
             return this.AxialCoordinates.GetDistanceToCenter();
-        }
-
-        public List<Ship> GetShips()
-        {
-            return GameState.GetInstance().Ships.Where(x => ShipIds.Contains(x.Id)).ToList();
-        }
-
-        public Hex Copy()
-        {
-            var hex = new Hex();
-            hex.AxialCoordinates = this.AxialCoordinates;
-            hex.IsPlaceholder = this.IsPlaceholder;
-            hex.Sides = this.Sides;
-
-            return hex;
         }
 
         public Hex CopyAndRotate()

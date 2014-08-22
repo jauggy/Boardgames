@@ -9,7 +9,6 @@ namespace Eclipse.Models.Hexes
     public class HexBoard
     {
         public List<Hex> Hexes { get; set; }
-        public Hex CenterHex { get; set; }
 
         
         public void Setup()
@@ -27,6 +26,14 @@ namespace Eclipse.Models.Hexes
 
 
             
+        }
+
+
+        public HexBoard Copy()
+        {
+            var board = new HexBoard();
+            board.Hexes = Hexes.Select(x => x.Copy()).ToList();
+            return board;
         }
 
         public void AddStartingPlayerHex(Player player)
@@ -115,6 +122,7 @@ namespace Eclipse.Models.Hexes
         private void PopulateCenterHex(Hex hex)
         {
         }
+
 
 
     }
