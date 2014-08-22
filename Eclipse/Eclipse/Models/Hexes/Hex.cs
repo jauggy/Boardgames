@@ -133,9 +133,7 @@ namespace Eclipse.Models.Hexes
         {
             var points = Direction.GetDirectionsAsPoints();
 
-            points.Select(x => AddPoint(x, p));
-
-            return points;
+            return points.Select(x => AddPoint(x, p)).ToList();
         }
 
         private List<Point> GetNeighbourPoints(IEnumerable<Point> points)

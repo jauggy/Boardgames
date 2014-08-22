@@ -31,10 +31,11 @@ namespace Eclipse.Models.Hexes
         {
             var point = GetCenterCanvasPoint();
             var R = GetHexRadius();
-            point.X += (int) 1.5 * hex.AxialCoordinates.X *  R;
-            point.Y += (int)1 * R * hex.AxialCoordinates.X;
+            var H = GetHexHeight();
+            point.X += (int) (1.5 * hex.AxialCoordinates.X *  R);
+            point.Y += (int)(1 * H * hex.AxialCoordinates.X);
 
-            point.Y += (int)2 * R * hex.AxialCoordinates.Y;
+            point.Y += (int)(2 * H * hex.AxialCoordinates.Y);
 
             return point;
         }
@@ -43,6 +44,11 @@ namespace Eclipse.Models.Hexes
         public static int GetHexRadius() 
         { 
             return 80;
+        }
+
+        public static double GetHexHeight()
+        {
+            return Math.Sqrt(3) / 2 * GetHexRadius();
         }
 
 

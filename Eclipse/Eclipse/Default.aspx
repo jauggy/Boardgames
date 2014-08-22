@@ -8,12 +8,26 @@
         <script src="Scripts/jquery-2.0.3.min.js" type="text/javascript"></script>
       <script type="text/javascript">
           function DrawHex(hex) {
-              var ctx = GetCanvasContext();
-              var x = hex.X;
-              MoveToCenter(ctx);
-              MoveRight(ctx, x);
-              MoveDown(ctx, y);
+              var center_x = hex.CanvasLocation.X;
+              var center_y = hex.CanvasLocation.Y;
+              var size = hex.Radius;
+              var c=document.getElementById("myCanvas");
+              var ctx=c.getContext("2d");
+              ctx.beginPath();
+             
 
+              for(i=0;i<=6;i++)
+              {
+                  var  angle = 2 * Math.PI / 6 * (i);
+                  x_i = center_x + size * Math.cos(angle);
+                  y_i = center_y + size * Math.sin(angle);
+                  if (i == 0)
+                      ctx.moveTo(x_i, y_i)
+                  else
+                        ctx.lineTo(x_i, y_i)
+              }
+                          
+              ctx.stroke();
           }
 
           function MoveRight(ctx, times) {
@@ -45,8 +59,11 @@
                   type: "POST",
                   contentType: 'application/json; charset=utf-8',
                   success: function (data) {
-                      var model = data["d"];
-                     
+                      var hexboard = data["d"];
+                      
+                      $(hexboard.Hexes).each(function (index, item) {
+                          DrawHex(item);
+                      });
                   },
                   error: function (xmlHttpRequest, textStatus, errorThrown) {
                       alert(errorThrown);
@@ -63,7 +80,9 @@
 <body>
     <form id="form1" runat="server">
     <div>
-    
+    <canvas id="myCanvas" width="900" height="900" style="border:1px solid #000000;">
+Your browser does not support the HTML5 canvas tag.
+</canvas>
     </div>
     </form>
 </body>
