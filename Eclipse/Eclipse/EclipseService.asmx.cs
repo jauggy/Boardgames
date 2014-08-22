@@ -37,5 +37,10 @@ namespace Eclipse
             HexBoard.GetInstance().Setup();
         }
 
+        [WebMethod(true)]
+        public HexBoard GetHexBoard()
+        {
+            return HexBoard.GetInstance();
+        }
     }
 }

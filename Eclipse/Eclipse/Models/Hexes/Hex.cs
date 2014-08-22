@@ -17,12 +17,13 @@ namespace Eclipse.Models.Hexes
             get { return _axialCordinates; }
             set { 
                 _axialCordinates = value;
+                Radius = CanvasHelper.GetHexRadius();
                 CanvasLocation = CanvasHelper.HexToCanvasPoint(this);
             }
         }
         public Point CanvasLocation { get; private set; }
         public bool IsPlaceholder { get; set; }
-      
+        public int Radius { get; set; }
         public List<HexSide> Sides { get; set; }
 
         public Hex Copy()
@@ -152,7 +153,11 @@ namespace Eclipse.Models.Hexes
         private List<Point> GetNeighbourPoints(IEnumerable<Point>[] pointsArray)
         {
             var points = new List<Point>();
-            foreach (var pList in pointsArray) { points.AddRange(pList); }
+            foreach (var pList in pointsArray) 
+            { 
+                if(pList!=null)
+                    points.AddRange(pList); 
+            }
 
             var multipleLists = points.Select(x => GetNeighbourPoints(x));
             var result = new List<Point>();

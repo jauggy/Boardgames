@@ -14,16 +14,17 @@ namespace Eclipse.Models
 
         public static GameState GetInstance()
         {
-            var gameState = HttpContext.Current.Session["GameState"];
-            if (gameState == null)
+            if (HttpContext.Current.Session["GameState"] == null)
                 HttpContext.Current.Session["GameState"] = new GameState();
 
-            return (GameState)gameState;
+            return (GameState)HttpContext.Current.Session["GameState"];
         }
 
         private GameState()
         {
             CurrentPlayers = new List<Player>();
+            HexBoard = new HexBoard();
+            HexBoard.Setup();
         }
 
         //I think args should be we copy only hexboard

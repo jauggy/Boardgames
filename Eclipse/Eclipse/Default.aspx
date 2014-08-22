@@ -39,7 +39,7 @@
           function TestService() {
             
               $.ajax({
-                  url: "EclipseService.asmx/HelloWorld",
+                  url: "EclipseService.asmx/GetHexBoard",
                   data: '{}',
                   dataType: "json",
                   type: "POST",

@@ -15,7 +15,7 @@ namespace Eclipse.Models
         public int OwnerId { get; set; }
         public void ResetLastHex()
         {
-            LastCoordinates = null;
+            LastCoordinates = new Point(-1,-1);
         }
 
         public Ship Copy()
@@ -41,8 +41,8 @@ namespace Eclipse.Models
             foreach (var hex in possible)
             {
                 var copy = GameState.SetCopyAsInstance();
-                var copyShip = copy.GetShip(this);
-                copyShip.MoveTo(hex.AxialCoordinates);
+              //  var copyShip = copy.GetShip(this);
+             //   copyShip.MoveTo(hex.AxialCoordinates);
                 list.Add(copy);
                 i++;
 
@@ -59,7 +59,7 @@ namespace Eclipse.Models
             var hex = HexBoard.GetInstance().GetHex(point); //in this line we make sure we are in the same universe
             LastCoordinates = CurrentCoordinates;
             GetCurrentHex().Ships.Remove(this);
-            CurrentCoordinates = hex;
+          //  CurrentCoordinates = hex;
             GetCurrentHex().Ships.Add(this);
         }
     }
