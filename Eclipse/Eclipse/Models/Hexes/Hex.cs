@@ -69,8 +69,13 @@ namespace Eclipse.Models.Hexes
 
         public void InitSides()
         {
-            var points = Direction.GetDirectionsAsPoints();
-            Sides = points.Select(x => new HexSide(x)).ToList();
+            var list = new List<HexSide>();
+            for(int i = 0; i < 6 ; i ++)
+            {
+                list.Add(new HexSide(i));
+            }
+
+            Sides = list;
         }
 
         public void AddWormHoles(int number)
@@ -81,7 +86,7 @@ namespace Eclipse.Models.Hexes
 
         public List<Hex> GetAccessibleHexes()
         {
-            var directions = Sides.Where(x => x.HasWormHole).Select(x => x.Direction).ToList();
+            var directions = Sides.Where(x => x.HasWormHole).Select(x => x.PointDirection).ToList();
             var neighbourPoints = directions.Select(x => x.AddPoint(this.AxialCoordinates));
             var neighbourHexes = HexBoard.GetInstance().GetHexes(neighbourPoints);
             var list = new List<Hex>();

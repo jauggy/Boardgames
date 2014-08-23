@@ -12,6 +12,7 @@ namespace Eclipse.Models.Hexes
         SE,
         S,
         SW,
-        NW
+        NW,
+
     }
 }
