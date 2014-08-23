@@ -7,14 +7,30 @@
     <title></title>
         <script src="Scripts/jquery-2.0.3.min.js" type="text/javascript"></script>
       <script type="text/javascript">
+          var ctx = null;
+          var _componentSize = -1;
+
+          function DrawShape(point, sides) {
+              ctx.beginPath();
+              var size = _componentSize;
+              for (i = 0; i <= sides; i++) {
+                  var angle = 2 * Math.PI / sides * (i);
+                  x_i = point.X + size * Math.cos(angle);
+                  y_i = point.Y + size * Math.sin(angle);
+                  if (i == 0)
+                      ctx.moveTo(x_i, y_i)
+                  else
+                      ctx.lineTo(x_i, y_i)
+              }
+              ctx.fillStyle = '#00FF00';
+              ctx.stroke();
+          }
           function DrawHex(hex, color) {
               var center_x = hex.CanvasLocation.X;
               var center_y = hex.CanvasLocation.Y;
               var size = hex.Radius;
-              var c=document.getElementById("myCanvas");
-              var ctx=c.getContext("2d");
               ctx.beginPath();
-             
+              ctx.strokeStyle = "#000000"
 
               for(i=0;i<=6;i++)
               {
@@ -31,12 +47,18 @@
               ctx.stroke();
 
               DrawWormholes(hex);
+              DrawComponents(hex);
+              
+          }
+
+          function DrawComponents(hex) {
+              $(hex.ComponentCanvasLocations).each(function (index, point) {
+                  DrawShape(point, 3);
+              });
           }
 
           function DrawWormholes(hex)
           {
-              var c = document.getElementById("myCanvas");
-              var ctx = c.getContext("2d");
               $(hex.Sides).each(function (index, side) {
                   if (side.HasWormHole)
                   {
@@ -113,6 +135,24 @@
               });
           }
 
+          function InitCanvasConstants() {
+              var args = {};
+
+              $.ajax({
+                  url: "EclipseService.asmx/GetCanvasConstants",
+                  data: JSON.stringify(args),
+                  dataType: "json",
+                  type: "POST",
+                  contentType: 'application/json; charset=utf-8',
+                  success: function (data) {
+                      var constants = data["d"];
+                      _componentSize = constants.ComponentSize;
+                  },
+                  error: function (xmlHttpRequest, textStatus, errorThrown) {
+                      alert(errorThrown);
+                  }
+              });
+          }
 
           function getMousePos(canvas, evt) {
               var rect = canvas.getBoundingClientRect();
@@ -124,8 +164,8 @@
 
           $(document).ready(function () {
               var canvas = document.getElementById('myCanvas');
-              var context = canvas.getContext('2d');
-
+              ctx = canvas.getContext('2d');
+              InitCanvasConstants();
               canvas.addEventListener('mousedown', function (evt) {
                   var mousePos = getMousePos(canvas, evt);
                   var message = alert('Mouse position: ' + mousePos.x + ',' + mousePos.y);

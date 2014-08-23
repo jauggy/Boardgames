@@ -17,5 +17,22 @@ namespace Eclipse.Models
 
             return (Random)HttpContext.Current.Session["Random"];
         }
+
+        public static double GetDouble(double minimum, double maximum)
+        {
+            Random random = GetRandom();
+            return random.NextDouble() * (maximum - minimum) + minimum;
+        }
+
+        public static int GetInt(double minInclusive, double maxInclusive)
+        {
+              Random rnd = GetRandom();
+            return rnd.Next(Convert.ToInt32(minInclusive), Convert.ToInt32(maxInclusive + 1));
+        }
+
+        public static double GetAngle()
+        {
+            return GetDouble(0, 2 * Math.PI);
+        }
     }
 }

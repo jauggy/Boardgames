@@ -51,6 +51,10 @@ namespace Eclipse.Models.Hexes
             return Math.Sqrt(3) / 2 * GetHexRadius();
         }
 
+        public static double GetComponentSize()
+        {
+            return 10;
+        }
 
 
 

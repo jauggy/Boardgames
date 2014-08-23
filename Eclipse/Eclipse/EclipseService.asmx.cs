@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Services;
 using Eclipse.Models.Hexes;
+using Eclipse.Models;
 
 namespace Eclipse
 {
@@ -44,9 +45,15 @@ namespace Eclipse
         }
 
         [WebMethod(true)]
-        public Hex GetNearestHex(int x, int y)
+        public Hex GetNearestHex(double x, double y)
         {
-            return HexBoard.GetInstance().GetNearestHexbyCanvasLocation(x, y);
+            return HexBoard.GetInstance().GetNearestHexbyCanvasLocation((int)x, (int)y);
+        }
+
+        [WebMethod(true)]
+        public CanvasConstants GetCanvasConstants()
+        {
+            return new CanvasConstants();
         }
     }
 }

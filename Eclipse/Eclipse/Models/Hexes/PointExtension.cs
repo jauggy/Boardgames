@@ -101,8 +101,8 @@ namespace Eclipse.Models.Hexes
         public static Point GetRelativePoint(this Point start, double distance, double angle)
         {
             var result = new Point();
-            result.X = (int)Math.Round(start.X + distance * Math.Cos(angle));
-            result.Y = (int)Math.Round(start.Y + distance * Math.Sin(angle));
+            result.X = (int)(start.X + distance * Math.Cos(angle));
+            result.Y = (int)(start.Y + distance * Math.Sin(angle));
             return result;
         }
     }

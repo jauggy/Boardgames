@@ -26,6 +26,7 @@ namespace Eclipse.Models.Hexes
         public int Radius { get; set; }
         public List<HexSide> Sides { get; set; }
 
+
         public Hex Copy()
         {
             var hex = new Hex(this.AxialCoordinates);
@@ -49,12 +50,26 @@ namespace Eclipse.Models.Hexes
             AxialCoordinates = p;
             InitSides();
             AddWormHoles(2);
+            ComponentCanvasLocations = new List<Point>();
+            ComponentCanvasLocations.Add(GetFreeCanvasLocation());
+
         }
 
         public Hex(int x, int y)
             : this(new Point(x, y))
         {
             
+        }
+
+        public List<Point> ComponentCanvasLocations { get; set; }
+
+        public Point GetFreeCanvasLocation()
+        {
+            var hexHeight = CanvasHelper.GetHexHeight();
+            var compSize = CanvasHelper.GetComponentSize();
+            var dist =  RandomGenerator.GetDouble(compSize, hexHeight - compSize);
+            var angle = RandomGenerator.GetAngle();
+            return this.CanvasLocation.GetRelativePoint(dist, angle);
         }
 
         public int GetRingLevel()
