@@ -89,6 +89,7 @@
     <Compile Include="Models\PlayerBoard.cs" />
     <Compile Include="Models\PopulationSquare.cs" />
     <Compile Include="Models\PopulationTrack.cs" />
+    <Compile Include="Models\RandomGenerator.cs" />
     <Compile Include="Models\Ship.cs" />
     <Compile Include="Models\SupplyBoard.cs" />
     <Compile Include="Models\Unique\DracoUnique.cs" />

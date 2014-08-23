@@ -54,7 +54,7 @@ namespace Eclipse.Models.Hexes
 
         public static List<T> GetRandom<T>(this List<T> target, int numNeeded)
         {
-            var rnd = new Random();
+            var rnd = RandomGenerator.GetRandom();
             return target.OrderBy(x => rnd.Next()).Take(numNeeded).ToList();
 
         }
@@ -89,6 +89,21 @@ namespace Eclipse.Models.Hexes
             }
 
             return point;
+        }
+
+        /// <summary>
+        /// Returns relative point
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="length"></param>
+        /// <param name="angle">In radians</param>
+        /// <returns></returns>
+        public static Point GetRelativePoint(this Point start, double distance, double angle)
+        {
+            var result = new Point();
+            result.X = (int)Math.Round(start.X + distance * Math.Cos(angle));
+            result.Y = (int)Math.Round(start.Y + distance * Math.Sin(angle));
+            return result;
         }
     }
 }

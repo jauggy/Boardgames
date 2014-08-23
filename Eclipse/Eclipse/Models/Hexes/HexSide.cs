@@ -11,13 +11,18 @@ namespace Eclipse.Models.Hexes
         public double RadiansAngle { get; set; }
         public bool HasWormHole { get; set; }
         public Point PointDirection { get; set; }
-
+        public Point WormholeCanvasLocation { get; set; }
+        public double WormholeStartAngle { get; set; }
+        public double WormholeEndAngle { get; set; }
         //i must start with 1.
-        public HexSide(int i )
+        public HexSide(int i, Hex owner )
         {
             RadiansAngle = GetRadiansAngle(i);
             HasWormHole = false;
             PointDirection = GetDirection(i);
+            WormholeCanvasLocation = owner.CanvasLocation.GetRelativePoint(CanvasHelper.GetHexHeight(), RadiansAngle);
+            WormholeStartAngle = RadiansAngle - 0.5 * Math.PI;
+            WormholeEndAngle = WormholeStartAngle + Math.PI;
         }
 
         public Point GetDirection(int i)

@@ -11,7 +11,7 @@ namespace Eclipse.Models
         private Box Box { get; set; }
         public List<Player> CurrentPlayers { get; set; }
         public HexBoard HexBoard { get; set; }
-
+  
         public static GameState GetInstance()
         {
             if (HttpContext.Current.Session["GameState"] == null)
@@ -22,9 +22,10 @@ namespace Eclipse.Models
 
         private GameState()
         {
+
             CurrentPlayers = new List<Player>();
             HexBoard = new HexBoard();
-            HexBoard.Setup();
+            HexBoard.Setup(); 
         }
 
         //I think args should be we copy only hexboard

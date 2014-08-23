@@ -29,6 +29,23 @@
               if (color)
                   ctx.strokeStyle = color;
               ctx.stroke();
+
+              DrawWormholes(hex);
+          }
+
+          function DrawWormholes(hex)
+          {
+              var c = document.getElementById("myCanvas");
+              var ctx = c.getContext("2d");
+              $(hex.Sides).each(function (index, side) {
+                  if (side.HasWormHole)
+                  {
+                      ctx.beginPath();
+                      ctx.arc(side.WormholeCanvasLocation.X, side.WormholeCanvasLocation.Y, 10, side.WormholeStartAngle, side.WormholeEndAngle, true);
+                      ctx.stroke();
+                      ctx.stroke();
+                 }
+              });
           }
 
           function DrawGreenHex(hex, color)

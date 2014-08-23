@@ -45,8 +45,10 @@ namespace Eclipse.Models.Hexes
 
         //Base constructor
         public Hex(Point p)
-        {
+        { 
             AxialCoordinates = p;
+            InitSides();
+            AddWormHoles(2);
         }
 
         public Hex(int x, int y)
@@ -72,7 +74,7 @@ namespace Eclipse.Models.Hexes
             var list = new List<HexSide>();
             for(int i = 0; i < 6 ; i ++)
             {
-                list.Add(new HexSide(i));
+                list.Add(new HexSide(i, this));
             }
 
             Sides = list;
