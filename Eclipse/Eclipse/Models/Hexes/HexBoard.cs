@@ -28,6 +28,29 @@ namespace Eclipse.Models.Hexes
             
         }
 
+        public Hex GetNearestHexbyCanvasLocation(int x, int y)
+        {
+            var point = new Point(x, y);
+            Hex nearestHex = null;
+            double shortestDistance = 0;
+            foreach (var hex in Hexes)
+            {
+                var dist = hex.CanvasLocation.GetDistance(point);
+                if(dist < hex.Radius)
+                {
+                    if(nearestHex==null || shortestDistance > dist )
+                    {
+                        shortestDistance = dist;
+                        nearestHex = hex;
+                    }
+                }
+            }
+
+            return nearestHex;
+
+           
+        }
+
 
         public HexBoard Copy()
         {

@@ -42,5 +42,11 @@ namespace Eclipse
         {
             return HexBoard.GetInstance();
         }
+
+        [WebMethod(true)]
+        public Hex GetNearestHex(int x, int y)
+        {
+            return HexBoard.GetInstance().GetNearestHexbyCanvasLocation(x, y);
+        }
     }
 }
