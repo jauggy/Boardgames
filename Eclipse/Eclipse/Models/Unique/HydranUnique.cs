@@ -8,9 +8,12 @@ namespace Eclipse.Models.Unique
 {
     public class HydranUnique : UniqueMethods
     {
-        public override Hexes.Hex CreateStartingHex()
+
+        public override void PopulateStartingHex(Hex hex)
         {
-            return HexFactory.CreateStartingHex(224);
+            hex.AddOrangePlanet(1);
+            hex.AddPinkPlanet(2, 1);
+            hex.AddBrownPlanet(1, 1);
         }
     }
 }

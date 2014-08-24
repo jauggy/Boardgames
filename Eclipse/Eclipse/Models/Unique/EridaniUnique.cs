@@ -8,9 +8,11 @@ namespace Eclipse.Models.Unique
 {
     public class EridaniUnique : UniqueMethods
     {
-        public override Hexes.Hex CreateStartingHex()
+
+        public override void PopulateStartingHex(Hex hex)
         {
-            return HexFactory.CreateStartingHex(222);
+            hex.AddOrangePlanet(2, 1);
+            hex.AddPinkPlanet(2, 1);
         }
     }
 }

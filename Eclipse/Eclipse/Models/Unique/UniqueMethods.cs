@@ -10,7 +10,7 @@ namespace Eclipse.Models
     public abstract class UniqueMethods
     {
         //CreateStartingHex
-        public abstract Hex CreateStartingHex();
+        public abstract void PopulateStartingHex(Hex hex);
 
         //DrawStartingReputation
         //Move

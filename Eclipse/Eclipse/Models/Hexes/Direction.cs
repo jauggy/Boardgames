@@ -26,6 +26,19 @@ namespace Eclipse.Models.Hexes
             return list;
         }
 
+        public static List<Compass> GetCompassSix()
+        {
+            var list = new List<Compass>();
+            list.Add(Compass.N);
+            list.Add(Compass.S);
+            list.Add(Compass.NE);
+            list.Add(Compass.NW);
+            list.Add(Compass.SE);
+            list.Add(Compass.SW);
+
+            return list;
+        }
+
 
     }
 }

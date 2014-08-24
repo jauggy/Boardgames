@@ -15,7 +15,11 @@ namespace Eclipse.Models
         public static GameState GetInstance()
         {
             if (HttpContext.Current.Session["GameState"] == null)
-                HttpContext.Current.Session["GameState"] = new GameState();
+            {
+                var gs = new GameState();
+                HttpContext.Current.Session["GameState"] = gs;
+                gs.Setup();
+            }
 
             return (GameState)HttpContext.Current.Session["GameState"];
         }
@@ -23,7 +27,14 @@ namespace Eclipse.Models
         private GameState()
         {
 
+        }
+
+        public void Setup()
+        {
+
             CurrentPlayers = new List<Player>();
+            AddRandomPlayer();
+            AddRandomPlayer();
             HexBoard = new HexBoard();
             HexBoard.Setup(); 
         }
@@ -41,23 +52,15 @@ namespace Eclipse.Models
 
         }
 
-        public void Init(int numPlayers)
-        {
-            NumberPlayers = numPlayers;
-            for (int i = 0; i < numPlayers; i++)
-            {
-                AddRandomPlayer();
-            }
-        }
 
         public void AddRandomPlayer()
         {
             var player = new Player();
             CurrentPlayers.Add(player);
-            HexBoard.GetInstance().AddStartingPlayerHex(player);
+            //HexBoard.GetInstance().AddStartingPlayerHex(player);
         }
 
-        public int NumberPlayers { get; set; }
+        public int NumberPlayers { get { return CurrentPlayers.Count; } }
 
         public GameState Copy()
         {

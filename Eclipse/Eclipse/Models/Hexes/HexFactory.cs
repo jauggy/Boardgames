@@ -22,50 +22,5 @@ namespace Eclipse.Models.Hexes
 
             return hex;
         }
-
-        public static Hex CreateStartingHex(int startingHexNumber)
-        {
-            //Starting players have a certain hex number
-            var hex = new Hex();
-            switch(startingHexNumber)
-            {
-                case 222:
-                    hex.AddOrangePlanet(2, 1);
-                    hex.AddPinkPlanet(2, 1);
-                    break;
-                case 224:
-                    hex.AddOrangePlanet(1);
-                    hex.AddPinkPlanet(2, 1);
-                    hex.AddBrownPlanet(1, 1);
-                    break;
-                case 226:
-                    hex.AddPinkPlanet(1);
-                    hex.AddOrangePlanet(1);
-                    hex.AddBrownPlanet(1);
-                    break;
-                case 228:
-                    hex.AddOrangePlanet(1);
-                    hex.AddPinkPlanet(1);
-                    hex.AddBrownPlanet(1, 1);
-                    break;
-                case 230:
-                    hex.AddBrownPlanet(1, 1);
-                    hex.AddOrangePlanet(2, 1);
-                    hex.AddPinkPlanet(1);
-                    break;
-                case 232:
-                    hex.AddOrangePlanet(1, 1);
-                    hex.AddPinkPlanet(1);
-                    hex.AddBrownPlanet(2, 1);
-                    break;
-                default:
-                    hex.AddOrangePlanet(2, 1);
-                    hex.AddBrownPlanet(1);
-                    hex.AddPinkPlanet(2, 1);
-                    break;
-            }
-
-            return hex;
-        }
     }
 }

@@ -8,9 +8,12 @@ namespace Eclipse.Models.Unique
 {
     public class MechanemaUnique : UniqueMethods
     {
-        public override Hexes.Hex CreateStartingHex()
+
+        public override void PopulateStartingHex(Hex hex)
         {
-            return HexFactory.CreateStartingHex(230);
+            hex.AddBrownPlanet(1, 1);
+            hex.AddOrangePlanet(2, 1);
+            hex.AddPinkPlanet(1);
         }
     }
 }

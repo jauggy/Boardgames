@@ -8,9 +8,12 @@ namespace Eclipse.Models.Unique
 {
     public class DracoUnique : UniqueMethods
     {
-        public override Hexes.Hex CreateStartingHex()
+
+        public override void PopulateStartingHex(Hex hex)
         {
-            return HexFactory.CreateStartingHex(228);
+            hex.AddOrangePlanet(1);
+            hex.AddPinkPlanet(1);
+            hex.AddBrownPlanet(1, 1);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 
@@ -7,7 +8,7 @@ namespace Eclipse.Models
 {
     public enum PopulationType
     {
-        Money, Science, Materials
+        Money, Science, Materials, Unknown
     }
 
     public class PopulationSquare
@@ -15,10 +16,32 @@ namespace Eclipse.Models
         public bool IsOccupied { get; set; }
         public int PlayerId { get; set; }
         public PopulationType Type { get; set; }
-
+        public bool IsAdvanced { get; set; }
+        public Point CanvasLocation { get; set; }
+        public String Color { get { return GetColor(); } }
         public PopulationSquare Copy()
         {
             return null;
+        }
+
+        public String GetColor()
+        {
+            if (Type == PopulationType.Materials)
+            {
+                return "#663300";
+            }
+            else if(Type == PopulationType.Science)
+            {
+                return "#CC66FF";
+            }
+            else if(Type == PopulationType.Money)
+            {
+                return "#FF6600";
+            }
+            else
+            {
+                return "#909090";
+            }
         }
     }
 }

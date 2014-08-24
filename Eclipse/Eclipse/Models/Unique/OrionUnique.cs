@@ -8,9 +8,12 @@ namespace Eclipse.Models.Unique
 {
     public class OrionUnique:UniqueMethods
     {
-        public override Hexes.Hex CreateStartingHex()
+
+        public override void PopulateStartingHex(Hex hex)
         {
-            return HexFactory.CreateStartingHex(232);
+            hex.AddOrangePlanet(1, 1);
+            hex.AddPinkPlanet(1);
+            hex.AddBrownPlanet(2, 1);
         }
     }
 }

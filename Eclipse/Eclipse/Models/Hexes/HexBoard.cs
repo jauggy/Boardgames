@@ -24,8 +24,56 @@ namespace Eclipse.Models.Hexes
             Hexes.AddRange(firstRing);
             Hexes.AddRange(secondRing);
 
-
+            var startingHexes = GetStartingHexes();
+            foreach(var player in GameState.GetInstance().CurrentPlayers)
+            {
+                var freeHex = startingHexes.First(x => x.PopulationSquares.Count == 0);
+                player.UniqueMethods.PopulateStartingHex(freeHex);
+            }
             
+        }
+
+        public List<Hex> GetStartingHexes()
+        {
+            var center = GetCenterHex();
+            var result = new List<Hex>();
+            var allCompass = Direction.GetCompassSix();
+            var numPlayers = GameState.GetInstance().NumberPlayers;
+            if(numPlayers < 6)
+            {
+                allCompass.Remove(Compass.S);
+            }
+            if(numPlayers < 5 )
+            {
+                allCompass.Remove(Compass.N);
+            }
+            if(numPlayers==3)
+            {
+
+                allCompass.Clear();
+                allCompass.Add(Compass.SE);
+                allCompass.Add(Compass.SW);
+                allCompass.Add(Compass.N);
+            }
+            if(numPlayers==2)
+            {
+                allCompass.Clear();
+                allCompass.Add(Compass.N);
+                allCompass.Add(Compass.S);
+            }
+
+            foreach(var compass in allCompass)
+            {
+                result.Add(center.GetRelativeHex(compass, 2));
+            }
+
+
+            return result;
+        }
+
+        public Hex GetCenterHex()
+        {
+            return GetHex(new Point(0, 0));
         }
 
         public Hex GetNearestHexbyCanvasLocation(int x, int y)
@@ -52,20 +100,6 @@ namespace Eclipse.Models.Hexes
         }
 
 
-        public HexBoard Copy()
-        {
-            var board = new HexBoard();
-            board.Hexes = Hexes.Select(x => x.Copy()).ToList();
-            return board;
-        }
-
-        public void AddStartingPlayerHex(Player player)
-        {
-            var hex = player.UniqueMethods.CreateStartingHex();
-            Hexes.Add(hex);
-            hex.AxialCoordinates = GetFreeStartingPoint();
-        }
-
         private Point GetFreeStartingPoint()
         {
             var list = GetStartingPoints();
@@ -90,28 +124,6 @@ namespace Eclipse.Models.Hexes
             }
 
             return null;
-        }
-
-        public List<Hex> GetExplorableHexVariants(Hex approachHex, Point direction)
-        {
-            Hex hex = null;
-            
-            var list = new List<Hex>();
-   
-            for (int i = 0; i < 6; i++)
-            {
-                if (hex == null)
-                    hex = CreateNewHex(approachHex.AxialCoordinates.AddPoint(direction));
-                else
-                    hex = hex.CopyAndRotate();
-
-                if (hex.HasWormHoleAtDirection(direction.Opposite()))
-                {
-                    list.Add(hex);
-                }
-            }
-
-            return list;
         }
 
         private Hex CreateNewHex(Point p)

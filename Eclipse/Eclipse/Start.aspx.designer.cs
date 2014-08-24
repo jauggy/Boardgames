@@ -11,7 +11,7 @@ namespace Eclipse
 {
 
 
-    public partial class WebForm1
+    public partial class Start
     {
 
         /// <summary>

@@ -23,7 +23,7 @@ namespace Eclipse.Models.Hexes
 
         public static Size GetCanvasDimensions()
         {
-            return new Size(900, 900);
+            return new Size(1400, 1400);
 
         }
 

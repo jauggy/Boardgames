@@ -9,7 +9,7 @@ namespace Eclipse.Models.Hexes
     public class Hex
     {
         public List<Ship> Ships { get; set; }
-        public List<Planet> Planets { get; set; }
+        public List<PopulationSquare> PopulationSquares { get; set; }
 
         private Point _axialCordinates;
         public Point AxialCoordinates
@@ -22,21 +22,10 @@ namespace Eclipse.Models.Hexes
             }
         }
         public Point CanvasLocation { get; private set; }
-        public bool IsPlaceholder { get; set; }
+        public bool IsVisible { get { return PopulationSquares.Count > 0; } }
         public int Radius { get; set; }
         public List<HexSide> Sides { get; set; }
 
-
-        public Hex Copy()
-        {
-            var hex = new Hex(this.AxialCoordinates);
-            hex.CanvasLocation = this.CanvasLocation;
-            hex.IsPlaceholder = this.IsPlaceholder;
-            hex.Ships = Ships.Select(x => x.Copy()).ToList();
-            hex.Planets = Planets.Select(x => x.Copy()).ToList();
-            hex.Sides = Sides.Select(x => x.Copy()).ToList();
-            return hex;
-        }
 
         public Hex()
             : this(new Point(0,0))
@@ -51,7 +40,12 @@ namespace Eclipse.Models.Hexes
             InitSides();
             AddWormHoles(2);
             ComponentCanvasLocations = new List<Point>();
-            ComponentCanvasLocations.Add(GetFreeCanvasLocation());
+            PopulationSquares = new List<PopulationSquare>();
+
+            for (int i = 0; i < 24; i++)
+            {
+                ComponentCanvasLocations.Add(GetFreeCanvasLocation(i));
+            }
 
         }
 
@@ -63,25 +57,25 @@ namespace Eclipse.Models.Hexes
 
         public List<Point> ComponentCanvasLocations { get; set; }
 
-        public Point GetFreeCanvasLocation()
+        //begins at 0
+        public Point GetFreeCanvasLocation(int i )
         {
             var hexHeight = CanvasHelper.GetHexHeight();
             var compSize = CanvasHelper.GetComponentSize();
-            var dist =  RandomGenerator.GetDouble(compSize, hexHeight - compSize);
-            var angle = RandomGenerator.GetAngle();
-            return this.CanvasLocation.GetRelativePoint(dist, angle);
+            var dist = 2 / 3.0 * hexHeight;
+            var angle = i * 30;
+            if (i <= 6)
+            {
+                dist = 1 / 3.0 * hexHeight;
+                angle = i * 60 - 90;
+            }
+
+            return this.CanvasLocation.GetRelativePoint(dist,  AngleHelper.ToRadians(angle));
         }
 
         public int GetRingLevel()
         {
             return this.AxialCoordinates.GetDistanceToCenter();
-        }
-
-        public Hex CopyAndRotate()
-        {
-            var result = this.Copy();
-            result.Rotate();
-            return result;
         }
 
         public void InitSides()
@@ -139,6 +133,8 @@ namespace Eclipse.Models.Hexes
         public Hex GetRelativeHex(Compass compass, int distance)
         {
             Point p = compass.ToPoint();
+            p.X *= distance;
+            p.Y *= distance;
             return HexBoard.GetInstance().GetHex(p.AddPoint(this.AxialCoordinates));
         }
 
@@ -221,22 +217,35 @@ namespace Eclipse.Models.Hexes
 
         public void AddOrangePlanet(int size = 1, int advanced=0)
         {
-
+            AddPlanet(size, advanced, PopulationType.Money);
         }
 
         public void AddBrownPlanet(int size = 1, int advanced=0)
         {
-
+            AddPlanet(size, advanced, PopulationType.Materials);
         }
 
         public void AddPinkPlanet(int size =1, int advanced=0)
         {
-
+            AddPlanet(size, advanced, PopulationType.Science);
         }
 
         public void AddGrayPlanet(int size = 1, int advanced = 0)
         {
+            AddPlanet(size, advanced, PopulationType.Unknown);
+        }
 
+        public void AddPlanet(int size, int advanced, PopulationType type)
+        {
+            for (int i = 0; i < size; i++)
+            {
+                var square = new PopulationSquare();
+                square.Type = type;
+
+                square.IsAdvanced = i < advanced;
+                square.CanvasLocation = GetFreeCanvasLocation(PopulationSquares.Count);
+                PopulationSquares.Add(square);
+            }
         }
     }
 }
