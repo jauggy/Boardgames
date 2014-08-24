@@ -87,8 +87,8 @@ namespace Eclipse.Models.Hexes
             double shortestDistance = 0;
             foreach (var hex in Hexes)
             {
-                var dist = hex.CanvasLocation.GetDistance(point);
-                if(dist < hex.Radius)
+                var dist = hex.CanvasLocation.GetCanvasDistance(point);
+                if(dist <= hex.Radius)
                 {
                     if(nearestHex==null || shortestDistance > dist )
                     {

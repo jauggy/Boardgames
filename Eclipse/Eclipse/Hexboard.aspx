@@ -107,7 +107,7 @@
           function DrawGreenHex(hex, color)
           {
               if (_lastHex)
-                  DrawHex(_lastHex, 'black');
+                  DrawHexboard();
               DrawHex(hex, '#00FF00');
               _lastHex = hex;
           }
@@ -170,9 +170,12 @@
                   contentType: 'application/json; charset=utf-8',
                   success: function (data) {
                       var hex = data["d"];
-                      DrawGreenHex(hex);
+                      if (hex && hex.IsVisible)
+                      {
+                        DrawGreenHex(hex);
 
-                      ShowExploreMenu(x, y);
+                        ShowExploreMenu(x, y+10);
+                        }
 
                   },
                   error: function (xmlHttpRequest, textStatus, errorThrown) {
@@ -254,6 +257,9 @@
                 clone.show();
           }
 
+          function HideExploreMenus() {
+              $('#exploreMenus').empty();
+          }
 
 
           </script>
@@ -265,7 +271,7 @@
     <div id="hexClickDiv" style="display:none; background-color:white" class="explore">
 <div class="btn-group-vertical">
    <button type="button" class="btn btn-primary explorebutton">Explore</button>
- <button type="button" class="btn btn-default">Cancel</button>
+ <button type="button" onclick="HideExploreMenus(); return false;" class="btn btn-default">Cancel</button>
 </div>
         </div>
      <div id="exploreMenus">

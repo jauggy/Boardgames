@@ -19,7 +19,7 @@ namespace Eclipse.Models.Hexes
         }
 
 
-        public static int GetDistance(this Point h1, Point h2)
+        public static int GetAxialDistance(this Point h1, Point h2)
         {
             var x1 = h1.X;
             var y1 = h1.Y;
@@ -30,9 +30,18 @@ namespace Eclipse.Models.Hexes
             return (Math.Abs(x1 - x2) + Math.Abs(y1 - y2) + Math.Abs(z1 - z2)) / 2;
         }
 
+        public static double GetCanvasDistance(this Point h1, Point h2)
+        {
+            var x1 = h1.X;
+            var x2 = h2.X;
+            var y1 = h1.Y;
+            var y2 = h2.Y;
+            return Math.Sqrt((Math.Pow(x1 - x2, 2) + Math.Pow(y1 - y2, 2)));
+        }
+
         public static int GetDistanceToCenter(this Point h1)
         {
-            return GetDistance(h1, new Point(0, 0));
+            return GetAxialDistance(h1, new Point(0, 0));
         }
 
         public static Point Opposite(this Point p)
