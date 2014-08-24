@@ -10,7 +10,7 @@ namespace Eclipse.Models.Unique
         public static UniqueMethods GetNewRandomUnique()
         {
             var list = new List<UniqueMethods>() { new HumanUnique(),new DracoUnique(), new EridaniUnique(), new HydranUnique(), new MechanemaUnique(), new OrionUnique(), new PlantaUnique() };
-            var takenUniques = GameState.GetInstance().CurrentPlayers.Select(x => x.UniqueMethods);
+            var takenUniques = GameState.GetInstance().Players.Select(x => x.UniqueMethods);
 
             var refinedList =  list.Except(takenUniques).ToList();
 

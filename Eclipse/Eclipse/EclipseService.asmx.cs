@@ -20,12 +20,6 @@ namespace Eclipse
     public class WebService1 : System.Web.Services.WebService
     {
 
-        [WebMethod(true)]//use true to use session variables
-        public Hex HelloWorld()
-        {
-            return new Hex();
-        }
-
         [WebMethod(true)]
         public Size GetCanvasDimensions()
         {
@@ -59,6 +53,12 @@ namespace Eclipse
         public List<Point> GetNeighbourHexPoints()
         {
             throw new NotImplementedException();
+        }
+
+        [WebMethod(true)]
+        public List<Hex> GetExploreFromHexes()
+        {
+            return HexBoard.GetInstance().GetExploreFromHexes();
         }
     }
 }

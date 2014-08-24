@@ -36,16 +36,17 @@
               }
           }
           function DrawCircle(point, color) {
-             // ctx.beginPath();
-             // ctx.fillStyle = color;
-             // ctx.arc(point.X, point.Y,_componentSize/2, 2 * Math.PI, 0, 2 * Math.PI);
-              // ctx.fill();
+              ctx.beginPath();
+              ctx.fillStyle = color;
+              ctx.arc(point.X, point.Y,_componentSize/2, 2 * Math.PI, 0, 2 * Math.PI);
+              ctx.fill();   
+          }
+          function DrawAncient(point) {
               var size = 25;
               x = point.X - size / 2;
               y = point.Y - size / 2;
               var obj = document.getElementById('ancientImg');
               ctx.drawImage(obj, x, y, size, size);
-                           
           }
           function DrawHex(hex, color) {
               if (!hex.IsVisible)
@@ -81,6 +82,9 @@
           {
               if (hex.Controller) {
                   DrawCircle(hex.CanvasLocation, hex.Controller.Color);
+              }
+              else if (hex.HasAncient) {
+                  DrawAncient(hex.CanvasLocation);
               }
           }
 
@@ -206,6 +210,25 @@
               });
           }
 
+
+          function GetExploreFromHexes() {
+              var args = {};
+              $.ajax({
+                  url: "EclipseService.asmx/GetExploreFromHexes",
+                  data: JSON.stringify(args),dataType: "json",type: "POST",async: false,contentType: 'application/json; charset=utf-8',
+                  success: function (data) {
+                      var hexes = data["d"];
+                      HideExploreMenus();
+                      $(hexes).each(function (index, item) {
+                          ShowExploreMenu(item.CanvasLocation.X,item.CanvasLocation.Y + 35);
+                      });
+                  },
+                  error: function (xmlHttpRequest, textStatus, errorThrown) {
+                      alert(errorThrown);
+                  }
+              });
+          }
+
           function getMousePos(canvas, evt) {
               var rect = canvas.getBoundingClientRect();
               return {
@@ -244,16 +267,23 @@
                   DrawHexboard();//   window.location.href = '/Hexboard.aspx';
                   $(window).scrollTop(_tempScrollTop);
               });
+
+              $('#exploreTab').click(function (event) {
+                  _tempScrollTop = $(window).scrollTop();
+                  GetExploreFromHexes();
+                  $(window).scrollTop(_tempScrollTop);
+              });
           });
 
           function ShowExploreMenu(x, y) {
-              $('#exploreMenus').empty();
+       
                 var klon = $('#hexClickDiv');
                 var newId = x + y + '';
                 var clone = klon.clone().attr('id', newId);
                 $('#exploreMenus').append(clone);
-                clone.css({ 'top': y + canvas.offsetTop, 'left': x, 'position': 'absolute' });
                 clone.find('.explorebutton').html('Explore from');
+                clone.css({ 'top': y + canvas.offsetTop, 'left': x - clone.outerWidth()/2, 'position': 'absolute' });
+               
                 clone.show();
           }
 

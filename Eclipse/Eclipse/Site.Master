@@ -28,7 +28,7 @@
           <ul class="nav navbar-nav">
             <li id="resourceViewTab" class="active"><a href="javascript:void(0)">Resource View</a></li>
             <li id="militaryViewTab"><a href="javascript:void(0)">Military View</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li id="exploreTab"><a href="javascript:void(0)">Explore</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">

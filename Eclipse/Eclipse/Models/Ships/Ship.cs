@@ -10,8 +10,18 @@ namespace Eclipse.Models
     public class Ship
     {
         public bool IsAncient { get; set; }
-        
+        public Player Owner { get; set; }
+        public List<int> CannonDamage { get; set; }
+        public int Computers { get; set; }
+        public Ship()
+        {
+            CannonDamage = new List<int>();
+        }
 
+        public void AddCannon(int damage)
+        {
+            CannonDamage.Add(damage);
+        }
       /*  public void MoveTo(Point point)
         {
             var hex = HexBoard.GetInstance().GetHex(point); //in this line we make sure we are in the same universe

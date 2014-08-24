@@ -9,9 +9,9 @@ namespace Eclipse.Models
     public class GameState
     {
         private Box Box { get; set; }
-        public List<Player> CurrentPlayers { get; set; }
+        public List<Player> Players { get; set; }
         public HexBoard HexBoard { get; set; }
-  
+        public Player CurrentPlayer { get; set; }
         public static GameState GetInstance()
         {
             if (HttpContext.Current.Session["GameState"] == null)
@@ -32,11 +32,12 @@ namespace Eclipse.Models
         public void Setup()
         {
 
-            CurrentPlayers = new List<Player>();
+            Players = new List<Player>();
             AddRandomPlayer();
             AddRandomPlayer();
             HexBoard = new HexBoard();
-            HexBoard.Setup(); 
+            HexBoard.Setup();
+            CurrentPlayer = Players[0];
         }
 
         //I think args should be we copy only hexboard
@@ -56,11 +57,11 @@ namespace Eclipse.Models
         public void AddRandomPlayer()
         {
             var player = new Player();
-            CurrentPlayers.Add(player);
+            Players.Add(player);
             //HexBoard.GetInstance().AddStartingPlayerHex(player);
         }
 
-        public int NumberPlayers { get { return CurrentPlayers.Count; } }
+        public int NumberPlayers { get { return Players.Count; } }
 
         public GameState Copy()
         {

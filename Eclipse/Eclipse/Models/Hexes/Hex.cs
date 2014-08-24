@@ -26,7 +26,7 @@ namespace Eclipse.Models.Hexes
         public int Radius { get; set; }
         public List<HexSide> Sides { get; set; }
         public Player Controller { get; set; }
-
+        public bool HasAncient { get { return Ships.Any(x => x.IsAncient); } }
         public Hex()
             : this(new Point(0,0))
         {
@@ -41,7 +41,7 @@ namespace Eclipse.Models.Hexes
             AddWormHoles(2);
             ComponentCanvasLocations = new List<Point>();
             PopulationSquares = new List<PopulationSquare>();
-
+            Ships = new List<Ship>();
             for (int i = 0; i < 24; i++)
             {
                 ComponentCanvasLocations.Add(GetFreeCanvasLocation(i));
@@ -135,7 +135,8 @@ namespace Eclipse.Models.Hexes
             Point p = compass.ToPoint();
             p.X *= distance;
             p.Y *= distance;
-            return HexBoard.GetInstance().GetHex(p.AddPoint(this.AxialCoordinates));
+            var result= HexBoard.GetInstance().GetOrCreateHex(p.AddPoint(this.AxialCoordinates));
+            return result;
         }
 
         public void Explore(Compass direction)
@@ -284,6 +285,26 @@ namespace Eclipse.Models.Hexes
         {
             var num = RandomGenerator.GetInt(new List<int> {12,5,2 });
             AddAncientShip(num);
+        }
+
+        public List<Hex> GetExploreToHexes(Player player)
+        {
+            var directions = Sides.Where(x => x.HasWormHole).Select(x => x.PointDirection).ToList();
+            var neighbourPoints = directions.Select(x => x.AddPoint(this.AxialCoordinates));
+            var neighbourHexes = HexBoard.GetInstance().GetHexes(neighbourPoints);
+            var result =  neighbourHexes.Where(x => !x.IsVisible).ToList();
+            return result;
+
+        }
+
+        public bool IsExploreFromHex(Player player)
+        {
+            if (this.IsVisible && Ships.Any(x => x.Owner == player))
+            {
+                return GetExploreToHexes(player).Count > 0;
+            }
+
+            return false;
         }
     }
 }

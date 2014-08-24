@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Eclipse.Models.Ships;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -21,15 +22,16 @@ namespace Eclipse.Models.Hexes
 
             Hexes = new List<Hex>();
             Hexes.Add(startHex);
-            Hexes.AddRange(firstRing);
-            Hexes.AddRange(secondRing);
+           /* Hexes.AddRange(firstRing);
+            Hexes.AddRange(secondRing);*/
 
             var startingHexes = GetStartingHexes();
-            foreach(var player in GameState.GetInstance().CurrentPlayers)
+            foreach(var player in GameState.GetInstance().Players)
             {
                 var freeHex = startingHexes.First(x => x.PopulationSquares.Count == 0);
                 player.UniqueMethods.PopulateStartingHex(freeHex);
                 freeHex.Controller = player;
+                freeHex.Ships.Add(new Interceptor(player));
             }
 
 
@@ -77,7 +79,7 @@ namespace Eclipse.Models.Hexes
 
         public Hex GetCenterHex()
         {
-            return GetHex(new Point(0, 0));
+            return FindHex(new Point(0, 0));
         }
 
         public Hex GetNearestHexbyCanvasLocation(int x, int y)
@@ -143,12 +145,23 @@ namespace Eclipse.Models.Hexes
 
         public List<Hex> GetHexes(IEnumerable<Point> p)
         {
-            return null;
+            return p.Select(x => GetOrCreateHex(x)).ToList();
         }
 
-        public Hex GetHex(Point p)
+        public Hex FindHex(Point p)
         {
             return Hexes.FirstOrDefault(x => x.AxialCoordinates.Equals(p));
+        }
+
+        public Hex GetOrCreateHex(Point p)
+        {
+            var result = FindHex(p);
+            if(result==null)
+            {
+                result = new Hex(p);
+                Hexes.Add(result);
+            }
+            return result;
         }
 
 
@@ -160,7 +173,7 @@ namespace Eclipse.Models.Hexes
 
         private void PopulateCenterHex()
         {
-            GetCenterHex().AddBrownPlanet(2, 1).AddPinkPlanet(2, 1).AddGrayPlanet(2);
+            GetCenterHex().AddBrownPlanet(2, 1).AddPinkPlanet(2, 1).AddGrayPlanet(2).Ships.Add(new GalacticCenter());
         }
 
         public void PopulateLevel1Hex(Hex hex)
@@ -190,6 +203,14 @@ namespace Eclipse.Models.Hexes
             hex.AddRandomPopSquare(normalPop, false);
             hex.AddRandomPopSquare(advancedPop, true);
             hex.AddRandomAncientShips();
+        }
+
+        public List<Hex> GetExploreFromHexes()
+        {
+            var newList = Hexes.ToList();
+            var currentPlayer = GameState.GetInstance().CurrentPlayer;
+            var result =  newList.Where(x => x.IsExploreFromHex(currentPlayer)).ToList();
+            return result;
         }
 
     }
