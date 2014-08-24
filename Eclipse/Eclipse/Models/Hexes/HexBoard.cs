@@ -30,6 +30,9 @@ namespace Eclipse.Models.Hexes
                 var freeHex = startingHexes.First(x => x.PopulationSquares.Count == 0);
                 player.UniqueMethods.PopulateStartingHex(freeHex);
             }
+
+
+            PopulateCenterHex();
             
         }
 
@@ -154,10 +157,36 @@ namespace Eclipse.Models.Hexes
 
         }
 
-        private void PopulateCenterHex(Hex hex)
+        private void PopulateCenterHex()
         {
+            GetCenterHex().AddBrownPlanet(2, 1).AddPinkPlanet(2, 1).AddGrayPlanet(2);
         }
 
+        public void PopulateLevel1Hex(Hex hex)
+        {
+            var normalPop = RandomGenerator.GetInt(new List<int>{1,3,5});
+            var advancedPop = RandomGenerator.GetInt(new List<int> { 2, 5, 2 });
+            hex.AddRandomPopSquare(normalPop, false);
+            hex.AddRandomPopSquare(advancedPop, true);
+        }
+
+        public void PopulateLevel2Hex(Hex hex)
+        {
+            var normalPop = RandomGenerator.GetInt(new List<int> {2,5,3,1});
+            var advancedPop = RandomGenerator.GetInt(new List<int> { 6, 3, 2});
+            hex.AddRandomPopSquare(normalPop, false);
+            hex.AddRandomPopSquare(advancedPop, true);
+        }
+
+
+
+        public void PopulateLevel3Hex(Hex hex)
+        {
+            var normalPop = RandomGenerator.GetInt(new List<int> { 2, 11, 4 });
+            var advancedPop = RandomGenerator.GetInt(new List<int> { 9, 8 });
+            hex.AddRandomPopSquare(normalPop, false);
+            hex.AddRandomPopSquare(advancedPop, true);
+        }
 
 
     }

@@ -8,7 +8,10 @@ namespace Eclipse.Models
 {
     public enum PopulationType
     {
-        Money, Science, Materials, Unknown
+        Money, 
+        Science, 
+        Materials, 
+        Unknown
     }
 
     public class PopulationSquare
@@ -19,6 +22,12 @@ namespace Eclipse.Models
         public bool IsAdvanced { get; set; }
         public Point CanvasLocation { get; set; }
         public String Color { get { return GetColor(); } }
+
+        public PopulationSquare(PopulationType type)
+        {
+            Type = type;
+        }
+
         public PopulationSquare Copy()
         {
             return null;

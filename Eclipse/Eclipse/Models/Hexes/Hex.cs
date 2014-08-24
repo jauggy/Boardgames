@@ -215,37 +215,59 @@ namespace Eclipse.Models.Hexes
 
         }
 
-        public void AddOrangePlanet(int size = 1, int advanced=0)
+        public Hex AddOrangePlanet(int size = 1, int advanced=0)
         {
             AddPlanet(size, advanced, PopulationType.Money);
+            return this;
         }
 
-        public void AddBrownPlanet(int size = 1, int advanced=0)
+        public Hex AddBrownPlanet(int size = 1, int advanced = 0)
         {
             AddPlanet(size, advanced, PopulationType.Materials);
+            return this;
         }
 
-        public void AddPinkPlanet(int size =1, int advanced=0)
+        public Hex AddPinkPlanet(int size = 1, int advanced = 0)
         {
             AddPlanet(size, advanced, PopulationType.Science);
+            return this;
         }
 
-        public void AddGrayPlanet(int size = 1, int advanced = 0)
+        public Hex AddGrayPlanet(int size = 1, int advanced = 0)
         {
             AddPlanet(size, advanced, PopulationType.Unknown);
+            return this;
         }
 
         public void AddPlanet(int size, int advanced, PopulationType type)
         {
             for (int i = 0; i < size; i++)
             {
-                var square = new PopulationSquare();
-                square.Type = type;
+                var square = new PopulationSquare(type);
 
                 square.IsAdvanced = i < advanced;
                 square.CanvasLocation = GetFreeCanvasLocation(PopulationSquares.Count);
                 PopulationSquares.Add(square);
             }
+        }
+
+        public void AddRandomPopSquare(int number, bool isAdvanced)
+        {
+            for(int i = 0; i<number;i++)
+            {
+                var square = new PopulationSquare(GetRandomPopType());
+                square.IsAdvanced = isAdvanced;
+                square.CanvasLocation = GetFreeCanvasLocation(PopulationSquares.Count);
+                PopulationSquares.Add(square);
+            }
+
+        }
+
+        private PopulationType GetRandomPopType()
+        {
+            Array values = Enum.GetValues(typeof(PopulationType));
+            var random = RandomGenerator.GetInt(new List<int> { 15, 13, 11, 4 });
+            return (PopulationType)values.GetValue(random);
         }
     }
 }

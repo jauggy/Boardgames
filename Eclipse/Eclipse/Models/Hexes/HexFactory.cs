@@ -22,5 +22,14 @@ namespace Eclipse.Models.Hexes
 
             return hex;
         }
+
+        public static void PopulateLevel1Hex(Hex hex)
+        {
+            hex.AddRandomPopSquare(RandomGenerator.GetInt(1, 2), false);
+            hex.AddRandomPopSquare(RandomGenerator.GetInt(0, 2), true);
+        }
+
+
+
     }
 }

@@ -34,5 +34,25 @@ namespace Eclipse.Models
         {
             return GetDouble(0, 2 * Math.PI);
         }
+
+        /// <summary>
+        /// Returns a random index
+        /// </summary>
+        /// <param name="distr">index i contains the number of times this count appears</param>
+        /// <returns></returns>
+        public static int GetInt(List<int> distr)
+        {
+            var sum = distr.Sum();
+            var rand = GetInt(1, sum);
+            var count = 0;
+            for(int i = 0; i< distr.Count; i++)
+            {
+                count += distr[i];
+                if (rand <= count)
+                    return i;
+            }
+
+            throw new NotImplementedException();
+        }
     }
 }
