@@ -1,11 +1,14 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Hexboard.aspx.cs" Inherits="Eclipse.Hexboard" %>
+﻿<%@ Page MaintainScrollPositionOnPostback="true" Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Hexboard.aspx.cs" Inherits="Eclipse.Hexboard" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
           <script type="text/javascript">
           var ctx = null;
           var _componentSize = -1;
           var canvas = null;
-
-          function DrawPopSquare(point, color) {
+          var _isMilitaryView = false;
+          var _hexBoard;
+          var _tempScrollTop;
+          function DrawPopSquare(point, color, isAdvanced) {
               var ctx = canvas.getContext('2d');
               ctx.beginPath();
               sides = 4;
@@ -27,9 +30,11 @@
               ctx.lineWidth = 1;
               ctx.font = '10pt';
               ctx.fillStyle = 'black';
-              ctx.textAlign = 'center';
-              ctx.textBaseline = 'middle';
-              ctx.fillText('6', point.X, point.Y);
+              if (isAdvanced) {
+                  ctx.textAlign = 'center';
+                  ctx.textBaseline = 'middle';
+                  ctx.fillText('A', point.X, point.Y);
+              }
           }
           function DrawHex(hex, color) {
               if (!hex.IsVisible)
@@ -55,13 +60,16 @@
               ctx.stroke();
 
               DrawWormholes(hex);
-              DrawComponents(hex);
+              
+                DrawComponents(hex);
+
               
           }
 
           function DrawComponents(hex) {
               $(hex.PopulationSquares).each(function (index, o) {
-                  DrawPopSquare(o.CanvasLocation, o.Color);
+                  if (!_isMilitaryView)
+                    DrawPopSquare(o.CanvasLocation, o.Color, o.IsAdvanced);
               });
           }
 
@@ -103,7 +111,7 @@
           function MoveToCenter(ctx) {
           }
 
-          function TestService() {
+          function GetHexboard() {
             
               $.ajax({
                   url: "EclipseService.asmx/GetHexBoard",
@@ -113,14 +121,20 @@
                   contentType: 'application/json; charset=utf-8',
                   success: function (data) {
                       var hexboard = data["d"];
-                      
-                      $(hexboard.Hexes).each(function (index, item) {
-                          DrawHex(item);
-                      });
+                      _hexBoard = hexboard;
+                      DrawHexboard();
                   },
                   error: function (xmlHttpRequest, textStatus, errorThrown) {
                       alert(errorThrown);
                   }
+              });
+          }
+
+          function DrawHexboard()
+          {
+              ctx.clearRect(0, 0, canvas.width, canvas.height);
+              $(_hexBoard.Hexes).each(function (index, item) {
+                  DrawHex(item);
               });
           }
 
@@ -151,6 +165,7 @@
                   data: JSON.stringify(args),
                   dataType: "json",
                   type: "POST",
+                  async: false,
                   contentType: 'application/json; charset=utf-8',
                   success: function (data) {
                       var constants = data["d"];
@@ -183,50 +198,29 @@
                   GetNearestHex(mousePos.x, mousePos.y);
               }, false);
 
-              TestService();
+              GetHexboard();
+              
+              var windowHeight = $(window).height();
+              $(window).scrollTop(canvas.height/2 - windowHeight / 2 + canvas.offsetTop);
+           
+              $('#militaryViewTab').click(function (event) {
+                  _tempScrollTop = $(window).scrollTop();
+                  _isMilitaryView = true;
+                  DrawHexboard();//   window.location.href = '/Hexboard.aspx';
+                  $(window).scrollTop(_tempScrollTop);
+              });
           });
+
+              
+
+
+
 
           </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
      
- <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">Project name</a>
-        </div>
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li class="divider"></li>
-                <li class="dropdown-header">Nav header</li>
-                <li><a href="#">Separated link</a></li>
-                <li><a href="#">One more separated link</a></li>
-              </ul>
-            </li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="../navbar/">Default</a></li>
-            <li><a href="../navbar-static-top/">Static top</a></li>
-            <li class="active"><a href="./">Fixed top</a></li>
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
-    </div>
+ 
 
     <div>
     <canvas id="myCanvas" width="900" height="900" style="border:1px solid #000000;">

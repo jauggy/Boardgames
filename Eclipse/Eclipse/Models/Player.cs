@@ -10,13 +10,14 @@ namespace Eclipse.Models
     public class Player
     {
         public UniqueMethods UniqueMethods { get; set; }
-
-        public Player(UniqueMethods uniqueMethods)
+        public String Color { get; set; }
+        public Player(UniqueMethods uniqueMethods, string color)
         {
             UniqueMethods = uniqueMethods;
+            Color = color;
         }
 
-        public Player():this(UniqueHelper.GetNewRandomUnique())
+        public Player():this(UniqueHelper.GetNewRandomUnique(), UniqueHelper.GetRandomColor())
         {
             
         }
