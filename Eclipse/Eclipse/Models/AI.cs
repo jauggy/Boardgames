@@ -27,7 +27,7 @@ namespace Eclipse.Models
         }
 
         //If order doesn't matter it is a combination
-        public List<GameState> GetPossibleGameStatesOnMove(Player player)
+       /* public List<GameState> GetPossibleGameStatesOnMove(Player player)
         {
             var list = new List<GameState>();
             
@@ -44,7 +44,7 @@ namespace Eclipse.Models
             }
             
             return null;
-        }
+        }*/
 
     }
 }

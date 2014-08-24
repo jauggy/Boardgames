@@ -269,5 +269,21 @@ namespace Eclipse.Models.Hexes
             var random = RandomGenerator.GetInt(new List<int> { 15, 13, 11, 4 });
             return (PopulationType)values.GetValue(random);
         }
+
+        public void AddAncientShip(int num)
+        {
+            for(int i = 0;i<num;i++)
+            {
+                var ship  = new Ship();
+                ship.IsAncient = true;
+                Ships.Add(ship);
+            }
+        }
+
+        public void AddRandomAncientShips()
+        {
+            var num = RandomGenerator.GetInt(new List<int> {12,5,2 });
+            AddAncientShip(num);
+        }
     }
 }

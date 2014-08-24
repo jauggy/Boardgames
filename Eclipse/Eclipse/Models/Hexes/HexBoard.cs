@@ -9,7 +9,7 @@ namespace Eclipse.Models.Hexes
     public class HexBoard
     {
         public List<Hex> Hexes { get; set; }
-
+        private Hex _lastClickedHex;
         
         public void Setup()
         {
@@ -97,7 +97,7 @@ namespace Eclipse.Models.Hexes
                     }
                 }
             }
-
+            _lastClickedHex = nearestHex;
             return nearestHex;
 
            
@@ -169,6 +169,7 @@ namespace Eclipse.Models.Hexes
             var advancedPop = RandomGenerator.GetInt(new List<int> { 2, 5, 2 });
             hex.AddRandomPopSquare(normalPop, false);
             hex.AddRandomPopSquare(advancedPop, true);
+            hex.AddRandomAncientShips();
         }
 
         public void PopulateLevel2Hex(Hex hex)
@@ -177,6 +178,7 @@ namespace Eclipse.Models.Hexes
             var advancedPop = RandomGenerator.GetInt(new List<int> { 6, 3, 2});
             hex.AddRandomPopSquare(normalPop, false);
             hex.AddRandomPopSquare(advancedPop, true);
+            hex.AddRandomAncientShips();
         }
 
 
@@ -187,8 +189,8 @@ namespace Eclipse.Models.Hexes
             var advancedPop = RandomGenerator.GetInt(new List<int> { 9, 8 });
             hex.AddRandomPopSquare(normalPop, false);
             hex.AddRandomPopSquare(advancedPop, true);
+            hex.AddRandomAncientShips();
         }
-
 
     }
 }

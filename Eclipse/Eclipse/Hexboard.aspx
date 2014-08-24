@@ -8,6 +8,7 @@
           var _isMilitaryView = false;
           var _hexBoard;
           var _tempScrollTop;
+          var _lastHex;
           function DrawPopSquare(point, color, isAdvanced) {
               //var ctx = canvas.getContext('2d');
               ctx.beginPath();
@@ -105,7 +106,10 @@
 
           function DrawGreenHex(hex, color)
           {
-              DrawHex(hex, '#00FF00')
+              if (_lastHex)
+                  DrawHex(_lastHex, 'black');
+              DrawHex(hex, '#00FF00');
+              _lastHex = hex;
           }
 
           function MoveRight(ctx, times) {
@@ -167,6 +171,9 @@
                   success: function (data) {
                       var hex = data["d"];
                       DrawGreenHex(hex);
+
+                      ShowExploreMenu(x, y);
+
                   },
                   error: function (xmlHttpRequest, textStatus, errorThrown) {
                       alert(errorThrown);
@@ -209,9 +216,9 @@
               ctx = canvas.getContext('2d');
            
               InitCanvasConstants();
-              canvas.addEventListener('dblclick', function (evt) {
+              canvas.addEventListener('click', function (evt) {
                   var mousePos = getMousePos(canvas, evt);
-                  var message = alert('Mouse position: ' + mousePos.x + ',' + mousePos.y);
+                  //var message = alert('Mouse position: ' + mousePos.x + ',' + mousePos.y);
                   GetNearestHex(mousePos.x, mousePos.y);
               }, false);
 
@@ -236,8 +243,16 @@
               });
           });
 
-              
-
+          function ShowExploreMenu(x, y) {
+              $('#exploreMenus').empty();
+                var klon = $('#hexClickDiv');
+                var newId = x + y + '';
+                var clone = klon.clone().attr('id', newId);
+                $('#exploreMenus').append(clone);
+                clone.css({ 'top': y + canvas.offsetTop, 'left': x, 'position': 'absolute' });
+                clone.find('.explorebutton').html('Explore from');
+                clone.show();
+          }
 
 
 
@@ -246,7 +261,15 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
      
  <img style="display:none"  id="ancientImg" src="Images/ancient.png"/>
-
+   
+    <div id="hexClickDiv" style="display:none; background-color:white" class="explore">
+<div class="btn-group-vertical">
+   <button type="button" class="btn btn-primary explorebutton">Explore</button>
+ <button type="button" class="btn btn-default">Cancel</button>
+</div>
+        </div>
+     <div id="exploreMenus">
+    </div>
     <div>
     <canvas id="myCanvas" width="900" height="900" style="border:1px solid #000000;">
 Your browser does not support the HTML5 canvas tag.

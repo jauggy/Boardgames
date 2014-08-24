@@ -55,5 +55,10 @@ namespace Eclipse
         {
             return new CanvasConstants();
         }
+
+        public List<Point> GetNeighbourHexPoints()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
