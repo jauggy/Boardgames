@@ -63,6 +63,7 @@
     <Content Include="css\bootstrap.min.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Hexboard.aspx" />
+    <Content Include="Images\ancient.png" />
     <Content Include="js\bootstrap.js" />
     <Content Include="js\bootstrap.min.js" />
     <Content Include="Models\Architecture.txt" />

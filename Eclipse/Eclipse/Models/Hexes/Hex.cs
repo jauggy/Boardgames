@@ -25,7 +25,7 @@ namespace Eclipse.Models.Hexes
         public bool IsVisible { get { return PopulationSquares.Count > 0; } }
         public int Radius { get; set; }
         public List<HexSide> Sides { get; set; }
-
+        public Player Controller { get; set; }
 
         public Hex()
             : this(new Point(0,0))

@@ -29,6 +29,7 @@ namespace Eclipse.Models.Hexes
             {
                 var freeHex = startingHexes.First(x => x.PopulationSquares.Count == 0);
                 player.UniqueMethods.PopulateStartingHex(freeHex);
+                freeHex.Controller = player;
             }
 
 

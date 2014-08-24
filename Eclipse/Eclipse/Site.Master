@@ -26,7 +26,7 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="javascript:void(0)">Resource View</a></li>
+            <li id="resourceViewTab" class="active"><a href="javascript:void(0)">Resource View</a></li>
             <li id="militaryViewTab"><a href="javascript:void(0)">Military View</a></li>
             <li><a href="#contact">Contact</a></li>
             <li class="dropdown">

@@ -9,7 +9,7 @@
           var _hexBoard;
           var _tempScrollTop;
           function DrawPopSquare(point, color, isAdvanced) {
-              var ctx = canvas.getContext('2d');
+              //var ctx = canvas.getContext('2d');
               ctx.beginPath();
               sides = 4;
               var size = _componentSize;
@@ -22,8 +22,6 @@
                   else
                       ctx.lineTo(x_i, y_i)
               }
-             // ctx.fillStyle = '#00FF00';
-            //  ctx.fill();
               ctx.strokeStyle = color;
               ctx.lineWidth = 2;
               ctx.stroke();
@@ -35,6 +33,18 @@
                   ctx.textBaseline = 'middle';
                   ctx.fillText('A', point.X, point.Y);
               }
+          }
+          function DrawCircle(point, color) {
+             // ctx.beginPath();
+             // ctx.fillStyle = color;
+             // ctx.arc(point.X, point.Y,_componentSize/2, 2 * Math.PI, 0, 2 * Math.PI);
+              // ctx.fill();
+              var size = 25;
+              x = point.X - size / 2;
+              y = point.Y - size / 2;
+              var obj = document.getElementById('ancientImg');
+              ctx.drawImage(obj, x, y, size, size);
+                           
           }
           function DrawHex(hex, color) {
               if (!hex.IsVisible)
@@ -62,8 +72,15 @@
               DrawWormholes(hex);
               
                 DrawComponents(hex);
-
+                DrawController(hex);
               
+          }
+
+          function DrawController(hex)
+          {
+              if (hex.Controller) {
+                  DrawCircle(hex.CanvasLocation, hex.Controller.Color);
+              }
           }
 
           function DrawComponents(hex) {
@@ -209,6 +226,14 @@
                   DrawHexboard();//   window.location.href = '/Hexboard.aspx';
                   $(window).scrollTop(_tempScrollTop);
               });
+
+
+              $('#resourceViewTab').click(function (event) {
+                  _tempScrollTop = $(window).scrollTop();
+                  _isMilitaryView = false;
+                  DrawHexboard();//   window.location.href = '/Hexboard.aspx';
+                  $(window).scrollTop(_tempScrollTop);
+              });
           });
 
               
@@ -220,7 +245,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
      
- 
+ <img style="display:none"  id="ancientImg" src="Images/ancient.png"/>
 
     <div>
     <canvas id="myCanvas" width="900" height="900" style="border:1px solid #000000;">
