@@ -73,6 +73,12 @@ namespace Eclipse.Models.Hexes
             return this.CanvasLocation.GetRelativePoint(dist,  AngleHelper.ToRadians(angle));
         }
 
+        public void AddShip(Ship ship)
+        {
+            ship.CanvasLocation = GetFreeCanvasLocation(Ships.Count);
+            Ships.Add(ship);
+        }
+
         public int GetRingLevel()
         {
             return this.AxialCoordinates.GetDistanceToCenter();
@@ -292,7 +298,7 @@ namespace Eclipse.Models.Hexes
             {
                 var ship  = new Ship();
                 ship.IsAncient = true;
-                Ships.Add(ship);
+                this.AddShip(ship);
             }
         }
 

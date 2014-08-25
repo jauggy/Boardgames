@@ -90,10 +90,29 @@
           }
 
           function DrawComponents(hex) {
-              $(hex.PopulationSquares).each(function (index, o) {
-                  if (!_isMilitaryView)
-                    DrawPopSquare(o.CanvasLocation, o.Color, o.IsAdvanced);
-              });
+              if (!_isMilitaryView) {
+                  $(hex.PopulationSquares).each(function (index, o) {
+
+                      DrawPopSquare(o.CanvasLocation, o.Color, o.IsAdvanced);
+                  });
+              }
+              else {
+                  $(hex.Ships).each(function (index, ship) {
+
+                      DrawShip(ship);
+                  });
+              }
+          }
+
+          function DrawShip(ship) {
+              if (ship.IsAncient) {
+
+              }
+              else {
+                  ctx.textAlign = 'center';
+                  ctx.textBaseline = 'middle';
+                  ctx.fillText(ship.Code, ship.CanvasLocation.X, ship.CanvasLocation.Y);
+              }
           }
 
           function DrawWormholes(hex)
@@ -312,7 +331,7 @@
               $('#militaryViewTab').click(function (event) {
                   _tempScrollTop = $(window).scrollTop();
                   _isMilitaryView = true;
-                  DrawHexboard();//   window.location.href = '/Hexboard.aspx';
+                  GetHexboard();//   window.location.href = '/Hexboard.aspx';
                   $(window).scrollTop(_tempScrollTop);
               });
 
@@ -320,7 +339,7 @@
               $('#resourceViewTab').click(function (event) {
                   _tempScrollTop = $(window).scrollTop();
                   _isMilitaryView = false;
-                  DrawHexboard();//   window.location.href = '/Hexboard.aspx';
+                  GetHexboard();//   window.location.href = '/Hexboard.aspx';
                   $(window).scrollTop(_tempScrollTop);
               });
 
@@ -363,7 +382,7 @@
               var clone = klon.clone().attr('id', newId);
               $('#exploreMenus').append(clone);
               clone.find('.explorebutton').click(callback);
-              clone.css({ 'top': y + canvas.offsetTop + 35, 'left': x - clone.outerWidth() / 2, 'position': 'absolute' });
+              clone.css({ 'top': y + canvas.offsetTop + 35, 'left': x + _componentSize, 'position': 'absolute' });
 
               clone.show();
           }

@@ -13,6 +13,9 @@ namespace Eclipse.Models
         public Player Owner { get; set; }
         public List<int> CannonDamage { get; set; }
         public int Computers { get; set; }
+        public String Code { get; set; }
+        public Point CanvasLocation { get; set; }
+
         public Ship()
         {
             CannonDamage = new List<int>();
