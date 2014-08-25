@@ -70,6 +70,14 @@
     <Content Include="js\bootstrap.min.js" />
     <Content Include="Models\Architecture.txt" />
     <Content Include="Playerboard.html" />
+    <Content Include="Scripts\application.js" />
+    <Content Include="Scripts\bootstrap-select.js" />
+    <Content Include="Scripts\bootstrap-switch.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\flatui-checkbox.js" />
+    <Content Include="Scripts\flatui-radio.js" />
+    <Content Include="Scripts\html5shiv.js" />
+    <Content Include="Scripts\icon-font-ie7.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery-1.8.3.min.js" />
     <Content Include="Scripts\jquery-2.0.3.min.js" />
@@ -78,6 +86,9 @@
     <Content Include="Scripts\jquery.placeholder.js" />
     <Content Include="Scripts\jquery.tagsinput.js" />
     <Content Include="Scripts\jquery.ui.touch-punch.min.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\spectrum.js" />
+    <Content Include="Scripts\typeahead.js" />
     <Content Include="Start.aspx" />
     <Content Include="Web.config" />
     <Content Include="EclipseService.asmx" />
@@ -91,6 +102,7 @@
       <DependentUpon>Hexboard.aspx</DependentUpon>
     </Compile>
     <Compile Include="Models\AI.cs" />
+    <Compile Include="Models\BattleHelper.cs" />
     <Compile Include="Models\Box.cs" />
     <Compile Include="Models\CanvasConstants.cs" />
     <Compile Include="Models\GameState.cs" />
@@ -108,6 +120,7 @@
     <Compile Include="Models\Planet.cs" />
     <Compile Include="Models\Player.cs" />
     <Compile Include="Models\Playerboards\PlayerBoard.cs" />
+    <Compile Include="Models\Playerboards\ShipBlueprint.cs" />
     <Compile Include="Models\PopulationSquare.cs" />
     <Compile Include="Models\PopulationTrack.cs" />
     <Compile Include="Models\RandomGenerator.cs" />
@@ -116,6 +129,9 @@
     <Compile Include="Models\Ships\Ship.cs" />
     <Compile Include="Models\SupplyBoard.cs" />
     <Compile Include="Models\Supply\SupplyBoard.cs" />
+    <Compile Include="Models\Tech\ShipPart.cs" />
+    <Compile Include="Models\Tech\Technology.cs" />
+    <Compile Include="Models\Tech\TechnologyFactory.cs" />
     <Compile Include="Models\Unique\DracoUnique.cs" />
     <Compile Include="Models\Unique\EridaniUnique.cs" />
     <Compile Include="Models\Unique\HumanUnique.cs" />

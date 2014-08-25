@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Eclipse.Models.Technology
+namespace Eclipse.Models.Tech
 {
     public  class Technology
     {
@@ -21,5 +21,8 @@ namespace Eclipse.Models.Technology
             Name = name;
             ShipPart = part;
         }
+
+        public Technology(ShipPart part):this(part.Name, part)
+        { }
     }
 }
