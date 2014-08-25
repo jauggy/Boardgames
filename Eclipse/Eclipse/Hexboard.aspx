@@ -111,6 +111,8 @@
               else {
                   ctx.textAlign = 'center';
                   ctx.textBaseline = 'middle';
+                  ctx.fillStyle = ship.Owner.Color;
+                  ctx.font = '20px Arial';
                   ctx.fillText(ship.Code, ship.CanvasLocation.X, ship.CanvasLocation.Y);
               }
           }
