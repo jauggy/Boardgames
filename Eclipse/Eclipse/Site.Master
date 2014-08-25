@@ -61,14 +61,15 @@
                 $('.nav li').removeClass('active'); // remove active class from tabs
                 $(this).addClass('active'); // add active class to clicked tab
             });
-
-            $(document).ajaxError(function myErrorHandler(event, xhr, ajaxOptions, thrownError) {
-                alert("There was an ajax error!");
-            });
-
-
         });
 
+        //Global ajax error handler
+        $(document).ajaxError(function myErrorHandler(event, xhr, ajaxOptions, thrownError) {
+            alert("There was an ajax error!");
+        });
+
+
+        //This allows stacking of modals.
         $(document).on('show.bs.modal', '.modal', function (event) {
             var zIndex = 1040 + (10 * $('.modal:visible').length);
             $(this).css('z-index', zIndex);

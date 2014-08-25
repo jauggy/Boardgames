@@ -11,6 +11,7 @@ namespace Eclipse.Models
     {
         public UniqueMethods UniqueMethods { get; set; }
         public String Color { get; set; }
+        public PlayerBoard PlayerBoard { get; set; }
         public Player(UniqueMethods uniqueMethods, string color)
         {
             UniqueMethods = uniqueMethods;

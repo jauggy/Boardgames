@@ -16,10 +16,7 @@ namespace Eclipse.Models.Hexes
         {
             var startHex = new Hex();
             startHex.AxialCoordinates = new Point(0, 0);
-            var firstRing = startHex.GetRing(1).ToHex();
-
-            var secondRing = startHex.GetRing(2).ToHex();
-
+            
             Hexes = new List<Hex>();
             Hexes.Add(startHex);
            /* Hexes.AddRange(firstRing);
@@ -168,7 +165,7 @@ namespace Eclipse.Models.Hexes
 
         private void PopulateCenterHex()
         {
-            GetCenterHex().AddBrownPlanet(2, 1).AddPinkPlanet(2, 1).AddGrayPlanet(2).Ships.Add(new GalacticCenter());
+            GetCenterHex().AddBrownPlanet(2, 1).AddPinkPlanet(2, 1).AddGrayPlanet(2).AddShip(new GalacticCenter());
             GetCenterHex().AddWormHoles(6);
         }
 

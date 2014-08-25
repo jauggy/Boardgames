@@ -64,6 +64,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Hexboard.aspx" />
     <Content Include="Images\ancient.png" />
+    <Content Include="Images\discovery.png" />
+    <Content Include="Images\discoveryshield.png" />
     <Content Include="js\bootstrap.js" />
     <Content Include="js\bootstrap.min.js" />
     <Content Include="Models\Architecture.txt" />
@@ -105,7 +107,7 @@
     <Compile Include="Models\ListExtensions.cs" />
     <Compile Include="Models\Planet.cs" />
     <Compile Include="Models\Player.cs" />
-    <Compile Include="Models\PlayerBoard.cs" />
+    <Compile Include="Models\Playerboards\PlayerBoard.cs" />
     <Compile Include="Models\PopulationSquare.cs" />
     <Compile Include="Models\PopulationTrack.cs" />
     <Compile Include="Models\RandomGenerator.cs" />
@@ -113,6 +115,7 @@
     <Compile Include="Models\Ships\Interceptor.cs" />
     <Compile Include="Models\Ships\Ship.cs" />
     <Compile Include="Models\SupplyBoard.cs" />
+    <Compile Include="Models\Supply\SupplyBoard.cs" />
     <Compile Include="Models\Unique\DracoUnique.cs" />
     <Compile Include="Models\Unique\EridaniUnique.cs" />
     <Compile Include="Models\Unique\HumanUnique.cs" />

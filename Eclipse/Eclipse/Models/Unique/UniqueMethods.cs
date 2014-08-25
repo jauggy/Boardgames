@@ -24,5 +24,6 @@ namespace Eclipse.Models
         {
             return 2;
         }
+        public abstract void SetupPlayerboard(PlayerBoard board);
     }
 }

@@ -8,6 +8,7 @@
           var _isMilitaryView = false;
           var _hexBoard;
           var _tempScrollTop;
+          var _tempScrollLeft;
           var _lastHex;
           function DrawPopSquare(point, color, isAdvanced) {
               //var ctx = canvas.getContext('2d');
@@ -48,6 +49,13 @@
               var obj = document.getElementById('ancientImg');
               ctx.drawImage(obj, x, y, size, size);
           }
+          function DrawDiscovery(point) {
+              var size = 20;
+              x = point.X - size / 2;
+              y = point.Y - size / 2;
+              var obj = document.getElementById('discoveryImg');
+              ctx.drawImage(obj, x, y, size, size);
+          }
           function DrawHex(hex, color) {
               if (!hex.IsVisible)
                   return;
@@ -85,7 +93,7 @@
                   DrawCircle(hex.CanvasLocation, hex.Controller.Color);
               }
               else if (hex.HasAncient) {
-                  DrawAncient(hex.CanvasLocation);
+                  DrawDiscovery(hex.CanvasLocation);
               }
           }
 
@@ -106,7 +114,7 @@
 
           function DrawShip(ship) {
               if (ship.IsAncient) {
-
+                  DrawAncient(ship.CanvasLocation);
               }
               else {
                   ctx.textAlign = 'center';
@@ -123,9 +131,10 @@
                   if (side.HasWormHole)
                   {
                       ctx.beginPath();
+                     // ctx.strokeStyle = 'Gray';
                       ctx.arc(side.WormholeCanvasLocation.X, side.WormholeCanvasLocation.Y, 10, side.WormholeStartAngle, side.WormholeEndAngle, true);
                       ctx.stroke();
-                      ctx.stroke();
+                
                  }
               });
           }
@@ -314,26 +323,23 @@
               
               var windowHeight = $(window).height();
               $(window).scrollTop(canvas.height/2 - windowHeight / 2 + canvas.offsetTop);
-           
+              $(window).scrollLeft(canvas.width / 2 - $(window).width() / 2 + canvas.offsetLeft);
+
               $('#militaryViewTab').click(function (event) {
-                  _tempScrollTop = $(window).scrollTop();
                   _isMilitaryView = true;
                   GetHexboard();//   window.location.href = '/Hexboard.aspx';
-                  $(window).scrollTop(_tempScrollTop);
+                //  LoadScroll();
               });
 
 
               $('#resourceViewTab').click(function (event) {
-                  _tempScrollTop = $(window).scrollTop();
                   _isMilitaryView = false;
                   GetHexboard();//   window.location.href = '/Hexboard.aspx';
-                  $(window).scrollTop(_tempScrollTop);
+     
               });
 
               $('#exploreTab').click(function (event) {
-                  _tempScrollTop = $(window).scrollTop();
                   GetExploreFromHexes();
-                  $(window).scrollTop(_tempScrollTop);
               });
 
               $('#playerboardTab').click(function (event) {
@@ -343,6 +349,7 @@
 
               
           });
+
 
           function ShowExploreFromMenu(x, y,  callback) {
        
@@ -391,7 +398,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
      
  <img style="display:none"  id="ancientImg" src="Images/ancient.png"/>
-   
+   <img style="display:none"  id="discoveryImg" src="Images/discoveryshield.png"/> 
     <div id="exploreFromDiv" style="display:none; background-color:white" class="explore">
             <div class="btn-group-vertical">
                <button type="button" class="btn btn-primary explorebutton">Explore from</button>

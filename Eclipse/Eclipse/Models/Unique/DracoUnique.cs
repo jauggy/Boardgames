@@ -15,5 +15,10 @@ namespace Eclipse.Models.Unique
             hex.AddPinkPlanet(1);
             hex.AddBrownPlanet(1, 1);
         }
+
+        public override void SetupPlayerboard(PlayerBoard board)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
