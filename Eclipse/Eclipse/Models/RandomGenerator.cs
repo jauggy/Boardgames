@@ -18,6 +18,11 @@ namespace Eclipse.Models
             return (Random)HttpContext.Current.Session["Random"];
         }
 
+        public static int GetDice()
+        {
+            return GetInt(1, 6);
+        }
+
         public static double GetDouble(double minimum, double maximum)
         {
             Random random = GetRandom();
