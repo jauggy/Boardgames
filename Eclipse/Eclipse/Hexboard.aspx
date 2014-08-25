@@ -27,7 +27,7 @@
               ctx.lineWidth = 2;
               ctx.stroke();
               ctx.lineWidth = 1;
-              ctx.font = '10pt';
+              ctx.font = '10px sans-serif';
               ctx.fillStyle = 'black';
               if (isAdvanced) {
                   ctx.textAlign = 'center';
@@ -112,7 +112,7 @@
                   ctx.textAlign = 'center';
                   ctx.textBaseline = 'middle';
                   ctx.fillStyle = ship.Owner.Color;
-                  ctx.font = '20px Arial';
+                  ctx.font = '15px sans-serif';
                   ctx.fillText(ship.Code, ship.CanvasLocation.X, ship.CanvasLocation.Y);
               }
           }
