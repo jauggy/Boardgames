@@ -32,6 +32,7 @@ namespace Eclipse.Models.Hexes
                 player.UniqueMethods.PopulateStartingHex(freeHex);
                 freeHex.Controller = player;
                 freeHex.AddShip(new Interceptor(player));
+                freeHex.AddWormHoles(4);
             }
 
 
@@ -168,6 +169,7 @@ namespace Eclipse.Models.Hexes
         private void PopulateCenterHex()
         {
             GetCenterHex().AddBrownPlanet(2, 1).AddPinkPlanet(2, 1).AddGrayPlanet(2).Ships.Add(new GalacticCenter());
+            GetCenterHex().AddWormHoles(6);
         }
 
         public void PopulateHex(Hex hex)
@@ -185,6 +187,8 @@ namespace Eclipse.Models.Hexes
             {
                 PopulateLevel3Hex(hex);
             }
+            hex.AddRandomAncientShips();
+            hex.AddRandomWormholes();
     
         }
    
@@ -195,7 +199,7 @@ namespace Eclipse.Models.Hexes
             var advancedPop = RandomGenerator.GetInt(new List<int> { 2, 5, 2 });
             hex.AddRandomPopSquare(normalPop, false);
             hex.AddRandomPopSquare(advancedPop, true);
-            hex.AddRandomAncientShips();
+            
         }
 
         public void PopulateLevel2Hex(Hex hex)
@@ -204,7 +208,7 @@ namespace Eclipse.Models.Hexes
             var advancedPop = RandomGenerator.GetInt(new List<int> { 6, 3, 2});
             hex.AddRandomPopSquare(normalPop, false);
             hex.AddRandomPopSquare(advancedPop, true);
-            hex.AddRandomAncientShips();
+  
         }
 
 
@@ -215,7 +219,6 @@ namespace Eclipse.Models.Hexes
             var advancedPop = RandomGenerator.GetInt(new List<int> { 9, 8 });
             hex.AddRandomPopSquare(normalPop, false);
             hex.AddRandomPopSquare(advancedPop, true);
-            hex.AddRandomAncientShips();
         }
 
         public List<Hex> GetExploreFromHexes()

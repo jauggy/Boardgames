@@ -38,7 +38,7 @@ namespace Eclipse.Models.Hexes
         { 
             AxialCoordinates = p;
             InitSides();
-            AddWormHoles(2);
+            //AddWormHoles();
             ComponentCanvasLocations = new List<Point>();
             PopulationSquares = new List<PopulationSquare>();
             Ships = new List<Ship>();
@@ -93,6 +93,12 @@ namespace Eclipse.Models.Hexes
             }
 
             Sides = list;
+        }
+
+        public void AddRandomWormholes()
+        {
+            var num = RandomGenerator.GetInt(new List<int> { 0, 0, 11, 14, 9, 3 });
+            AddWormHoles(num);
         }
 
         public void AddWormHoles(int number)

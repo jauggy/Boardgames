@@ -170,9 +170,6 @@
                       var hexboard = data["d"];
                       _hexBoard = hexboard;
                       DrawHexboard();
-                  },
-                  error: function (xmlHttpRequest, textStatus, errorThrown) {
-                      alert(errorThrown);
                   }
               });
           }
@@ -202,9 +199,6 @@
                         ShowExploreFromMenu(x, y);
                         }
 
-                  },
-                  error: function (xmlHttpRequest, textStatus, errorThrown) {
-                      alert(errorThrown);
                   }
               });
           }
@@ -224,9 +218,6 @@
                       _componentSize = constants.ComponentSize;
                       canvas.setAttribute('width', constants.CanvasWidth);
                       canvas.setAttribute('height', constants.CanvasHeight);
-                  },
-                  error: function (xmlHttpRequest, textStatus, errorThrown) {
-                      alert(errorThrown);
                   }
               });
           }
@@ -282,9 +273,6 @@
                       DrawHex(hex);
                       var callback = function () { Rotate(hex);};
                       ShowRotateMenu(hex.CanvasLocation.X, hex.CanvasLocation.Y, callback);
-                  },
-                  error: function (xmlHttpRequest, textStatus, errorThrown) {
-                      alert(errorThrown);
                   }
               });
           }
@@ -299,11 +287,8 @@
                       DrawHex(hex);
                       var callback = function () { Rotate(hex); };
                       ShowRotateMenu(hex.CanvasLocation.X, hex.CanvasLocation.Y, callback);
-                  },
-                  error: function (xmlHttpRequest, textStatus, errorThrown) {
-                      alert(errorThrown);
                   }
-              });
+             });
           }
 
           function getMousePos(canvas, evt) {
@@ -350,6 +335,13 @@
                   GetExploreFromHexes();
                   $(window).scrollTop(_tempScrollTop);
               });
+
+              $('#playerboardTab').click(function (event) {
+                  $("#modalPlaceholder").load("Playerboard.html");
+                  
+              });
+
+              
           });
 
           function ShowExploreFromMenu(x, y,  callback) {
@@ -430,4 +422,7 @@ Your browser does not support the HTML5 canvas tag.
 </canvas>
     </div>
    
+
+<div id="modalPlaceholder"></div>
+
 </asp:Content>

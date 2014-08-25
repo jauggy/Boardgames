@@ -26,13 +26,14 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
           
-            
+             <li id="playerboardTab" ><a href="javascript:void(0)">Player board</a></li>
             <li id="exploreTab"><a href="javascript:void(0)">Explore</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Switch View <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
                 <li id="resourceViewTab" class="active"><a href="javascript:void(0)">Resource View</a></li>
                <li id="militaryViewTab"><a href="javascript:void(0)">Military View</a></li>
+                 
               </ul>
             </li>
           </ul>
@@ -61,6 +62,19 @@
                 $(this).addClass('active'); // add active class to clicked tab
             });
 
+            $(document).ajaxError(function myErrorHandler(event, xhr, ajaxOptions, thrownError) {
+                alert("There was an ajax error!");
+            });
+
+
+        });
+
+        $(document).on('show.bs.modal', '.modal', function (event) {
+            var zIndex = 1040 + (10 * $('.modal:visible').length);
+            $(this).css('z-index', zIndex);
+            setTimeout(function () {
+                $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack');
+            }, 0);
         });
         </script>
 </body>
