@@ -60,5 +60,18 @@ namespace Eclipse
         {
             return HexBoard.GetInstance().GetExploreFromHexes();
         }
+
+         [WebMethod(true)]
+        public List<Hex> GetExploreToHexes(int x, int y)
+        {
+            var hex = HexBoard.GetInstance().FindHex(new Point(x, y));
+            return HexBoard.GetInstance().GetExploreToHexes(hex);
+        }
+
+         [WebMethod(true)]
+        public Hex ExploreTo(int x, int y)
+         {
+             return HexBoard.GetInstance().ExploreTo(new Point(x, y));
+         }
     }
 }

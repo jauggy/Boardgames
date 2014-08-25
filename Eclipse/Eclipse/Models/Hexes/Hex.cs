@@ -118,7 +118,7 @@ namespace Eclipse.Models.Hexes
             return false;
         }
 
-        public void Rotate()
+        private void Rotate()
         {
             var temp = Sides[0].HasWormHole;
 
@@ -128,6 +128,19 @@ namespace Eclipse.Models.Hexes
             }
 
             Sides[Sides.Count - 1].HasWormHole = temp;
+        }
+
+        public void Rotate(Hex fromHex)
+        {
+            //rotate but there must be a wormhole that connects to the from hex.
+            var wormHoleDirection = this.AxialCoordinates.AddPoint(fromHex.AxialCoordinates);
+            
+            Rotate();
+            while (!Sides.Where(x => x.PointDirection.Equals(wormHoleDirection)).Any(x => x.HasWormHole))
+            {
+                Rotate();
+            }
+
         }
 
         public Hex GetRelativeHex(Compass compass, int distance)

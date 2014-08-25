@@ -177,8 +177,7 @@
                       if (hex && hex.IsVisible)
                       {
                         DrawGreenHex(hex);
-
-                        ShowExploreMenu(x, y+10);
+                        ShowExploreFromMenu(x, y);
                         }
 
                   },
@@ -220,7 +219,28 @@
                       var hexes = data["d"];
                       HideExploreMenus();
                       $(hexes).each(function (index, item) {
-                          ShowExploreMenu(item.CanvasLocation.X,item.CanvasLocation.Y + 35);
+                          var callback = function () { GetExploreToHexes(item);};
+                          ShowExploreFromMenu(item.CanvasLocation.X, item.CanvasLocation.Y,  callback);
+
+                      });
+                  },
+                  error: function (xmlHttpRequest, textStatus, errorThrown) {
+                      alert(errorThrown);
+                  }
+              });
+          }
+
+          function GetExploreToHexes(hex) {
+              var args = {x:hex.AxialCoordinates.X, y:hex.AxialCoordinates.Y};
+              $.ajax({
+                  url: "EclipseService.asmx/GetExploreToHexes",
+                  data: JSON.stringify(args), dataType: "json", type: "POST", async: false, contentType: 'application/json; charset=utf-8',
+                  success: function (data) {
+                      var hexes = data["d"];
+                      HideExploreMenus();
+                      $(hexes).each(function (index, item) {
+                          var callback = function () { alert('asdf');};
+                          ShowExploreToMenu(item.CanvasLocation.X, item.CanvasLocation.Y, callback);
                       });
                   },
                   error: function (xmlHttpRequest, textStatus, errorThrown) {
@@ -275,16 +295,29 @@
               });
           });
 
-          function ShowExploreMenu(x, y) {
+          function ShowExploreFromMenu(x, y,  callback) {
        
-                var klon = $('#hexClickDiv');
+                var klon = $('#exploreFromDiv');
                 var newId = x + y + '';
                 var clone = klon.clone().attr('id', newId);
                 $('#exploreMenus').append(clone);
-                clone.find('.explorebutton').html('Explore from');
-                clone.css({ 'top': y + canvas.offsetTop, 'left': x - clone.outerWidth()/2, 'position': 'absolute' });
+                clone.find('.explorebutton').click(callback);
+                clone.css({ 'top': y + canvas.offsetTop + 35, 'left': x - clone.outerWidth()/2, 'position': 'absolute' });
                
                 clone.show();
+          }
+
+
+          function ShowExploreToMenu(x, y, callback) {
+
+              var klon = $('#exploreToDiv');
+              var newId = x + y + '';
+              var clone = klon.clone().attr('id', newId);
+              $('#exploreMenus').append(clone);
+              clone.find('.explorebutton').click(callback);
+              clone.css({ 'top': y + canvas.offsetTop - clone.outerHeight()/2, 'left': x - clone.outerWidth() / 2, 'position': 'absolute' });
+
+              clone.show();
           }
 
           function HideExploreMenus() {
@@ -298,11 +331,18 @@
      
  <img style="display:none"  id="ancientImg" src="Images/ancient.png"/>
    
-    <div id="hexClickDiv" style="display:none; background-color:white" class="explore">
-<div class="btn-group-vertical">
-   <button type="button" class="btn btn-primary explorebutton">Explore</button>
- <button type="button" onclick="HideExploreMenus(); return false;" class="btn btn-default">Cancel</button>
-</div>
+    <div id="exploreFromDiv" style="display:none; background-color:white" class="explore">
+            <div class="btn-group-vertical">
+               <button type="button" class="btn btn-primary explorebutton">Explore from</button>
+             <button type="button" onclick="HideExploreMenus(); return false;" class="btn btn-default">Cancel</button>
+            </div>
+        </div>
+
+        <div id="exploreToDiv" style="display:none; background-color:white" class="explore">
+            <div class="btn-group-vertical">
+               <button type="button" class="btn btn-warning explorebutton">Explore to</button>
+             <button type="button" onclick="HideExploreMenus(); return false;" class="btn btn-default">Cancel</button>
+            </div>
         </div>
      <div id="exploreMenus">
     </div>

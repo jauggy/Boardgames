@@ -165,16 +165,29 @@ namespace Eclipse.Models.Hexes
         }
 
 
-        private void PopulateHex(Hex hex)
-        {
-            //Populates hex based on the level
-
-        }
-
         private void PopulateCenterHex()
         {
             GetCenterHex().AddBrownPlanet(2, 1).AddPinkPlanet(2, 1).AddGrayPlanet(2).Ships.Add(new GalacticCenter());
         }
+
+        public void PopulateHex(Hex hex)
+        {
+            var ringLevel = hex.GetRingLevel();
+            if(ringLevel==1)
+            {
+                PopulateLevel1Hex(hex);
+            }
+            else if (ringLevel == 2)
+            {
+                PopulateLevel2Hex(hex);
+            }
+            else
+            {
+                PopulateLevel3Hex(hex);
+            }
+    
+        }
+   
 
         public void PopulateLevel1Hex(Hex hex)
         {
@@ -211,6 +224,19 @@ namespace Eclipse.Models.Hexes
             var currentPlayer = GameState.GetInstance().CurrentPlayer;
             var result =  newList.Where(x => x.IsExploreFromHex(currentPlayer)).ToList();
             return result;
+        }
+
+        public List<Hex> GetExploreToHexes(Hex hex)
+        {
+            _lastClickedHex = hex;
+            return hex.GetExploreToHexes(GameState.GetInstance().CurrentPlayer);
+        }
+
+        public Hex ExploreTo(Point point)
+        {
+            var hex = GetOrCreateHex(point);
+            PopulateHex(hex);
+            return hex;
         }
 
     }
