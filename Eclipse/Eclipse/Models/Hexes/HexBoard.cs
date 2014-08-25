@@ -11,7 +11,7 @@ namespace Eclipse.Models.Hexes
     {
         public List<Hex> Hexes { get; set; }
         private Hex _lastClickedHex;
-        
+        public Hex LastSelectedHex { get { return _lastClickedHex; } }
         public void Setup()
         {
             var startHex = new Hex();
@@ -232,10 +232,11 @@ namespace Eclipse.Models.Hexes
             return hex.GetExploreToHexes(GameState.GetInstance().CurrentPlayer);
         }
 
-        public Hex ExploreTo(Point point)
+        public Hex ExploreTo( Point point)
         {
             var hex = GetOrCreateHex(point);
             PopulateHex(hex);
+            hex.Rotate(_lastClickedHex);
             return hex;
         }
 

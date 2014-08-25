@@ -73,5 +73,13 @@ namespace Eclipse
          {
              return HexBoard.GetInstance().ExploreTo(new Point(x, y));
          }
+
+         [WebMethod(true)]
+        public Hex Rotate(int x, int y)
+         {
+             var hex =  HexBoard.GetInstance().FindHex(new Point(x, y));
+             hex.Rotate(null);
+             return hex;
+         }
     }
 }

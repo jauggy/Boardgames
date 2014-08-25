@@ -132,8 +132,10 @@ namespace Eclipse.Models.Hexes
 
         public void Rotate(Hex fromHex)
         {
+            if (fromHex == null)
+                fromHex = HexBoard.GetInstance().LastSelectedHex;
             //rotate but there must be a wormhole that connects to the from hex.
-            var wormHoleDirection = this.AxialCoordinates.AddPoint(fromHex.AxialCoordinates);
+            var wormHoleDirection = fromHex.AxialCoordinates.SubtractPoint(this.AxialCoordinates);
             
             Rotate();
             while (!Sides.Where(x => x.PointDirection.Equals(wormHoleDirection)).Any(x => x.HasWormHole))

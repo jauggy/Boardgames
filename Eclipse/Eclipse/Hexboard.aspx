@@ -70,7 +70,8 @@
               if (color)
                   ctx.strokeStyle = color;
               ctx.stroke();
-
+              ctx.fillStyle = 'white';
+              ctx.fill();
               DrawWormholes(hex);
               
                 DrawComponents(hex);
@@ -239,9 +240,44 @@
                       var hexes = data["d"];
                       HideExploreMenus();
                       $(hexes).each(function (index, item) {
-                          var callback = function () { alert('asdf');};
+                          var callback = function () { ExploreTo(item);};
                           ShowExploreToMenu(item.CanvasLocation.X, item.CanvasLocation.Y, callback);
                       });
+                  },
+                  error: function (xmlHttpRequest, textStatus, errorThrown) {
+                      alert(errorThrown);
+                  }
+              });
+          }
+
+          function ExploreTo(hex) {
+              var args = { x: hex.AxialCoordinates.X, y: hex.AxialCoordinates.Y };
+              $.ajax({
+                  url: "EclipseService.asmx/ExploreTo",
+                  data: JSON.stringify(args), dataType: "json", type: "POST", async: false, contentType: 'application/json; charset=utf-8',
+                  success: function (data) {
+                      var hex = data["d"];
+                      HideExploreMenus();
+                      DrawHex(hex);
+                      var callback = function () { Rotate(hex);};
+                      ShowRotateMenu(hex.CanvasLocation.X, hex.CanvasLocation.Y, callback);
+                  },
+                  error: function (xmlHttpRequest, textStatus, errorThrown) {
+                      alert(errorThrown);
+                  }
+              });
+          }
+
+          function Rotate(hex) {
+              var args = { x: hex.AxialCoordinates.X, y: hex.AxialCoordinates.Y };
+              $.ajax({
+                  url: "EclipseService.asmx/Rotate",
+                  data: JSON.stringify(args), dataType: "json", type: "POST", async: false, contentType: 'application/json; charset=utf-8',
+                  success: function (data) {
+                      var hex = data["d"];
+                      DrawHex(hex);
+                      var callback = function () { Rotate(hex); };
+                      ShowRotateMenu(hex.CanvasLocation.X, hex.CanvasLocation.Y, callback);
                   },
                   error: function (xmlHttpRequest, textStatus, errorThrown) {
                       alert(errorThrown);
@@ -320,6 +356,18 @@
               clone.show();
           }
 
+          function ShowRotateMenu(x, y, callback) {
+
+              var klon = $('#rotateDiv');
+              var newId = x + y + '';
+              var clone = klon.clone().attr('id', newId);
+              $('#exploreMenus').append(clone);
+              clone.find('.explorebutton').click(callback);
+              clone.css({ 'top': y + canvas.offsetTop + 35, 'left': x - clone.outerWidth() / 2, 'position': 'absolute' });
+
+              clone.show();
+          }
+
           function HideExploreMenus() {
               $('#exploreMenus').empty();
           }
@@ -344,6 +392,15 @@
              <button type="button" onclick="HideExploreMenus(); return false;" class="btn btn-default">Cancel</button>
             </div>
         </div>
+
+            <div id="rotateDiv" style="display:none; background-color:white" class="explore">
+            <div class="btn-group-vertical">
+               <button type="button" class="btn btn-success explorebutton">Rotate</button>
+             <button type="button" onclick="HideExploreMenus(); return false;" class="btn btn-default">Accept</button>
+            </div>
+        </div>
+
+
      <div id="exploreMenus">
     </div>
     <div>

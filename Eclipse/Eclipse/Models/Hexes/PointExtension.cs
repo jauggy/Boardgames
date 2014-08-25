@@ -61,6 +61,15 @@ namespace Eclipse.Models.Hexes
             return point;
         }
 
+        public static Point SubtractPoint(this Point p, Point otherPoint)
+        {
+            var point = new Point();
+            point.X = p.X - otherPoint.X;
+            point.Y = p.Y - otherPoint.Y;
+
+            return point;
+        }
+
         public static List<T> GetRandom<T>(this List<T> target, int numNeeded)
         {
             var rnd = RandomGenerator.GetRandom();
