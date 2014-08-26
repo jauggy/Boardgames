@@ -99,6 +99,7 @@
 
           function DrawComponents(hex) {
               if (!_isMilitaryView) {
+
                   $(hex.PopulationSquares).each(function (index, o) {
 
                       DrawPopSquare(o.CanvasLocation, o.Color, o.IsAdvanced);
@@ -307,6 +308,11 @@
                   y: evt.clientY - rect.top
               };
           }
+
+          $.ajaxSetup({
+              // Disable caching of AJAX responses  
+              cache: false
+          });
 
           $(document).ready(function () {
               canvas = document.getElementById('myCanvas');

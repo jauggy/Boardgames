@@ -6,11 +6,29 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title">Modal title</h4>
             </div>
-            <div class="modal-body" id="myModalBody" >
+            <div class="modal-body" id="techtable" >
+                <div class="bs-callout bs-callout-info">Search Results</div>
+
+                <div class="bs-callout bs-callout-warning">Search Results</div>
+
+                <div class="bs-callout bs-callout-danger">Search Results</div>
+
+                <h2>Technology</h2>
                 <ul class="list-inline">
-                    <li>Item 1</li>
-                    <li>Item 2</li>
-                    <li>Item 3</li>
+                    <li><button class="btn btn-default">Item 1 as d d d d ddf as</button></li>
+                    <li><button class="btn btn-default ">Item 1 asdf as</button></li>
+                    <li><button class="btn btn-default ">Item 1 asdf as</button></li>
+                </ul>
+                <h3>Technology</h3>
+                <ul class="list-inline">
+                    <li><button class="btn btn-default ">Item 1 asdf as</button></li>
+                    <li><button class="btn btn-default ">It as</button></li>
+                    <li><button class="btn btn-default">Item 1 asdf as</button></li>
+                </ul>
+                <ul class="list-inline">
+                    <li><button class="btn btn-default">Item 1 asdf as</button></li>
+                    <li><button class="btn btn-default">Item 1 asdf as</button></li>
+                    <li><button class="btn btn-default">Item 1 asdf as</button></li>
                 </ul>
             </div>
             <div class="modal-footer">
@@ -46,7 +64,8 @@
     });
 
     $(document).ready(function () {
-   
+        var h = $('<button class="btn btn-default">Item 1 as d d d d ddf as</button>').height();
+        alert(h);
         $('#myModal').modal();
         $('#saveButton').click(function () {
             $('#myModal2').modal();
