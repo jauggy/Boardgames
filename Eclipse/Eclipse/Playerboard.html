@@ -1,74 +1,87 @@
 ﻿      <!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog" style="width:100%">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Modal title</h4>
-            </div>
-            <div class="modal-body" id="techtable" >
-                <div class="bs-callout bs-callout-info">Search Results</div>
 
-                <div class="bs-callout bs-callout-warning">Search Results</div>
-
-                <div class="bs-callout bs-callout-danger">Search Results</div>
-
-                <h2>Technology</h2>
-                <ul class="list-inline">
-                    <li><button class="btn btn-default">Item 1 as d d d d ddf as</button></li>
-                    <li><button class="btn btn-default ">Item 1 asdf as</button></li>
-                    <li><button class="btn btn-default ">Item 1 asdf as</button></li>
-                </ul>
-                <h3>Technology</h3>
-                <ul class="list-inline">
-                    <li><button class="btn btn-default ">Item 1 asdf as</button></li>
-                    <li><button class="btn btn-default ">It as</button></li>
-                    <li><button class="btn btn-default">Item 1 asdf as</button></li>
-                </ul>
-                <ul class="list-inline">
-                    <li><button class="btn btn-default">Item 1 asdf as</button></li>
-                    <li><button class="btn btn-default">Item 1 asdf as</button></li>
-                    <li><button class="btn btn-default">Item 1 asdf as</button></li>
-                </ul>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="saveButton">Save changes</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Modal title</h4>
-            </div>
-            <div class="modal-body" id="myModalBody">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="saveButton">Save changes</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test</title>
+ 
+</head>
 
 
-<script type="text/javascript">
-    $('#myModal').on('show.bs.modal', function () {
-        
-    });
+<body>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="width:100%">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Modal title</h4>
+                </div>
+                <div class="modal-body" id="techtable">
+                    <div class=" bs-callout bs-callout-info">Search Results</div>
 
-    $(document).ready(function () {
-        var h = $('<button class="btn btn-default">Item 1 as d d d d ddf as</button>').height();
-        alert(h);
-        $('#myModal').modal();
-        $('#saveButton').click(function () {
-            $('#myModal2').modal();
+                    <div class="bs-callout bs-callout-warning">Search Results</div>
+
+                    <div class="bs-callout bs-callout-danger">Search Results</div>
+
+                    <h2>Technology</h2>
+                    <ul class="list-inline">
+                        <li><button id="test" class="btn btn-default">Item 1 as d d d d ddf as</button></li>
+                        <li><button class="btn btn-default ">Item 1 asdf as</button></li>
+                        <li><button class="btn btn-default ">Item 1 asdf as</button></li>
+                    </ul>
+                    <h3>Technology</h3>
+                    <ul class="list-inline">
+                        <li><button class="btn btn-default ">Item 1 asdf as</button></li>
+                        <li><button class="btn btn-default">It as</button></li>
+                        <li><button class="btn btn-default">Item 1 asdf as</button></li>
+                    </ul>
+                    <ul class="list-inline">
+                        <li><button class="btn btn-default">Item 1 asdf as</button></li>
+                        <li><button class="btn btn-default">Item 1 asdf as</button></li>
+                        <li><button class="btn btn-default">Item 1 asdf as</button></li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="saveButton">Save changes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Modal title</h4>
+                </div>
+                <div class="modal-body" id="myModalBody">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="saveButton">Save changes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+    <script type="text/javascript">
+        $('#myModal').on('show.bs.modal', function () {
+
         });
-    });
-</script>
+
+        $(document).ready(function () {
+            alert('asdf');
+            var h = $('#test').actual('height');
+            alert(h);
+            $('#myModal').modal();
+            $('#saveButton').click(function () {
+                $('#myModal2').modal();
+            });
+        });
+    </script>
+</body>
+</html>

@@ -3,8 +3,9 @@
 }
 
 #techtable button{
-    width:100px !important;
-    white-space: normal !important;
+    width:100px;
+    white-space:normal;
+    height:60px ;
 }
 
 /* Base styles (regardless of theme) */
