@@ -11,19 +11,46 @@ namespace Eclipse.Models.Tech
         public List<Technology> GetAllTechs()
         {
             var list = new List<Technology>();
-            list.Add(new Technology(GetPlasmaCannon()));
-            list.Add(new Technology(GetPhaseShield()));
-            list.Add(new Technology(GetTachyonSource()));
-            list.Add(new Technology(Get))
-            
+            //Technologies with ship parts
+            list.Add(new Technology(GetPlasmaCannon(),6,4, TechnologyType.Military));
+            list.Add(new Technology(GetPhaseShield(),8,5, TechnologyType.Military));
+            list.Add(new Technology(GetTachyonSource(),12,6, TechnologyType.Military));
+            list.Add(new Technology(GetPlasmaMissile(),14,7, TechnologyType.Military));
+            list.Add(new Technology(GetPlasmaCannon(),6,4, TechnologyType.Military));
+            list.Add(new Technology(GetGluonComputer(),16,8, TechnologyType.Military));
 
 
+            list.Add(new Technology(GetGaussShield(),2,2, TechnologyType.Grid));
+            list.Add(new Technology(GetImprovedHull(),4,3, TechnologyType.Grid));
+            list.Add(new Technology(GetFusionSource(),6,4, TechnologyType.Grid));
+            list.Add(new Technology(GetPositronComputer(),8,5, TechnologyType.Grid));
+            list.Add(new Technology(GetTachyonDrive(), 12, 6, TechnologyType.Grid));
+            list.Add(new Technology(GetAntimatterCannon(), 14, 7, TechnologyType.Grid));
+
+
+
+            list.Add(new Technology(GetFusionDrive(), 4, 3, TechnologyType.Nano));
+
+            return list;
         }
 
-        private void AddShipPartToTech(ShipPart part)
+        private ShipPart GetFusionDrive()
         {
-            Technologies.Add(new Technology(part.Name, part));
+            var part = new ShipPart("Fusion Drive");
+            part.Movement = 2;
+            part.Initiative = 2;
+            part.EnergyRequirement = 2;
+            return part;
         }
+
+        private ShipPart GetAntimatterCannon()
+        {
+            var part = new ShipPart("Antimatter Cannon");
+            part.CannonDamage = new List<int> { 4 };
+            part.EnergyRequirement = 4;
+            return part;
+        }
+
 
         private ShipPart GetPhaseShield()
         {

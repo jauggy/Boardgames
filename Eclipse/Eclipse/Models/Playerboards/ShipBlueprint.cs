@@ -1,4 +1,4 @@
-﻿using Eclipse.Models.Technology;
+﻿using Eclipse.Models.Tech;
 using System;
 using System.Collections.Generic;
 using System.Linq;

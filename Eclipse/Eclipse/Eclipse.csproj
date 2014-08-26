@@ -132,6 +132,7 @@
     <Compile Include="Models\Tech\ShipPart.cs" />
     <Compile Include="Models\Tech\Technology.cs" />
     <Compile Include="Models\Tech\TechnologyFactory.cs" />
+    <Compile Include="Models\Tech\TechnologyType.cs" />
     <Compile Include="Models\Unique\DracoUnique.cs" />
     <Compile Include="Models\Unique\EridaniUnique.cs" />
     <Compile Include="Models\Unique\HumanUnique.cs" />

@@ -10,19 +10,18 @@ namespace Eclipse.Models.Tech
     {
         public ShipPart ShipPart { get; set; }
         public String Name { get; set; }
-
-        public Technology(String name)
+        public TechnologyType Type { get; set; }
+        public Technology(String name, int defaultCost, int minCost, TechnologyType type)
         {
             Name = name;
         }
 
-        public Technology(String name, ShipPart part)
+
+        public Technology(ShipPart part, int defaultCost, int minCost, TechnologyType type)
+            :this(part.Name, defaultCost, minCost, type)
         {
-            Name = name;
             ShipPart = part;
+            
         }
-
-        public Technology(ShipPart part):this(part.Name, part)
-        { }
     }
 }
