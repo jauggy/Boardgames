@@ -27,7 +27,7 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-          
+            <li><span class="navbar-brand">Eclipse</span></li>
              <li id="playerboardTab" ><a href="javascript:void(0)">Player board</a></li>
             <li id="exploreTab"><a href="javascript:void(0)">Explore</a></li>
               <li id="populateTab"><a href="javascript:void(0)">Populate</a></li>
