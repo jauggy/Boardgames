@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Services;
 using Eclipse.Models.Hexes;
 using Eclipse.Models;
+using Eclipse.Models.Canvas;
 
 namespace Eclipse
 {
@@ -91,11 +92,20 @@ namespace Eclipse
          }
 
         [WebMethod(true)]
-        public List<String> GetPopulatableTypes(int x, int y)
+            public List<TempMenu> GetPopulateMenus()
         {
-            var hex =  HexBoard.GetInstance().FindHex(new Point(x, y));
-            
-            return hex.GetPopulatableTypes();
+            var result = new List<TempMenu>();
+            var hexes = HexBoard.GetInstance().Hexes;
+            foreach(var hex in hexes)
+            {
+                var types = hex.GetPopulatableTypes();
+                if (types.Count > 0)
+                {
+                    result.Add(new TempMenu(types, hex));
+                }
+            }
+
+            return result;
         }
     }
 }

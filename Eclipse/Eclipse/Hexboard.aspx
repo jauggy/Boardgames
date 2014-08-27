@@ -59,28 +59,31 @@
 
           function ShowPopulatableHexes()
           {
-              $(_hexBoard.Hexes).each(function (i, o) {
-                 if(o.Owner)
-                      var args = { x:o.AxialCoordinates.X, y:o.AxialCoordinates.Y};
+
+              HideTempMenus();
                       $.ajax({
-                          url: "EclipseService.asmx/GetPopulatableTypes",
-                          data: JSON.stringify(args),
+                          url: "EclipseService.asmx/GetPopulateMenus",
+                          data: '{}',
                           dataType: "json",
                           type: "POST",
                           contentType: 'application/json; charset=utf-8',
                           success: function (data) {
-                              var stringList = data["d"];
+                              var tempMenus = data["d"];
+                              $(tempMenus).each(function(index,menu){
+                                  ShowPopulateMenu(menu.Hex, menu.MenuItems);
+                              });
+                              
                           }
                       });
                   
-              });
+              
           }
 
           function DrawHex(hex, color) {
               if (!hex.IsVisible)
                   return;
 
-              AddPopulationToHex(hex.PopulationSquares[0].Type);
+            
 
               var center_x = hex.CanvasLocation.X;
               var center_y = hex.CanvasLocation.Y;
@@ -281,7 +284,7 @@
                   data: JSON.stringify(args),dataType: "json",type: "POST",async: false,contentType: 'application/json; charset=utf-8',
                   success: function (data) {
                       var hexes = data["d"];
-                      HideExploreMenus();
+                      HideTempMenus();
                       $(hexes).each(function (index, item) {
                           var callback = function () { GetExploreToHexes(item);};
                           ShowExploreFromMenu(item.CanvasLocation.X, item.CanvasLocation.Y,  callback);
@@ -301,7 +304,7 @@
                   data: JSON.stringify(args), dataType: "json", type: "POST", async: false, contentType: 'application/json; charset=utf-8',
                   success: function (data) {
                       var hexes = data["d"];
-                      HideExploreMenus();
+                      HideTempMenus();
                       $(hexes).each(function (index, item) {
                           var callback = function () { ExploreTo(item);};
                           ShowExploreToMenu(item.CanvasLocation.X, item.CanvasLocation.Y, callback);
@@ -320,7 +323,7 @@
                   data: JSON.stringify(args), dataType: "json", type: "POST", async: false, contentType: 'application/json; charset=utf-8',
                   success: function (data) {
                       var hex = data["d"];
-                      HideExploreMenus();
+                      HideTempMenus();
                       DrawHex(hex);
                       var callback = function () { Rotate(hex);};
                       ShowRotateMenu(hex.CanvasLocation.X, hex.CanvasLocation.Y, callback);
@@ -355,47 +358,7 @@
               cache: false
           });
 
-          $(document).ready(function () {
-              canvas = document.getElementById('myCanvas');
-              ctx = canvas.getContext('2d');
-           
-              InitCanvasConstants();
-              canvas.addEventListener('click', function (evt) {
-                  var mousePos = getMousePos(canvas, evt);
-                  //var message = alert('Mouse position: ' + mousePos.x + ',' + mousePos.y);
-                  GetNearestHex(mousePos.x, mousePos.y);
-              }, false);
 
-              GetHexboard();
-              
-              var windowHeight = $(window).height();
-              $(window).scrollTop(canvas.height/2 - windowHeight / 2 + canvas.offsetTop);
-              $(window).scrollLeft(canvas.width / 2 - $(window).width() / 2 + canvas.offsetLeft);
-
-              $('#militaryViewTab').click(function (event) {
-                  _isMilitaryView = true;
-                  GetHexboard();//   window.location.href = '/Hexboard.aspx';
-                //  LoadScroll();
-              });
-
-
-              $('#resourceViewTab').click(function (event) {
-                  _isMilitaryView = false;
-                  GetHexboard();//   window.location.href = '/Hexboard.aspx';
-     
-              });
-
-              $('#exploreTab').click(function (event) {
-                  GetExploreFromHexes();
-              });
-
-              $('#playerboardTab').click(function (event) {
-                  $("#modalPlaceholder").load("Playerboard.html");
-                  
-              });
-
-              
-          });
 
 
           function ShowExploreFromMenu(x, y,  callback) {
@@ -403,7 +366,7 @@
                 var klon = $('#exploreFromDiv');
                 var newId = x + y + '';
                 var clone = klon.clone().attr('id', newId);
-                $('#exploreMenus').append(clone);
+                $('#tempMenus').append(clone);
                 clone.find('.explorebutton').click(callback);
                 clone.css({ 'top': y + canvas.offsetTop + 35, 'left': x - clone.outerWidth()/2, 'position': 'absolute' });
                
@@ -416,7 +379,7 @@
               var klon = $('#exploreToDiv');
               var newId = x + y + '';
               var clone = klon.clone().attr('id', newId);
-              $('#exploreMenus').append(clone);
+              $('#tempMenus').append(clone);
               clone.find('.explorebutton').click(callback);
               clone.css({ 'top': y + canvas.offsetTop - clone.outerHeight()/2, 'left': x - clone.outerWidth() / 2, 'position': 'absolute' });
 
@@ -428,17 +391,84 @@
               var klon = $('#rotateDiv');
               var newId = x + y + '';
               var clone = klon.clone().attr('id', newId);
-              $('#exploreMenus').append(clone);
+              $('#tempMenus').append(clone);
               clone.find('.explorebutton').click(callback);
               clone.css({ 'top': y + canvas.offsetTop + 35, 'left': x + _componentSize, 'position': 'absolute' });
 
               clone.show();
           }
 
-          function HideExploreMenus() {
-              $('#exploreMenus').empty();
+          function HideTempMenus() {
+              $('#tempMenus').empty();
           }
 
+          function ShowPopulateMenu( hex, stringList) {
+              var clone= $('#populateDiv').clone();
+              clone.attr('id', 'populate' + x + y);
+              var x = hex.CanvasLocation.X;
+              var y = hex.CanvasLocation.Y;
+              
+              $('#tempMenus').append(clone);
+              $(stringList).each(function (index, o) {
+                  var callback = function () { ajaxPopulateHex(hex.AxialCoordinates.X, hex.AxialCoordinates.Y, o) };
+                  var button = $(' <li><a href="#">'+o+'</a></li>');
+                  clone.find('.dropdown-menu').append(button);
+                  button.click(callback);
+              });
+              clone.css({ 'top': y + canvas.offsetTop + 40, 'left': x - clone.outerWidth() / 2, 'position': 'absolute' });
+              clone.show();
+          }
+
+          function ajaxPopulateHex(x, y, popType) {
+              alert('x:' + x);
+          }
+
+
+          $(document).ready(function () {
+              canvas = document.getElementById('myCanvas');
+              ctx = canvas.getContext('2d');
+
+              InitCanvasConstants();
+              canvas.addEventListener('click', function (evt) {
+                  var mousePos = getMousePos(canvas, evt);
+                  //var message = alert('Mouse position: ' + mousePos.x + ',' + mousePos.y);
+                  GetNearestHex(mousePos.x, mousePos.y);
+              }, false);
+
+              GetHexboard();
+
+              var windowHeight = $(window).height();
+              $(window).scrollTop(canvas.height / 2 - windowHeight / 2 + canvas.offsetTop);
+              $(window).scrollLeft(canvas.width / 2 - $(window).width() / 2 + canvas.offsetLeft);
+
+              $('#militaryViewTab').click(function (event) {
+                  _isMilitaryView = true;
+                  GetHexboard();//   window.location.href = '/Hexboard.aspx';
+                  //  LoadScroll();
+              });
+
+
+              $('#resourceViewTab').click(function (event) {
+                  _isMilitaryView = false;
+                  GetHexboard();//   window.location.href = '/Hexboard.aspx';
+
+              });
+
+              $('#exploreTab').click(function (event) {
+                  GetExploreFromHexes();
+              });
+
+              $('#populateTab').click(function (event) {
+                  ShowPopulatableHexes();
+              })
+
+              $('#playerboardTab').click(function (event) {
+                  $("#modalPlaceholder").load("Playerboard.html");
+
+              });
+
+
+          });
 
           </script>
 </asp:Content>
@@ -449,26 +479,35 @@
     <div id="exploreFromDiv" style="display:none; background-color:white" class="explore">
             <div class="btn-group-vertical">
                <button type="button" class="btn btn-primary explorebutton">Explore from</button>
-             <button type="button" onclick="HideExploreMenus(); return false;" class="btn btn-default">Cancel</button>
+             <button type="button" onclick="HideTempMenus(); return false;" class="btn btn-default">Cancel</button>
             </div>
         </div>
 
         <div id="exploreToDiv" style="display:none; background-color:white" class="explore">
             <div class="btn-group-vertical">
                <button type="button" class="btn btn-warning explorebutton">Explore to</button>
-             <button type="button" onclick="HideExploreMenus(); return false;" class="btn btn-default">Cancel</button>
+             <button type="button" onclick="HideTempMenus(); return false;" class="btn btn-default">Cancel</button>
             </div>
         </div>
 
             <div id="rotateDiv" style="display:none; background-color:white" class="explore">
             <div class="btn-group-vertical">
                <button type="button" class="btn btn-success explorebutton">Rotate</button>
-             <button type="button" onclick="HideExploreMenus(); return false;" class="btn btn-default">Accept</button>
+             <button type="button" onclick="HideTempMenus(); return false;" class="btn btn-default">Accept</button>
             </div>
         </div>
 
+    
+            <div id="populateDiv" style="display:none; background-color:white" >
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    Populate <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    
+                  </ul>
+        </div>
 
-     <div id="exploreMenus">
+     <div id="tempMenus">
     </div>
     <div>
     <canvas id="myCanvas" width="900" height="900" style="border:1px solid #000000;">
