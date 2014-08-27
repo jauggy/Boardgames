@@ -8,6 +8,13 @@
     height:60px ;
 }
 
+#techtable small{
+    width:100px;
+
+    white-space:normal;
+     display: inline-block;
+}
+
 /* Base styles (regardless of theme) */
 .bs-callout {
 margin: 20px 0;
