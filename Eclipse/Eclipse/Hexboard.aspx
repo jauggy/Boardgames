@@ -10,7 +10,10 @@
           var _tempScrollTop;
           var _tempScrollLeft;
           var _lastHex;
-          function DrawPopSquare(point, color, isAdvanced) {
+          function DrawPopSquare(popSquare) {
+              var color = popSquare.Color;
+              var isAdvanced = popSquare.isAdvanced;
+              var point = popSquare.CanvasLocation;
               //var ctx = canvas.getContext('2d');
               ctx.beginPath();
               sides = 4;
@@ -24,6 +27,16 @@
                   else
                       ctx.lineTo(x_i, y_i)
               }
+              ctx.closePath();
+              if (popSquare.IsOccupied) {
+                  var playerColor = popSquare.Owner.Color;
+                  ctx.fillStyle = playerColor;
+                  ctx.fill();
+              }
+              ctx.strokeStyle = 'white';
+              ctx.lineWidth = 7;
+              ctx.stroke();
+
               ctx.strokeStyle = color;
               ctx.lineWidth = 2;
               ctx.stroke();
@@ -127,8 +140,8 @@
               if (!_isMilitaryView) {
 
                   $(hex.PopulationSquares).each(function (index, o) {
-
-                      DrawPopSquare(o.CanvasLocation, o.Color, o.IsAdvanced);
+                      DrawPopSquare(o);
+                     // DrawPopSquare(o.CanvasLocation, o.Color, o.IsAdvanced);
                   });
               }
               else {
@@ -221,8 +234,8 @@
                   type: "POST",
                   contentType: 'application/json; charset=utf-8',
                   success: function (data) {
-                      var hexboard = data["d"];
-
+                      var hex = data["d"];
+                      DrawHex(hex);
                   }
               });
           }
@@ -361,7 +374,7 @@
                 var clone = klon.clone().attr('id', newId);
                 $('#tempMenus').append(clone);
                 clone.find('.explorebutton').click(callback);
-                clone.css({ 'top': y + canvas.offsetTop + 35, 'left': x - clone.outerWidth()/2, 'position': 'absolute' });
+                clone.css({ 'top': y + canvas.offsetTop + 40, 'left': x - clone.outerWidth()/2, 'position': 'absolute' });
                
                 clone.show();
           }
@@ -403,7 +416,7 @@
               
               $('#tempMenus').append(clone);
               $(stringList).each(function (index, o) {
-                  var callback = function () {  ajaxAddPopulation(hex, o) };
+                  var callback = function () { ajaxAddPopulation(hex, o); HideTempMenus(); };
                   var button = $(' <li><a href="javascript:void(0)">' + o + '</a></li>');
                   clone.find('.dropdown-menu').append(button);
                   button.click(callback);
@@ -458,6 +471,10 @@
 
               });
 
+              $('#clearTempMenusTab').click(function (event) {
+                  HideTempMenus();
+              });
+
 
           });
 
@@ -470,14 +487,14 @@
     <div id="exploreFromDiv" style="display:none; background-color:white" class="explore">
             <div class="btn-group-vertical">
                <button type="button" class="btn btn-primary explorebutton">Explore from</button>
-             <button type="button" onclick="HideTempMenus(); return false;" class="btn btn-default">Cancel</button>
+            
             </div>
         </div>
 
         <div id="exploreToDiv" style="display:none; background-color:white" class="explore">
             <div class="btn-group-vertical">
                <button type="button" class="btn btn-warning explorebutton">Explore to</button>
-             <button type="button" onclick="HideTempMenus(); return false;" class="btn btn-default">Cancel</button>
+            
             </div>
         </div>
 
