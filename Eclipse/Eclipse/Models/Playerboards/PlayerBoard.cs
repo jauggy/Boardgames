@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Eclipse.Models.Tech;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,9 +17,11 @@ namespace Eclipse.Models
         public int MoneyPopulationCubes { get; private set; }
         public int SciencePopulationCubes { get; private set; }
         public int MaterialsPopulationCubes { get; private set; }
+        public List<Technology> Technologies { get; private set; }
         public PlayerBoard()
         {
             InfluenceDisks = 13;
+            Technologies = new List<Technology>();
         }
 
         public int GetUpkeep()
@@ -30,6 +33,27 @@ namespace Eclipse.Models
         public void RemoveInfluenceDisk()
         {
             InfluenceDisks--;
+        }
+
+        public void AddStartingTechs(List<String> list)
+        {
+            foreach(var name in list)
+            {
+                var tech =GameState.GetInstance().SupplyBoard.GetTechnologyWithoutRemove(name);
+                Technologies.Add(tech);
+            }
+            
+        }
+
+        public int GetProductionLevel(int numPopCubes)
+        {
+            var list = new List<int> { 28, 24, 21, 18, 15, 12, 10, 8, 6, 4, 3, 2 };
+            return list[numPopCubes];
+        }
+
+        public void RemovePopulationCube(PopulationType type)
+        {
+
         }
     }
 }

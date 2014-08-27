@@ -81,5 +81,21 @@ namespace Eclipse
              hex.Rotate(null);
              return hex;
          }
+
+        [WebMethod(true)]
+        public void AddPopulationToHex(int popType, int x, int y)
+         {
+             var pType = (PopulationType)popType;
+             var hex = HexBoard.GetInstance().FindHex(new Point(x, y));
+             HexBoard.GetInstance().AddPopulationToSelectedHex(pType, hex);
+         }
+
+        [WebMethod(true)]
+        public List<String> GetPopulatableTypes(int x, int y)
+        {
+            var hex =  HexBoard.GetInstance().FindHex(new Point(x, y));
+            
+            return hex.GetPopulatableTypes();
+        }
     }
 }

@@ -16,8 +16,8 @@ namespace Eclipse.Models
 
     public class PopulationSquare
     {
-        public bool IsOccupied { get; set; }
-        public int PlayerId { get; set; }
+        public bool IsOccupied { get { return Owner != null; } }
+        public Player Owner { get; set; }
         public PopulationType Type { get; set; }
         public bool IsAdvanced { get; set; }
         public Point CanvasLocation { get; set; }
@@ -51,6 +51,11 @@ namespace Eclipse.Models
             {
                 return "#909090";
             }
+        }
+
+        public void AddPopulation(Player player)
+        {
+
         }
     }
 }

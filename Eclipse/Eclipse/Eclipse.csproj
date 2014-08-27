@@ -129,7 +129,6 @@
     <Compile Include="Models\Ships\GalacticCenter.cs" />
     <Compile Include="Models\Ships\Interceptor.cs" />
     <Compile Include="Models\Ships\Ship.cs" />
-    <Compile Include="Models\SupplyBoard.cs" />
     <Compile Include="Models\Supply\SupplyBoard.cs" />
     <Compile Include="Models\Tech\ShipPart.cs" />
     <Compile Include="Models\Tech\Technology.cs" />

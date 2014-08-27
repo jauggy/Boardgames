@@ -27,6 +27,7 @@ namespace Eclipse.Models.Hexes
         public List<HexSide> Sides { get; set; }
         public Player Controller { get; set; }
         public bool HasAncient { get { return Ships.Any(x => x.IsAncient); } }
+
         public Hex()
             : this(new Point(0,0))
         {
@@ -332,6 +333,25 @@ namespace Eclipse.Models.Hexes
             }
 
             return false;
+        }
+
+        public void AddPopulation(PopulationType popType, Player player)
+        {
+            player.PlayerBoard.RemovePopulationCube(popType);
+            var popSquare = PopulationSquares.FirstOrDefault(x => x.Type == popType && !x.IsOccupied);
+            popSquare.Owner = player;
+        }
+
+        public List<String> GetPopulatableTypes()
+        {
+            if (GameState.GetInstance().CurrentPlayer == this.Controller)
+            {
+                return PopulationSquares.Select(x => x.Type.ToString()).Distinct().ToList();
+            }
+            else
+            {
+                return new List<String>();
+            }
         }
     }
 }

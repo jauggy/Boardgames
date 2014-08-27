@@ -240,5 +240,11 @@ namespace Eclipse.Models.Hexes
             return hex;
         }
 
+        public Hex AddPopulationToSelectedHex(PopulationType popType, Hex hex)
+        {
+            hex.AddPopulation(popType, GameState.GetInstance().CurrentPlayer);
+            return hex;
+        }
+
     }
 }

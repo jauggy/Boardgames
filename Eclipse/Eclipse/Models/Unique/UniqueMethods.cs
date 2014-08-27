@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Web;
 using Eclipse.Models.Hexes;
+using Eclipse.Models.Tech;
 
 namespace Eclipse.Models
 {
@@ -25,5 +26,8 @@ namespace Eclipse.Models
             return 2;
         }
         public abstract void SetupPlayerboard(PlayerBoard board);
+
+        public abstract List<String> GetStartingTechnolyNames();
+
     }
 }

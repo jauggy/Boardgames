@@ -19,5 +19,10 @@ namespace Eclipse.Models.Unique
         {
             throw new NotImplementedException();
         }
+
+        public override List<string> GetStartingTechnolyNames()
+        {
+            return new List<String> { "Gauss Shield", "Fusion Drive", "Plasma Cannon" };
+        }
     }
 }

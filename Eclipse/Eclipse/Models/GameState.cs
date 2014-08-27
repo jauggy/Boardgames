@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Eclipse.Models.Hexes;
+using Eclipse.Models.Supply;
 
 namespace Eclipse.Models
 {
@@ -12,6 +13,7 @@ namespace Eclipse.Models
         public List<Player> Players { get; set; }
         public HexBoard HexBoard { get; set; }
         public Player CurrentPlayer { get; set; }
+        public SupplyBoard SupplyBoard { get; set; }
         public static GameState GetInstance()
         {
             if (HttpContext.Current.Session["GameState"] == null)
@@ -38,6 +40,12 @@ namespace Eclipse.Models
             HexBoard = new HexBoard();
             HexBoard.Setup();
             CurrentPlayer = Players[0];
+
+            //Give players their starting techs
+            foreach (var player in Players)
+            {
+               // player.PlayerBoard.AddStartingTechs(player.UniqueMethods.GetStartingTechnolyNames());
+            }
         }
 
         //I think args should be we copy only hexboard

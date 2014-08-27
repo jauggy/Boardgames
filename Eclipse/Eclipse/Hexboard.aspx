@@ -56,9 +56,32 @@
               var obj = document.getElementById('discoveryImg');
               ctx.drawImage(obj, x, y, size, size);
           }
+
+          function ShowPopulatableHexes()
+          {
+              $(_hexBoard.Hexes).each(function (i, o) {
+                 if(o.Owner)
+                      var args = { x:o.AxialCoordinates.X, y:o.AxialCoordinates.Y};
+                      $.ajax({
+                          url: "EclipseService.asmx/GetPopulatableTypes",
+                          data: JSON.stringify(args),
+                          dataType: "json",
+                          type: "POST",
+                          contentType: 'application/json; charset=utf-8',
+                          success: function (data) {
+                              var stringList = data["d"];
+                          }
+                      });
+                  
+              });
+          }
+
           function DrawHex(hex, color) {
               if (!hex.IsVisible)
                   return;
+
+              AddPopulationToHex(hex.PopulationSquares[0].Type);
+
               var center_x = hex.CanvasLocation.X;
               var center_y = hex.CanvasLocation.Y;
               var size = hex.Radius;
@@ -173,6 +196,24 @@
               $.ajax({
                   url: "EclipseService.asmx/GetHexBoard",
                   data: '{}',
+                  dataType: "json",
+                  type: "POST",
+                  contentType: 'application/json; charset=utf-8',
+                  success: function (data) {
+                      var hexboard = data["d"];
+                      _hexBoard = hexboard;
+                      DrawHexboard();
+                  }
+              });
+          }
+
+
+
+          function AddPopulationToHex(popTypeA) {
+              var args = { popType: popTypeA };
+              $.ajax({
+                  url: "EclipseService.asmx/AddPopulationToHex",
+                  data: JSON.stringify(args),
                   dataType: "json",
                   type: "POST",
                   contentType: 'application/json; charset=utf-8',
