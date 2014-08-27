@@ -212,8 +212,8 @@
 
 
 
-          function AddPopulationToHex(popTypeA) {
-              var args = { popType: popTypeA };
+          function ajaxAddPopulation(hex, popTypeString) {
+              var args = { x: hex.AxialCoordinates.X, y: hex.AxialCoordinates.Y, popType: popTypeString };
               $.ajax({
                   url: "EclipseService.asmx/AddPopulationToHex",
                   data: JSON.stringify(args),
@@ -222,8 +222,7 @@
                   contentType: 'application/json; charset=utf-8',
                   success: function (data) {
                       var hexboard = data["d"];
-                      _hexBoard = hexboard;
-                      DrawHexboard();
+
                   }
               });
           }
@@ -290,9 +289,6 @@
                           ShowExploreFromMenu(item.CanvasLocation.X, item.CanvasLocation.Y,  callback);
 
                       });
-                  },
-                  error: function (xmlHttpRequest, textStatus, errorThrown) {
-                      alert(errorThrown);
                   }
               });
           }
@@ -309,9 +305,6 @@
                           var callback = function () { ExploreTo(item);};
                           ShowExploreToMenu(item.CanvasLocation.X, item.CanvasLocation.Y, callback);
                       });
-                  },
-                  error: function (xmlHttpRequest, textStatus, errorThrown) {
-                      alert(errorThrown);
                   }
               });
           }
@@ -410,8 +403,8 @@
               
               $('#tempMenus').append(clone);
               $(stringList).each(function (index, o) {
-                  var callback = function () { ajaxPopulateHex(hex.AxialCoordinates.X, hex.AxialCoordinates.Y, o) };
-                  var button = $(' <li><a href="#">'+o+'</a></li>');
+                  var callback = function () {  ajaxAddPopulation(hex, o) };
+                  var button = $(' <li><a href="javascript:void(0)">' + o + '</a></li>');
                   clone.find('.dropdown-menu').append(button);
                   button.click(callback);
               });
@@ -419,9 +412,7 @@
               clone.show();
           }
 
-          function ajaxPopulateHex(x, y, popType) {
-              alert('x:' + x);
-          }
+
 
 
           $(document).ready(function () {

@@ -84,9 +84,9 @@ namespace Eclipse
          }
 
         [WebMethod(true)]
-        public void AddPopulationToHex(int popType, int x, int y)
+        public void AddPopulationToHex(int x, int y, string popType)
          {
-             var pType = (PopulationType)popType;
+             var pType =(PopulationType) Enum.Parse(typeof(PopulationType), popType);
              var hex = HexBoard.GetInstance().FindHex(new Point(x, y));
              HexBoard.GetInstance().AddPopulationToSelectedHex(pType, hex);
          }

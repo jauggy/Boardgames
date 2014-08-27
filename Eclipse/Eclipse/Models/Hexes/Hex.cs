@@ -346,7 +346,7 @@ namespace Eclipse.Models.Hexes
         {
             if (GameState.GetInstance().CurrentPlayer == this.Controller)
             {
-                return PopulationSquares.Select(x => x.Type.ToString()).Distinct().ToList();
+                return PopulationSquares.Where(x=>!x.IsOccupied).Select(x => x.Type.ToString()).Distinct().ToList();
             }
             else
             {
