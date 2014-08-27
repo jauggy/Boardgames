@@ -62,6 +62,7 @@
     <Content Include="css\bootstrap.css" />
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\Custom.css" />
+    <Content Include="PlayerTechnologyView.html" />
     <Content Include="Scripts\jquery.actual.js" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Hexboard.aspx" />
