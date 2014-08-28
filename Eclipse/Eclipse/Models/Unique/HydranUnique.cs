@@ -21,7 +21,7 @@ namespace Eclipse.Models.Unique
             throw new NotImplementedException();
         }
 
-        public override List<string> GetStartingTechnolyNames()
+        protected override List<string> GetStartingTechnolyNames()
         {
             return new List<String> { "Advanced Labs" };
         }

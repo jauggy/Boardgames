@@ -1,4 +1,5 @@
-﻿using Eclipse.Models.Tech;
+﻿using Eclipse.Models.Playerboards;
+using Eclipse.Models.Tech;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,10 @@ namespace Eclipse.Models
         public int SciencePopulationCubes { get; private set; }
         public int MaterialsPopulationCubes { get; private set; }
         public List<Technology> Technologies { get; private set; }
+        public ShipBlueprint InterceptorBlueprint { get; set; }
+        public ShipBlueprint CruiserBlueprint { get; set; }
+        public ShipBlueprint DreadnoughtBlueprint { get; set; }
+        public ShipBlueprint StarbaseBlueprint { get; set; }
         public PlayerBoard()
         {
             InfluenceDisks = 13;

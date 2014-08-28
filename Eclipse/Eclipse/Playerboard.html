@@ -21,7 +21,14 @@
                                 <ul class="nav navbar-nav">
                                     <li class="active"><a href="#">Home</a></li>
                                     <li><a href="#">Link</a></li>
-                                    <li><a href="#">Link</a></li>
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Blueprint View <span class="caret"></span></a>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li id="resourceViewTab" class="active"><a href="javascript:void(0)">Technology View</a></li>
+                                            <li id="militaryViewTab"><a href="javascript:void(0)">Resource View</a></li>
+
+                                        </ul>
+                                    </li>
                                 </ul>
                             </div><!-- /.navbar-collapse -->
                         </div><!-- /.container-fluid -->
@@ -75,5 +82,14 @@
             $('#saveButton').click(function () {
                 $('#myModal2').modal();
             });
+
+            $(".dropdown-menu li a").click(function () {
+                
+                var button = $(this).parents('.dropdown').find('.dropdown-toggle');
+                button.html($(this).text()+' <span class="caret">');
+                button.val($(this).text());
+
+            });
+
         });
     </script>

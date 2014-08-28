@@ -20,9 +20,16 @@ namespace Eclipse.Models.Unique
             throw new NotImplementedException();
         }
 
-        public override List<string> GetStartingTechnolyNames()
+        protected override List<string> GetStartingTechnolyNames()
         {
             return new List<String> { "Gauss Shield", "Fusion Drive", "Plasma Cannon" };
+        }
+
+        public override Playerboards.ShipBlueprint CreateDreadnoughtBlueprint()
+        {
+            var print  = base.CreateDreadnoughtBlueprint();
+            print.EnergySourceBonus = 1;
+            return print;
         }
     }
 }

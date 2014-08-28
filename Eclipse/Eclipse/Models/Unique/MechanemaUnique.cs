@@ -1,4 +1,5 @@
 ﻿using Eclipse.Models.Hexes;
+using Eclipse.Models.Playerboards;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,9 +22,16 @@ namespace Eclipse.Models.Unique
             throw new NotImplementedException();
         }
 
-        public override List<string> GetStartingTechnolyNames()
+        protected override List<string> GetStartingTechnolyNames()
         {
             return new List<String> { "Positron Computer" };
+        }
+
+        public override ShipBlueprint CreateInterceptorBlueprint()
+        {
+            var print =  base.CreateInterceptorBlueprint();
+            print.MaterialCost = 2;
+            return print;
         }
     }
 }

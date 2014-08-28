@@ -132,6 +132,7 @@
     <Compile Include="Models\Ships\Interceptor.cs" />
     <Compile Include="Models\Ships\Ship.cs" />
     <Compile Include="Models\Supply\SupplyBoard.cs" />
+    <Compile Include="Models\Tech\BasicShipPart.cs" />
     <Compile Include="Models\Tech\ShipPart.cs" />
     <Compile Include="Models\Tech\Technology.cs" />
     <Compile Include="Models\Tech\TechnologyFactory.cs" />

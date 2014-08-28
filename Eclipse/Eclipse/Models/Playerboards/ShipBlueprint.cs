@@ -17,9 +17,19 @@ namespace Eclipse.Models.Playerboards
         public int EnergySource { get { return ShipParts.Sum(x => x.EnergySource); } }
         public int Initiative { get { return ShipParts.Sum(x => x.Initiative); } }
         public int MaterialCost { get; set; }
+        public int Size { get; set; }
+        public int EnergySourceBonus { get; set; }
+        public int InitiativeBonus { get; set; }
+        public int ComputerBonus { get; set; }
         public ShipBlueprint()
         {
             ShipParts = new List<ShipPart>();
+        }
+
+        public ShipBlueprint(int size, int materialCost)
+        {
+            Size = size;
+            MaterialCost = materialCost;
         }
 
         public void AddShipPart(ShipPart part)

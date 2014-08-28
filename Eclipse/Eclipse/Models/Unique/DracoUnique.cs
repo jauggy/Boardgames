@@ -18,10 +18,11 @@ namespace Eclipse.Models.Unique
 
         public override void SetupPlayerboard(PlayerBoard board)
         {
-            throw new NotImplementedException();
+
+
         }
 
-        public override List<string> GetStartingTechnolyNames()
+        protected override List<string> GetStartingTechnolyNames()
         {
             return new List<String>();
         }
