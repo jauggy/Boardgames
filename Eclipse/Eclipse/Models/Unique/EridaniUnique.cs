@@ -15,10 +15,7 @@ namespace Eclipse.Models.Unique
             hex.AddPinkPlanet(2, 1);
         }
 
-        public override void SetupPlayerboard(PlayerBoard board)
-        {
-            throw new NotImplementedException();
-        }
+
 
         protected override List<string> GetStartingTechnolyNames()
         {
@@ -30,6 +27,13 @@ namespace Eclipse.Models.Unique
             var print  = base.CreateDreadnoughtBlueprint();
             print.EnergySourceBonus = 1;
             return print;
+        }
+
+        protected override void SetupStorage(PlayerBoard board)
+        {
+            board.MoneyStorage = 26;
+            board.ScienceStorage = 2;
+            board.MaterialsStorage = 4;
         }
     }
 }

@@ -21,14 +21,18 @@ namespace Eclipse.Models.Unique
             hex.AddPinkPlanet(2, 1);
         }
 
-        public override void SetupPlayerboard(PlayerBoard board)
-        {
-            throw new NotImplementedException();
-        }
+
 
         protected override List<string> GetStartingTechnolyNames()
         {
             return new List<String> { "Starbase" };
+        }
+
+        protected override void SetupStorage(PlayerBoard board)
+        {
+            board.MaterialsStorage = 3;
+            board.ScienceStorage = 3;
+            board.MoneyStorage = 2;
         }
     }
 }

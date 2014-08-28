@@ -33,10 +33,11 @@ namespace Eclipse.Models
 
         public void Setup()
         {
-
+            
             Players = new List<Player>();
             AddRandomPlayer();
             AddRandomPlayer();
+            SupplyBoard = new SupplyBoard();
             HexBoard = new HexBoard();
             HexBoard.Setup();
             CurrentPlayer = Players[0];
@@ -44,6 +45,7 @@ namespace Eclipse.Models
             //Give players their starting techs
             foreach (var player in Players)
             {
+                player.SetupBoard();
                // player.PlayerBoard.AddStartingTechs(player.UniqueMethods.GetStartingTechnolyNames());
             }
         }

@@ -5,7 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Web;
 
-namespace Eclipse.Models.Canvas
+namespace Eclipse.Models.UI
 {
     public class TempMenu
     {

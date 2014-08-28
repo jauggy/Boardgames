@@ -17,7 +17,7 @@ namespace Eclipse.Models.Supply
             var factory = new TechnologyFactory();
             AllTechnologies = factory.GetAllTechs();
             FutureTechnologies = AllTechnologies.Copy();
-
+            AvailableTechnologies = new List<Technology>();
             AddRandomTechToSupplyBoard(GetStartingNumberTech());
         }
 

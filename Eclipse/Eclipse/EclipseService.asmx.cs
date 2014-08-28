@@ -6,7 +6,7 @@ using System.Web;
 using System.Web.Services;
 using Eclipse.Models.Hexes;
 using Eclipse.Models;
-using Eclipse.Models.Canvas;
+using Eclipse.Models.UI;
 
 namespace Eclipse
 {
@@ -107,6 +107,11 @@ namespace Eclipse
             }
 
             return result;
+        }
+        [WebMethod(true)]
+        public PlayerBoardUI GetPlayerBoardUI()
+        {
+            return new PlayerBoardUI();
         }
     }
 }

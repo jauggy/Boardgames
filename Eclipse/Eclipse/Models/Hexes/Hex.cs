@@ -337,9 +337,14 @@ namespace Eclipse.Models.Hexes
 
         public void AddPopulation(PopulationType popType, Player player)
         {
-            player.PlayerBoard.RemovePopulationCube(popType);
-            var popSquare = PopulationSquares.FirstOrDefault(x => x.Type == popType && !x.IsOccupied);
-            popSquare.Owner = player;
+            
+            var popSquare = PopulationSquares.FirstOrDefault(x => x.Type == popType && !x.IsOccupied && !x.IsAdvanced);
+            if(popSquare!=null)
+            {
+                player.PlayerBoard.RemovePop(popType);
+                popSquare.Owner = player;
+            }
+
         }
 
         public List<String> GetPopulatableTypes()

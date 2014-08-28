@@ -29,7 +29,14 @@ namespace Eclipse.Models
         public virtual void SetupPlayerboard(PlayerBoard board)
         {
             board.AddStartingTechs(GetStartingTechnolyNames());
+            board.DreadnoughtBlueprint = this.CreateDreadnoughtBlueprint();
+            board.StarbaseBlueprint = this.CreateStarbaseBlueprint();
+            board.CruiserBlueprint = this.CreateCruiserBlueprint();
+            board.InterceptorBlueprint = this.CreateInterceptorBlueprint();
+            SetupStorage(board);
         }
+
+        protected abstract void SetupStorage(PlayerBoard board);
 
         protected abstract List<String> GetStartingTechnolyNames();
    
@@ -87,5 +94,18 @@ namespace Eclipse.Models
             print.AddShipPart(BasicShipPart.GetIonCannon());
             return print;
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj.GetType() == this.GetType())
+                return true;
+            return base.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.GetType().ToString().Length;
+        }
+       
     }
 }

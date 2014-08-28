@@ -17,11 +17,6 @@ namespace Eclipse.Models.Unique
             hex.AddPinkPlanet(1);
         }
 
-        public override void SetupPlayerboard(PlayerBoard board)
-        {
-            throw new NotImplementedException();
-        }
-
         protected override List<string> GetStartingTechnolyNames()
         {
             return new List<String> { "Positron Computer" };
@@ -32,6 +27,35 @@ namespace Eclipse.Models.Unique
             var print =  base.CreateInterceptorBlueprint();
             print.MaterialCost = 2;
             return print;
+        }
+
+        public override ShipBlueprint CreateCruiserBlueprint()
+        {
+            var print = base.CreateCruiserBlueprint();
+            print.MaterialCost = 4;
+            return print;
+        }
+
+        public override ShipBlueprint CreateDreadnoughtBlueprint()
+        {
+            var print =  base.CreateDreadnoughtBlueprint();
+            print.MaterialCost = 7;
+            return print;
+        }
+
+        public override ShipBlueprint CreateStarbaseBlueprint()
+        {
+            
+            var print =  base.CreateStarbaseBlueprint();
+            print.MaterialCost = 2;
+            return print;
+        }
+
+        protected override void SetupStorage(PlayerBoard board)
+        {
+            board.MoneyStorage = 3;
+            board.ScienceStorage = 3;
+            board.MaterialsStorage = 3;
         }
     }
 }

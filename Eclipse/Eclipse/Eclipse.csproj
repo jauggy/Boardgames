@@ -108,7 +108,8 @@
     <Compile Include="Models\BattleHelper.cs" />
     <Compile Include="Models\Box.cs" />
     <Compile Include="Models\CanvasConstants.cs" />
-    <Compile Include="Models\Canvas\TempMenu.cs" />
+    <Compile Include="Models\UI\PlayerBoardUI.cs" />
+    <Compile Include="Models\UI\TempMenu.cs" />
     <Compile Include="Models\GameState.cs" />
     <Compile Include="Models\Hexes\AngleHelper.cs" />
     <Compile Include="Models\Hexes\CanvasHelper.cs" />

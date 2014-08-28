@@ -18,10 +18,6 @@ namespace Eclipse.Models.Unique
             hex.AddBrownPlanet(1);
         }
 
-        public override void SetupPlayerboard(PlayerBoard board)
-        {
-            throw new NotImplementedException();
-        }
 
         protected override List<string> GetStartingTechnolyNames()
         {
@@ -68,6 +64,11 @@ namespace Eclipse.Models.Unique
             print.EnergySourceBonus = 5;
             print.ComputerBonus = 1;
             return print;
+        }
+
+        protected override void SetupStorage(PlayerBoard board)
+        {
+            board.MoneyStorage = board.ScienceStorage = board.MaterialsStorage = 4;
         }
     }
 }

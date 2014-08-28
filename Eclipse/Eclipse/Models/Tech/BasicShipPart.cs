@@ -44,5 +44,12 @@ namespace Eclipse.Models.Tech
             part.Hull = 1;
             return part;
         }
+
+        public static ShipPart GetGaussShield()
+        {
+            var part = new ShipPart("Gauss Sheild");
+            part.Shield = 1;
+            return part;
+        }
     }
 }

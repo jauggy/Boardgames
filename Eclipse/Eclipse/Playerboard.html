@@ -22,8 +22,8 @@
                                     <li class="active"><a href="#">Home</a></li>
                                     <li><a href="#">Link</a></li>
                                     <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Blueprint View <span class="caret"></span></a>
-                                        <ul class="dropdown-menu" role="menu">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span id="selectedPlayer"></span><span class="caret"></span></a>
+                                        <ul id="playerList" class="dropdown-menu" role="menu">
                                             <li id="resourceViewTab" class="active"><a href="javascript:void(0)">Technology View</a></li>
                                             <li id="militaryViewTab"><a href="javascript:void(0)">Resource View</a></li>
 
@@ -72,7 +72,32 @@
 
         });
 
+        function GetPlayerBoardUI() {
+            $.ajax({
+                url: "EclipseService.asmx/GetPlayerBoardUI",
+                data: '{}',
+                dataType: "json",
+                type: "POST",
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    var model = data["d"];
+                    $('#selectedPlayer').html(model.CurrentPlayer.Name)
+                    $('#playerList').empty();
+                    $(model.Players).each(function (index, item) {
+                        
+                        var listItem = $('<li class="active"><a href="javascript:void(0)">' + item.Name + '</a></li>');
+                        $('#playerList').append(listItem)
+                    });
+
+                }
+            });
+
+
+        }
+
+
         $(document).ready(function () {
+            debugger;
             $('.nav li').on('click', function (event) {
                 $('.nav li').removeClass('active'); // remove active class from tabs
                 $(this).addClass('active'); // add active class to clicked tab
@@ -91,5 +116,10 @@
 
             });
 
+            GetPlayerBoardUI();
+
+
         });
+
+       
     </script>

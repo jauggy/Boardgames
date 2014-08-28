@@ -16,15 +16,18 @@ namespace Eclipse.Models.Unique
             hex.AddBrownPlanet(1, 1);
         }
 
-        public override void SetupPlayerboard(PlayerBoard board)
-        {
 
-
-        }
 
         protected override List<string> GetStartingTechnolyNames()
         {
             return new List<String>();
+        }
+
+        protected override void SetupStorage(PlayerBoard board)
+        {
+            board.MoneyStorage = 2;
+            board.ScienceStorage = 4;
+            board.MaterialsStorage = 3;
         }
     }
 }

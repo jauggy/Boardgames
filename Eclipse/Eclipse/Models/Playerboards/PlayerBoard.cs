@@ -1,9 +1,11 @@
-﻿using Eclipse.Models.Playerboards;
+﻿using Eclipse.Models.Hexes;
+using Eclipse.Models.Playerboards;
 using Eclipse.Models.Tech;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Script.Serialization;
 
 namespace Eclipse.Models
 {
@@ -23,10 +25,17 @@ namespace Eclipse.Models
         public ShipBlueprint CruiserBlueprint { get; set; }
         public ShipBlueprint DreadnoughtBlueprint { get; set; }
         public ShipBlueprint StarbaseBlueprint { get; set; }
+        public int MoneyStorage { get; set; }
+        public int MaterialsStorage { get; set; }
+        public int ScienceStorage { get; set; }
+
         public PlayerBoard()
         {
             InfluenceDisks = 13;
             Technologies = new List<Technology>();
+            MoneyPopulationCubes = 12;
+            SciencePopulationCubes = 12;
+            MaterialsPopulationCubes = 12;
         }
 
         public int GetUpkeep()
@@ -56,9 +65,21 @@ namespace Eclipse.Models
             return list[numPopCubes];
         }
 
-        public void RemovePopulationCube(PopulationType type)
+        public void RemovePop(PopulationType type)
         {
+            AdjustPop(type, -1);
+        }
 
+        private void AdjustPop(PopulationType type, int adjust)
+        {
+            if (type == PopulationType.Materials)
+                MaterialsPopulationCubes += adjust;
+            else if (type == PopulationType.Money)
+                MoneyPopulationCubes += adjust;
+            else if (type == PopulationType.Science)
+                SciencePopulationCubes += adjust;
+            else
+                throw new NotImplementedException();
         }
     }
 }

@@ -13,7 +13,6 @@ namespace Eclipse.Models
     {
         public UniqueMethods UniqueMethods { get; set; }
         public String Color { get; set; }
-        [ScriptIgnore]
         public PlayerBoard PlayerBoard { get; set; }
         public String Name { get; set; }
         public Player(UniqueMethods uniqueMethods, string color)
@@ -21,13 +20,18 @@ namespace Eclipse.Models
             UniqueMethods = uniqueMethods;
             Color = color;
             PlayerBoard = new PlayerBoard();
-            PlayerBoard.AddStartingTechs(uniqueMethods.GetStartingTechnolyNames());
-            Name = FirstCharToUpper(color) + uniqueMethods.GetName();
+            
+            Name = FirstCharToUpper(color) + " " + uniqueMethods.GetName();
         }
 
         public Player():this(UniqueHelper.GetNewRandomUnique(), UniqueHelper.GetRandomColor())
         {
             
+        }
+
+        public void SetupBoard()
+        {
+            UniqueMethods.SetupPlayerboard(PlayerBoard);
         }
 
         public List<Ship> GetShips()
@@ -41,5 +45,6 @@ namespace Eclipse.Models
                 throw new ArgumentException("ARGH!");
             return input.First().ToString().ToUpper() + String.Join("", input.Skip(1));
         }
+
     }
 }
