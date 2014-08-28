@@ -32,6 +32,8 @@ namespace Eclipse.Models
         public int MaterialsStorage { get; set; }
         public int ScienceStorage { get; set; }
 
+        
+
         public PlayerBoard()
         {
             InfluenceDisks = 13;
@@ -39,6 +41,26 @@ namespace Eclipse.Models
             MoneyPopulationCubes = 12;
             SciencePopulationCubes = 12;
             MaterialsPopulationCubes = 12;
+        }
+
+        public int GetDiscount(TechnologyType type)
+        {
+            return 0;
+        }
+
+        public int GetDiscountNext(TechnologyType type)
+        {
+            return 0;
+        }
+
+        public List<Technology> GetTechnologies(TechnologyType type)
+        {
+            if (type == TechnologyType.Military)
+                return MilitaryTechnologies;
+            else if (type == TechnologyType.Grid)
+                return GridTechnologies;
+            else
+                return NanoTechnologies;
         }
 
         public int GetUpkeep()
