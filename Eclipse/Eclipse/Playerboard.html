@@ -24,9 +24,6 @@
                                     <li class="dropdown">
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span id="selectedPlayer"></span><span class="caret"></span></a>
                                         <ul id="playerList" class="dropdown-menu" role="menu">
-                                            <li id="resourceViewTab" class="active"><a href="javascript:void(0)">Technology View</a></li>
-                                            <li id="militaryViewTab"><a href="javascript:void(0)">Resource View</a></li>
-
                                         </ul>
                                     </li>
                                 </ul>
@@ -68,6 +65,8 @@
 
 
     <script type="text/javascript">
+        var _model;
+
         $('#myModal').on('show.bs.modal', function () {
 
         });
@@ -81,45 +80,75 @@
                 contentType: 'application/json; charset=utf-8',
                 success: function (data) {
                     var model = data["d"];
+                    _model = model;
                     $('#selectedPlayer').html(model.CurrentPlayer.Name)
                     $('#playerList').empty();
                     $(model.Players).each(function (index, item) {
                         
                         var listItem = $('<li class="active"><a href="javascript:void(0)">' + item.Name + '</a></li>');
-                        $('#playerList').append(listItem)
+                        $('#playerList').append(listItem);
+                        debugger;
+                        
                     });
 
+                    
+                    DrawTechnologies(_model.CurrentPlayer.PlayerBoard);
                 }
             });
-
-
         }
 
+        function DrawTechnologies(playerBoard) {
+            $('#gridTechs').empty();
+            $(playerBoard.Technologies).each(function (index, tech) {
+                var techButton = $('<li><button class="btn btn-default">'+tech.Name+'s</button></li>');
+                $('#gridTechs').append(techButton);
+
+            });
+        }
+
+        function SetPlayerBoard(playerName) {
+            var result = jQuery.grep(_model.Players, function (player) {
+                return player.Name == playerName;
+            });
+            DrawTechnologies(result[0].PlayerBoard);
+            
+        }
 
         $(document).ready(function () {
-            debugger;
+      
             $('.nav li').on('click', function (event) {
                 $('.nav li').removeClass('active'); // remove active class from tabs
                 $(this).addClass('active'); // add active class to clicked tab
             });
+            //load other html
             $('#pbPlaceholder').load('PlayerTechnologyView.html');
             $('#myModal').modal();
+
             $('#saveButton').click(function () {
                 $('#myModal2').modal();
             });
 
-            $(".dropdown-menu li a").click(function () {
-                
+
+
+
+            GetPlayerBoardUI();
+
+            $('#playerList').on('click', 'li', function () {
+                // snip...
+                SetPlayerBoard($(this).text());
+            });
+
+            $(".dropdown-menu").on('click', 'li',function () {
+
                 var button = $(this).parents('.dropdown').find('.dropdown-toggle');
-                button.html($(this).text()+' <span class="caret">');
+                button.html($(this).text() + ' <span class="caret">');
                 button.val($(this).text());
 
             });
 
-            GetPlayerBoardUI();
-
-
         });
+
+       
 
        
     </script>

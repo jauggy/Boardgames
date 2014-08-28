@@ -21,6 +21,9 @@ namespace Eclipse.Models
         public int SciencePopulationCubes { get; private set; }
         public int MaterialsPopulationCubes { get; private set; }
         public List<Technology> Technologies { get; private set; }
+        public List<Technology> MilitaryTechnologies { get { return Technologies.Where(x => x.Type == TechnologyType.Military).ToList(); } }
+        public List<Technology> GridTechnologies { get { return Technologies.Where(x => x.Type == TechnologyType.Grid).ToList(); } }
+        public List<Technology> NanoTechnologies { get { return Technologies.Where(x => x.Type == TechnologyType.Nano).ToList(); } }
         public ShipBlueprint InterceptorBlueprint { get; set; }
         public ShipBlueprint CruiserBlueprint { get; set; }
         public ShipBlueprint DreadnoughtBlueprint { get; set; }

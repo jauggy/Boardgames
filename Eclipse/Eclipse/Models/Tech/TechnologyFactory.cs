@@ -31,6 +31,18 @@ namespace Eclipse.Models.Tech
 
             list.Add(new Technology(GetFusionDrive(), 4, 3, TechnologyType.Nano));
 
+            list.Add(new Technology("Neutron Bombs", 2, 2, TechnologyType.Military));
+            list.Add(new Technology("Starbase",4,3, TechnologyType.Military));
+            list.Add(new Technology("Advanced Mining", 10, 6, TechnologyType.Military));
+            list.Add(new Technology("Advanced Economy",10,6,TechnologyType.Grid));
+            list.Add(new Technology("Nanorobots",2,2,TechnologyType.Nano));
+            list.Add(new Technology("Quantum Grid",16,8,TechnologyType.Grid));
+            list.Add(new Technology("Advanced Robotics",6,4,TechnologyType.Nano));
+            list.Add(new Technology("Orbitol",8,5,TechnologyType.Nano));
+            list.Add(new Technology("Advanced Labs",10,6,TechnologyType.Nano));
+            list.Add(new Technology("Monolith",12,6,TechnologyType.Nano));
+            list.Add(new Technology("Artifact Key",14,7,TechnologyType.Nano));
+            list.Add(new Technology("Wormhole Generator",16,8, TechnologyType.Nano));
             return list;
         }
 

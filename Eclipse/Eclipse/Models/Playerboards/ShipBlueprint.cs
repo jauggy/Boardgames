@@ -26,7 +26,7 @@ namespace Eclipse.Models.Playerboards
             ShipParts = new List<ShipPart>();
         }
 
-        public ShipBlueprint(int size, int materialCost)
+        public ShipBlueprint(int size, int materialCost):this()
         {
             Size = size;
             MaterialCost = materialCost;
