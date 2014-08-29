@@ -10,7 +10,11 @@ namespace Eclipse.Models.Tech
     {
         public ShipPart ShipPart { get; set; }
         public String Name { get; set; }
+        
         public TechnologyType Type { get; set; }
+
+        public Technology() { }
+
         public Technology(String name, int defaultCost, int minCost, TechnologyType type)
         {
             Name = name;

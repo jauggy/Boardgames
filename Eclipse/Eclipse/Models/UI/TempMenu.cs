@@ -17,5 +17,7 @@ namespace Eclipse.Models.UI
             Hex = hex;
             MenuItems = items;
         }
+
+        public TempMenu() { }
     }
 }

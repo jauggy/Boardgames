@@ -19,5 +19,7 @@ namespace Eclipse.Models.UI
             Technologies = new List<Technology>();
             Footer = new List<String>();
         }
+
+        public TechnologySection() { }
     }
 }

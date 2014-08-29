@@ -114,6 +114,18 @@
             
         }
 
+        function AddTechnologySegment()
+        {
+            $.get('PlayerTechnologyView.html', function (data) {
+                debugger;
+                var obj = $.parseHTML(data);
+               
+                $('#pbPlaceholder').append(obj);
+                $(obj).find('.bs-callout').addClass('bs-callout-warning');
+            });
+
+        }
+
         $(document).ready(function () {
       
             $('.nav li').on('click', function (event) {
@@ -132,7 +144,8 @@
 
 
             GetPlayerBoardUI();
-
+            
+            AddTechnologySegment();
             $('#playerList').on('click', 'li', function () {
                 // snip...
                 SetPlayerBoard($(this).text());

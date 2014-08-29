@@ -23,6 +23,7 @@ namespace Eclipse.Models
         public Point CanvasLocation { get; set; }
         public String Color { get { return GetColor(); } }
 
+        public PopulationSquare() { }
         public PopulationSquare(PopulationType type)
         {
             Type = type;

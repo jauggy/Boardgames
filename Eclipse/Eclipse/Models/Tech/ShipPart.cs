@@ -24,5 +24,7 @@ namespace Eclipse.Models.Tech
             CannonDamage = new List<int>();
             MissileDamage = new List<int>();
         }
+
+        public ShipPart() { }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Web;
+using System.Web.Script.Serialization;
 
 namespace Eclipse.Models.Hexes
 {
@@ -24,7 +25,8 @@ namespace Eclipse.Models.Hexes
         public Point CanvasLocation { get; private set; }
         public bool IsVisible { get { return PopulationSquares.Count > 0; } }
         public int Radius { get; set; }
-        public List<HexSide> Sides { get; set; }
+        [ScriptIgnore]
+        private List<HexSide> Sides { get; set; }
         public Player Controller { get; set; }
         public bool HasAncient { get { return Ships.Any(x => x.IsAncient); } }
 

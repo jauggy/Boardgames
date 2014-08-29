@@ -21,9 +21,7 @@ namespace Eclipse.Models
         public int SciencePopulationCubes { get; private set; }
         public int MaterialsPopulationCubes { get; private set; }
         public List<Technology> Technologies { get; private set; }
-        public List<Technology> MilitaryTechnologies { get { return Technologies.Where(x => x.Type == TechnologyType.Military).ToList(); } }
-        public List<Technology> GridTechnologies { get { return Technologies.Where(x => x.Type == TechnologyType.Grid).ToList(); } }
-        public List<Technology> NanoTechnologies { get { return Technologies.Where(x => x.Type == TechnologyType.Nano).ToList(); } }
+
         public ShipBlueprint InterceptorBlueprint { get; set; }
         public ShipBlueprint CruiserBlueprint { get; set; }
         public ShipBlueprint DreadnoughtBlueprint { get; set; }
@@ -31,6 +29,8 @@ namespace Eclipse.Models
         public int MoneyStorage { get; set; }
         public int MaterialsStorage { get; set; }
         public int ScienceStorage { get; set; }
+
+        public List<TechnologySegment> TechnologySegments { get{return   GetTechSegments(); } }
 
         
 
@@ -43,6 +43,28 @@ namespace Eclipse.Models
             MaterialsPopulationCubes = 12;
         }
 
+        public List<TechnologySegment> GetTechSegments()
+        {
+            var list = new List<TechnologySegment>();
+            list.Add(CreateTechnologySegment(TechnologyType.Military));
+            list.Add(CreateTechnologySegment(TechnologyType.Grid));
+            list.Add(CreateTechnologySegment(TechnologyType.Nano));
+            return list;
+        }
+
+        private TechnologySegment CreateTechnologySegment(TechnologyType type)
+        {
+            var segment1 = new TechnologySegment(type.ToString(), Technologies.Where(x => x.Type == type).ToList());
+            var footer = new List<String>();
+            footer.Add("Discount: " + GetDiscount(type));
+            footer.Add("Next discount:  " + GetDiscountNext(type));
+            footer.Add("VP: " + GetVP(type));
+            footer.Add("Next VP: " + GetVPNext(type));
+
+            segment1.Footer = footer;
+            return segment1;
+        }
+
         public int GetDiscount(TechnologyType type)
         {
             return 0;
@@ -53,15 +75,17 @@ namespace Eclipse.Models
             return 0;
         }
 
-        public List<Technology> GetTechnologies(TechnologyType type)
+        public int GetVP(TechnologyType type)
         {
-            if (type == TechnologyType.Military)
-                return MilitaryTechnologies;
-            else if (type == TechnologyType.Grid)
-                return GridTechnologies;
-            else
-                return NanoTechnologies;
+            return 0;
         }
+
+        public int GetVPNext(TechnologyType type)
+        {
+            return 0;
+        }
+
+
 
         public int GetUpkeep()
         {

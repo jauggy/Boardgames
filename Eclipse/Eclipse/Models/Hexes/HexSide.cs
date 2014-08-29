@@ -15,6 +15,7 @@ namespace Eclipse.Models.Hexes
         public double WormholeStartAngle { get; set; }
         public double WormholeEndAngle { get; set; }
         //i must start with 1.
+        
         public HexSide(int i, Hex owner )
         {
             RadiansAngle = GetRadiansAngle(i);
