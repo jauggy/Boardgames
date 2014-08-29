@@ -64,15 +64,7 @@
     </div><!-- /.modal -->
 
 
-<div id="techToolTip" style="display:none">
-    <div class="panel panel-primary">
-        <div class="panel-heading">Panel heading without title</div>
-        <div class="panel-body">
-            Panel content
-        </div>
-    </div>
-</div>
-    
+
 <script type="text/javascript">
         var _model;
 
@@ -138,11 +130,14 @@
                     $(techButton).find('button').html(tech.Name);
                     $(obj).find('.techButtons').append(techButton);
                 });
-               
+
+                
+
                 $(obj).find('.techButtons').on('click', 'li', function (event) {
-                    debugger;
-                    showTooltip(event.pageX, event.pageY, 'asfd');
-                   
+                    var firstLeftOffset = $(obj).find('.techButtons').first().offset().left;
+                    var desc = $(obj).find('.techDescription');
+                    var marginLeft = $(this).offset().left - firstLeftOffset;
+                    $(desc).css('margin-left', marginLeft).fadeIn();
 
                     return false;
                 });
@@ -150,15 +145,7 @@
 
         }
 
-        function showTooltip(x, y, contents) {
-            $('#techToolTip').css({
-                position: 'absolute',
-                top: y,
-                left: x,
-                'z-index': 9999
-            }).fadeIn(50);
 
-        };
 
         function GetCalloutClass(index)
         {
