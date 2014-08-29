@@ -64,7 +64,16 @@
     </div><!-- /.modal -->
 
 
-    <script type="text/javascript">
+<div id="techToolTip" style="display:none">
+    <div class="panel panel-primary">
+        <div class="panel-heading">Panel heading without title</div>
+        <div class="panel-body">
+            Panel content
+        </div>
+    </div>
+</div>
+    
+<script type="text/javascript">
         var _model;
 
         $('#myModal').on('show.bs.modal', function () {
@@ -98,10 +107,10 @@
         }
 
         function DrawTechnologies(playerBoard) {
-            $('#gridTechs').empty();
-            $(playerBoard.Technologies).each(function (index, tech) {
-                var techButton = $('<li><button class="btn btn-default">'+tech.Name+'s</button></li>');
-                $('#gridTechs').append(techButton);
+            $('#pbPlaceholder').empty();
+            $(playerBoard.TechnologySegments).each(function (index, segment) {
+                debugger;
+                AddTechnologySegment(index, segment);
 
             });
         }
@@ -114,16 +123,47 @@
             
         }
 
-        function AddTechnologySegment()
+        function AddTechnologySegment(index, segment)
         {
             $.get('PlayerTechnologyView.html', function (data) {
-                debugger;
+               
                 var obj = $.parseHTML(data);
                
                 $('#pbPlaceholder').append(obj);
-                $(obj).find('.bs-callout').addClass('bs-callout-warning');
+                $(obj).find('.bs-callout').addClass(GetCalloutClass(index));
+                $(obj).find('.techTitle').html(segment.Name);
+                $(segment.Technologies).each(function (index, tech) {
+                    var techButton = $(obj).find('.techButton').first().clone();
+                    $(techButton).css('display', 'inline');
+                    $(techButton).find('button').html(tech.Name);
+                    $(obj).find('.techButtons').append(techButton);
+                });
+               
+                $(obj).find('.techButtons').on('click', 'li', function (event) {
+                    debugger;
+                    showTooltip(event.pageX, event.pageY, 'asfd');
+                   
+
+                    return false;
+                });
             });
 
+        }
+
+        function showTooltip(x, y, contents) {
+            $('#techToolTip').css({
+                position: 'absolute',
+                top: y,
+                left: x,
+                'z-index': 9999
+            }).fadeIn(50);
+
+        };
+
+        function GetCalloutClass(index)
+        {
+            var array = ["bs-callout-info", "bs-callout-warning", "bs-callout-danger"]
+            return array[index];
         }
 
         $(document).ready(function () {
@@ -133,7 +173,7 @@
                 $(this).addClass('active'); // add active class to clicked tab
             });
             //load other html
-            $('#pbPlaceholder').load('PlayerTechnologyView.html');
+
             $('#myModal').modal();
 
             $('#saveButton').click(function () {
@@ -145,7 +185,7 @@
 
             GetPlayerBoardUI();
             
-            AddTechnologySegment();
+          
             $('#playerList').on('click', 'li', function () {
                 // snip...
                 SetPlayerBoard($(this).text());

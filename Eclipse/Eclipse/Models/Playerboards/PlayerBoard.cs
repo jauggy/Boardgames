@@ -30,7 +30,7 @@ namespace Eclipse.Models
         public int MaterialsStorage { get; set; }
         public int ScienceStorage { get; set; }
 
-        public List<TechnologySegment> TechnologySegments { get{return   GetTechSegments(); } }
+        public TechnologySegment[] TechnologySegments { get{return   GetTechSegments(); } }
 
         
 
@@ -43,13 +43,13 @@ namespace Eclipse.Models
             MaterialsPopulationCubes = 12;
         }
 
-        public List<TechnologySegment> GetTechSegments()
+        public TechnologySegment[] GetTechSegments()       
         {
             var list = new List<TechnologySegment>();
             list.Add(CreateTechnologySegment(TechnologyType.Military));
             list.Add(CreateTechnologySegment(TechnologyType.Grid));
             list.Add(CreateTechnologySegment(TechnologyType.Nano));
-            return list;
+            return list.ToArray();
         }
 
         private TechnologySegment CreateTechnologySegment(TechnologyType type)
