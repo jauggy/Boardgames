@@ -122,7 +122,7 @@
                 var obj = $.parseHTML(data);
                
                 $('#pbPlaceholder').append(obj);
-                $(obj).find('.bs-callout').addClass(GetCalloutClass(index));
+                $(obj).find('.bs-callout').addClass(GetClass(index,'bs-callout'));
                 $(obj).find('.techTitle').html(segment.Name);
                 $(segment.Technologies).each(function (index, tech) {
                     var techButton = $(obj).find('.techButton').first().clone();
@@ -131,13 +131,13 @@
                     $(obj).find('.techButtons').append(techButton);
                 });
 
-                
+                $(obj).find('.techDescription').addClass(GetClass(index, 'panel'));
 
                 $(obj).find('.techButtons').on('click', 'li', function (event) {
                     var firstLeftOffset = $(obj).find('.techButtons').first().offset().left;
                     var desc = $(obj).find('.techDescription');
                     var marginLeft = $(this).offset().left - firstLeftOffset;
-                    $(desc).css('margin-left', marginLeft).fadeIn();
+                    $(desc).css('margin-left', marginLeft).show();
 
                     return false;
                 });
@@ -147,10 +147,10 @@
 
 
 
-        function GetCalloutClass(index)
+        function GetClass(index, prefix)
         {
-            var array = ["bs-callout-info", "bs-callout-warning", "bs-callout-danger"]
-            return array[index];
+            var array = ["-info", "-warning", "-danger"]
+            return prefix + array[index];
         }
 
         $(document).ready(function () {
