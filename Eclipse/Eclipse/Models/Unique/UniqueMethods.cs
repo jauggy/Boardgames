@@ -29,10 +29,10 @@ namespace Eclipse.Models
         public virtual void SetupPlayerboard(PlayerBoard board)
         {
             board.AddStartingTechs(GetStartingTechnolyNames());
-            board.DreadnoughtBlueprint = this.CreateDreadnoughtBlueprint();
-            board.StarbaseBlueprint = this.CreateStarbaseBlueprint();
-            board.CruiserBlueprint = this.CreateCruiserBlueprint();
-            board.InterceptorBlueprint = this.CreateInterceptorBlueprint();
+            board.DreadnoughtBlueprint = this.CreateDreadnoughtBlueprint().SetName("Dreadnought");
+            board.StarbaseBlueprint = this.CreateStarbaseBlueprint().SetName("Starbase");
+            board.CruiserBlueprint = this.CreateCruiserBlueprint().SetName("Cruiser");
+            board.InterceptorBlueprint = this.CreateInterceptorBlueprint().SetName("Interceptor") ;
             SetupStorage(board);
         }
 

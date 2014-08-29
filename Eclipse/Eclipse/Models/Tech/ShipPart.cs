@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Eclipse.Models.Ships;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
 namespace Eclipse.Models.Tech
 {
-    public class ShipPart
+    public class ShipPart:IShipPart
     {
         public List<int> CannonDamage { get; set; }
         public int Shield { get; set; }
@@ -26,5 +27,14 @@ namespace Eclipse.Models.Tech
         }
 
         public ShipPart() { }
+
+
+
+
+
+        public string GetDescription()
+        {
+           return ShipHelper.GetDescription(this);
+        }
     }
 }

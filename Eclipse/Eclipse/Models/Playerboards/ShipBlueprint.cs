@@ -1,4 +1,5 @@
-﻿using Eclipse.Models.Tech;
+﻿using Eclipse.Models.Ships;
+using Eclipse.Models.Tech;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Web;
 
 namespace Eclipse.Models.Playerboards
 {
-    public class ShipBlueprint
+    public class ShipBlueprint : IShipPart
     {
         public List<ShipPart> ShipParts { get; set; }
 
@@ -21,6 +22,10 @@ namespace Eclipse.Models.Playerboards
         public int EnergySourceBonus { get; set; }
         public int InitiativeBonus { get; set; }
         public int ComputerBonus { get; set; }
+        public int Movement { get;set; }
+        public List<int> MissileDamage { get; set; }
+        public List<int> CannonDamage { get; set; }
+        public String Name { get; set; }
         public ShipBlueprint()
         {
             ShipParts = new List<ShipPart>();
@@ -67,6 +72,13 @@ namespace Eclipse.Models.Playerboards
 
             return list;
         }
+
+        public ShipBlueprint SetName(String name)
+        {
+            Name = name;
+            return this;
+        }
+
 
     }
 }

@@ -7,43 +7,54 @@ namespace Eclipse.Models.Tech
 {
     public class TechnologyFactory
     {
-        private List<Technology> Technologies { get; set; }
+        private static List<Technology> Technologies { get; set; }
         public List<Technology> GetAllTechs()
         {
-            var list = new List<Technology>();
-            //Technologies with ship parts
-            list.Add(new Technology(GetPlasmaCannon(),6,4, TechnologyType.Military));
-            list.Add(new Technology(GetPhaseShield(),8,5, TechnologyType.Military));
-            list.Add(new Technology(GetTachyonSource(),12,6, TechnologyType.Military));
-            list.Add(new Technology(GetPlasmaMissile(),14,7, TechnologyType.Military));
-            list.Add(new Technology(GetPlasmaCannon(),6,4, TechnologyType.Military));
-            list.Add(new Technology(GetGluonComputer(),16,8, TechnologyType.Military));
+            if (Technologies == null)
+            {
+                Technologies = new List<Technology>();
+
+                //Technologies with ship parts
+                listAdd(new Technology(GetPlasmaCannon(), 6, 4, TechnologyType.Military));
+                listAdd(new Technology(GetPhaseShield(), 8, 5, TechnologyType.Military));
+                listAdd(new Technology(GetTachyonSource(), 12, 6, TechnologyType.Military));
+                listAdd(new Technology(GetPlasmaMissile(), 14, 7, TechnologyType.Military));
+                listAdd(new Technology(GetPlasmaCannon(), 6, 4, TechnologyType.Military));
+                listAdd(new Technology(GetGluonComputer(), 16, 8, TechnologyType.Military));
 
 
-            list.Add(new Technology(GetGaussShield(),2,2, TechnologyType.Grid));
-            list.Add(new Technology(GetImprovedHull(),4,3, TechnologyType.Grid));
-            list.Add(new Technology(GetFusionSource(),6,4, TechnologyType.Grid));
-            list.Add(new Technology(GetPositronComputer(),8,5, TechnologyType.Grid));
-            list.Add(new Technology(GetTachyonDrive(), 12, 6, TechnologyType.Grid));
-            list.Add(new Technology(GetAntimatterCannon(), 14, 7, TechnologyType.Grid));
+                listAdd(new Technology(GetGaussShield(), 2, 2, TechnologyType.Grid));
+                listAdd(new Technology(GetImprovedHull(), 4, 3, TechnologyType.Grid));
+                listAdd(new Technology(GetFusionSource(), 6, 4, TechnologyType.Grid));
+                listAdd(new Technology(GetPositronComputer(), 8, 5, TechnologyType.Grid));
+                listAdd(new Technology(GetTachyonDrive(), 12, 6, TechnologyType.Grid));
+                listAdd(new Technology(GetAntimatterCannon(), 14, 7, TechnologyType.Grid));
 
 
 
-            list.Add(new Technology(GetFusionDrive(), 4, 3, TechnologyType.Nano));
+                listAdd(new Technology(GetFusionDrive(), 4, 3, TechnologyType.Nano));
 
-            list.Add(new Technology("Neutron Bombs", 2, 2, TechnologyType.Military));
-            list.Add(new Technology("Starbase",4,3, TechnologyType.Military));
-            list.Add(new Technology("Advanced Mining", 10, 6, TechnologyType.Military));
-            list.Add(new Technology("Advanced Economy",10,6,TechnologyType.Grid));
-            list.Add(new Technology("Nanorobots",2,2,TechnologyType.Nano));
-            list.Add(new Technology("Quantum Grid",16,8,TechnologyType.Grid));
-            list.Add(new Technology("Advanced Robotics",6,4,TechnologyType.Nano));
-            list.Add(new Technology("Orbitol",8,5,TechnologyType.Nano));
-            list.Add(new Technology("Advanced Labs",10,6,TechnologyType.Nano));
-            list.Add(new Technology("Monolith",12,6,TechnologyType.Nano));
-            list.Add(new Technology("Artifact Key",14,7,TechnologyType.Nano));
-            list.Add(new Technology("Wormhole Generator",16,8, TechnologyType.Nano));
-            return list;
+                listAdd(new Technology("Neutron Bombs", 2, 2, TechnologyType.Military)).Description = "You may destroy population without rolling dice";
+                listAdd(new Technology("Starbase", 4, 3, TechnologyType.Military)).Description = "You may build starbases";
+                listAdd(new Technology("Advanced Mining", 10, 6, TechnologyType.Military)).Description = "You may populate advanced materials squares";
+                listAdd(new Technology("Advanced Economy", 10, 6, TechnologyType.Grid)).Description = "You may populate advanced economy squares";
+                listAdd(new Technology("Nanorobots", 2, 2, TechnologyType.Nano)).Description = "You may build one additional ship or structure";
+                listAdd(new Technology("Quantum Grid", 16, 8, TechnologyType.Grid)).Description ="Two additional influence disks";
+                listAdd(new Technology("Advanced Robotics", 6, 4, TechnologyType.Nano)).Description = "One additional influence disk";
+                listAdd(new Technology("Orbitol", 8, 5, TechnologyType.Nano)).Description = "You may build orbitols";
+                listAdd(new Technology("Advanced Labs", 10, 6, TechnologyType.Nano)).Description = "You may populate advanced science squares";
+                listAdd(new Technology("Monolith", 12, 6, TechnologyType.Nano)).Description = "You may build monoliths";
+                listAdd(new Technology("Artifact Key", 14, 7, TechnologyType.Nano)).Description = "Take 5 resources of one type for each artifact on controlled hexes";
+                listAdd(new Technology("Wormhole Generator", 16, 8, TechnologyType.Nano)).Description = "Explore, influence and move through hex edge that has a wormhole on one side";
+            }
+            return Technologies;
+        }
+
+
+        private Technology listAdd(Technology tech)
+        {
+            Technologies.Add(tech);
+            return tech;
         }
 
         private ShipPart GetFusionDrive()

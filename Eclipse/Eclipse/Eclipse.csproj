@@ -63,6 +63,8 @@
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\callout.css" />
     <Content Include="css\Custom.css" />
+    <Content Include="js\custom.js" />
+    <Content Include="PlayerBlueprintView.html" />
     <Content Include="PlayerTechnologyView.html" />
     <Content Include="Scripts\jquery.actual.js" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -111,6 +113,8 @@
     <Compile Include="Models\Box.cs" />
     <Compile Include="Models\CanvasConstants.cs" />
     <Compile Include="Models\Playerboards\TechnologySegment.cs" />
+    <Compile Include="Models\Ships\IShipPart.cs" />
+    <Compile Include="Models\Ships\ShipHelper.cs" />
     <Compile Include="Models\UI\PlayerBoardUI.cs" />
     <Compile Include="Models\UI\TempMenu.cs" />
     <Compile Include="Models\GameState.cs" />

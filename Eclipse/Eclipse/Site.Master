@@ -11,7 +11,7 @@
                 <script src="Scripts/jquery-2.0.3.min.js" type="text/javascript"></script>
     <script src="js/bootstrap.js" ></script>
     <script src="Scripts/jquery.actual.js"></script>
-
+      <script src="js/custom.js"></script>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
@@ -71,7 +71,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
-            $('.nav li').on('click', function (event) {
+            $('.nav li').not('.dropdown').on('click', function (event) {
                 $('.nav li').removeClass('active'); // remove active class from tabs
                 $(this).addClass('active'); // add active class to clicked tab
             });

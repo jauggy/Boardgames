@@ -10,7 +10,17 @@ namespace Eclipse.Models.Tech
     {
         public ShipPart ShipPart { get; set; }
         public String Name { get; set; }
-        
+
+        private String _description;
+        public String Description 
+        { 
+            get 
+            {
+                return  GetDescription();
+            } 
+            set { _description = value; }
+        }
+
         public TechnologyType Type { get; set; }
 
         public Technology() { }
@@ -26,6 +36,18 @@ namespace Eclipse.Models.Tech
         {
             ShipPart = part;
             
+        }
+
+        private String GetDescription()
+        {
+            if (ShipPart == null)
+            {
+                return _description;
+            }
+            else
+            {
+                return ShipPart.GetDescription();
+            }
         }
     }
 }

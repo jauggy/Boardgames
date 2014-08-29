@@ -57,11 +57,11 @@ namespace Eclipse.Models
             var segment1 = new TechnologySegment(type.ToString(), Technologies.Where(x => x.Type == type).ToList());
             var footer = new List<String>();
             footer.Add("Discount: " + GetDiscount(type));
-            footer.Add("Next discount:  " + GetDiscountNext(type));
+            footer.Add("Next:  " + GetDiscountNext(type));
             footer.Add("VP: " + GetVP(type));
             footer.Add("Next VP: " + GetVPNext(type));
 
-            segment1.Footer = footer;
+            segment1.Footer = footer.ToArray();
             return segment1;
         }
 

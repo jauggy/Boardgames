@@ -10,7 +10,7 @@ namespace Eclipse.Models.Playerboards
     {
         public String Name { get; set; }
         public List<Technology> Technologies { get; set; }
-        public List<String> Footer { get; set; }
+        public String[] Footer { get; set; }
         public TechnologySegment(String name, List<Technology>techs)
         {
             Name = name;
