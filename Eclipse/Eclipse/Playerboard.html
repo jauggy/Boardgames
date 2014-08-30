@@ -242,15 +242,18 @@
                 buttonHtml += '<li><label class="btn btn-primary" data-description="'+part.Description+'">' + part.Name + '</label></li>';
             });
             $(obj).find('.buttonlist').append(buttonHtml);
-            var desc = $(obj).find('.blueprintDescription');
+            var desc = $(obj).find('.shipPartDescription');
             $(desc).css('visibility', 'hidden');
             $(obj).find('.buttonlist').on('mouseenter', 'label', function (event) {
-                var firstLeft = $(obj).find('.buttonlist').first().offset().left;
+                var firstLeft = $(obj).find('.buttonlist').first().find('label').offset().left;
                 var marginLeft = $(this).offset().left - firstLeft;
-                $(obj).find('.blueprintDescription').css('margin-left', marginLeft);
+               // alert(marginLeft);
+                $(obj).find('.shipPartDescription').css('margin-left', marginLeft);
+                $(desc).find('.panel-heading').text($(this).text());
                 $(desc).find('.panel-body').html($(this).attr('data-description'));
                 $(desc).css('visibility', 'visible');
             });
+            $(obj).find('.blueprintDescription').html(blueprint.Description);
 
             $(obj).find('.hoverable').on('mouseleave', function (event) {
                 $(desc).css('visibility', 'hidden');
@@ -270,11 +273,11 @@
         }
 
         $('.modal').on('shown.bs.modal',  function (e) {
-            debugger;
-            var millisecondsToWait = 1000;
+            _modalShown = true;
+            /*var millisecondsToWait = 1000;
             setTimeout(function() {
                 _modalShown=true;
-            }, millisecondsToWait);
+            }, millisecondsToWait);*/
         });
 
         $(document).ready(function () {

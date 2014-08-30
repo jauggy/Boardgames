@@ -12,11 +12,11 @@ namespace Eclipse.Models.Ships
             var list = new List<String>();
             if (part.CannonDamage.Count > 0)
             {
-                list.Add("Cannon_Damage: " + String.Join("+", part.CannonDamage));
+                list.Add("Cannon Damage: " + String.Join("+", part.CannonDamage));
             }
             if (part.MissileDamage.Count > 0)
             {
-                list.Add("Missile_Damage: " + String.Join("+", part.MissileDamage));
+                list.Add("Missile Damage: " + String.Join("+", part.MissileDamage));
             }
             if (part.Shield > 0)
                 list.Add("Shield: " + part.Shield);
@@ -26,15 +26,15 @@ namespace Eclipse.Models.Ships
                 list.Add("Computer: " + part.Computer);
 
             if (part.EnergySource > 0)
-                list.Add("Energy_Source: " + part.EnergySource);
+                list.Add("Energy Source: " + part.EnergySource);
             if (part.Initiative > 0)
                 list.Add("Initiative: " + part.Initiative);
             if (part.Movement > 0)
                 list.Add("Movement: " + part.Movement);
             if (part.EnergyRequirement > 0)
-                list.Add("Energy_Requirement: " + part.EnergyRequirement);
+                list.Add("Energy Requirement: " + part.EnergyRequirement);
 
-            return String.Join(", ", list);
+            return String.Join("</br>", list);
         }
     }
 }

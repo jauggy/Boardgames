@@ -23,9 +23,10 @@ namespace Eclipse.Models.Playerboards
         public int InitiativeBonus { get; set; }
         public int ComputerBonus { get; set; }
         public int Movement { get;set; }
-        public List<int> MissileDamage { get; set; }
-        public List<int> CannonDamage { get; set; }
+        public List<int> MissileDamage { get { return GetMissileDamage(); } }
+        public List<int> CannonDamage { get { return GetCannonDamage(); } }
         public String Name { get; set; }
+        public String Description { get { return GetDescription(); } }
         public ShipBlueprint()
         {
             ShipParts = new List<ShipPart>();
@@ -79,6 +80,10 @@ namespace Eclipse.Models.Playerboards
             return this;
         }
 
+        public String GetDescription()
+        {
+            return ShipHelper.GetDescription(this);//.Replace(", ","</br>").Replace("_"," ");
+        }
 
     }
 }

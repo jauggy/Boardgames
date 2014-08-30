@@ -19,3 +19,21 @@ function syncload(urlToLoad) {
     _dictionary[urlToLoad] = result;
     return result;
 }
+
+function asyncload(urlToLoad, callback) {
+    if (_dictionary[urlToLoad]) {
+        callback(_dictionary[urlToLoad]);
+    }
+    else {
+        var result;
+        jQuery.ajax({
+            url: urlToLoad,
+            success: function (res) {
+                callback(res);
+            }
+           
+        });
+    }
+    _dictionary[urlToLoad] = result;
+    return result;
+}
