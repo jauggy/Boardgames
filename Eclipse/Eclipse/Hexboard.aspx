@@ -167,6 +167,7 @@
 
           function DrawWormholes(hex)
           {
+              debugger;
               $(hex.Sides).each(function (index, side) {
                   if (side.HasWormHole)
                   {

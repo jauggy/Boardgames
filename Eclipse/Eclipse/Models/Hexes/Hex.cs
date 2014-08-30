@@ -25,8 +25,7 @@ namespace Eclipse.Models.Hexes
         public Point CanvasLocation { get; private set; }
         public bool IsVisible { get { return PopulationSquares.Count > 0; } }
         public int Radius { get; set; }
-        [ScriptIgnore]
-        private List<HexSide> Sides { get; set; }
+        public List<HexSide> Sides { get; set; }
         public Player Controller { get; set; }
         public bool HasAncient { get { return Ships.Any(x => x.IsAncient); } }
 

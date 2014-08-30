@@ -2,10 +2,14 @@
     <div class="modal-dialog" style="width:100%">
         <div class="modal-content">
             <div class="modal-body">
-
-                <div class="btn-group-vertical" id="research-menu" style="display:none;position:absolute; z-index:999999">
-                    <button class="btn btn-primary">Research</button>
+                <div id="research-menu" style="display:none">
+           
+                        <button class=" btn btn-success">
+                        Research</button>
+                     
+              
                 </div>
+
 
 
 
@@ -106,30 +110,44 @@
              var adjustedName = tech.Name;
              if (tech.SupplyCount > 1)
                  adjustedName+=" x" + tech.SupplyCount;
-             btnHtml += '<li><label data-name="'+tech.Name+'" data-cost="' + tech.CostDescription + '" data-description="' + tech.Description + '" class="btn btn-primary">' + adjustedName + '</label> </li>';
+             btnHtml += '<li><label data-trigger="focus" onclick="return false;" data-toggle="popover" data-name="' + tech.Name + '" data-cost="' + tech.CostDescription + '" data-description="' + tech.Description + '" class="btn btn-primary">' + adjustedName + '</label> </li>';
             
          }
          
          $(obj).find('.techButtons').append(btnHtml);
          var desc = $(obj).find('.techDescription');
-         $(obj).find('.techButtons').on('mouseenter', 'label', function (event) {
+         $(obj).find('.techButtons').on('mouseenter', '.btn-primary', function (event) {
              if (!_modalShown)
                  return false;
-             var firstLeft = $(obj).find('.techButtons').find('label').first().offset().left;
+             var firstLeft = $(obj).find('.techButtons').find('.btn-primary').first().offset().left;
              var marginLeft = $(this).offset().left - firstLeft;
         
              $(obj).find('.techDescription').css('margin-left', marginLeft);
              $(desc).find('.panel-heading').html($(this).attr('data-cost'));
              $(desc).find('.panel-body').html($(this).attr('data-description'));
              $(desc).show();
+             $('[data-toggle="popover"]').not(this).popover('hide');
+             
          });
-         $(obj).find('.techButtons').on('click', 'label', function (event) {
+         $(obj).on('click', '.techButtons .btn-primary', function (event) {
+             event.stopImmediatePropagation();
              if (!_modalShown)
                  return false;
-             var menu = $('#research-menu');
-             debugger;
-             $(menu).css({ top: event.pageY, left: event.clientX });
-             $(menu).show();
+            
+             $(this).popover('show');
+             
+
+
+            
+             return false;
+         });
+
+         $(obj).find('[data-toggle="popover"]').popover({
+             placement: 'top',
+             html: true,
+             content: function () {
+                 return $('#research-menu').html();
+             }
          });
 
      }
@@ -137,6 +155,9 @@
 
 $(document).ready(function () {
     $('.modal').modal();
+
+
+
     GetSupplyBoard();
 
     $('.modal').on('shown.bs.modal', function (e) {
@@ -149,7 +170,9 @@ $(document).ready(function () {
 
     $('.closemodal').click(function () {
          $('.modal').modal('hide');
-         });
+    });
+
+
 });
 
    
