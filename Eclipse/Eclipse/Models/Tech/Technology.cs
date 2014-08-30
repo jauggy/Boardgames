@@ -24,7 +24,7 @@ namespace Eclipse.Models.Tech
         }
 
         public String CostDescription { get { return GetCostDescription(); } }
-
+        public int SupplyCount { get; set; }
         public TechnologyType Type { get; set; }
 
         public Technology() { }

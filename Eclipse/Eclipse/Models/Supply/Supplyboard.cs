@@ -43,9 +43,17 @@ namespace Eclipse.Models.Supply
             for(int i =0;i<num;i++)
             {
                 var index = RandomGenerator.GetInt(0, AllTechnologies.Count - 1);
-                AvailableTechnologies.Add(AllTechnologies[index]);
-               // FutureTechnologies.RemoveAt(index);
-
+                var randTech = AllTechnologies[index];
+                var existing = AvailableTechnologies.FirstOrDefault(x => x.Name == randTech.Name);
+                if(existing==null)
+                {
+                    randTech.SupplyCount = 1;
+                    AvailableTechnologies.Add(randTech);
+                }
+                else
+                {
+                    existing.SupplyCount++;
+                }
             }
         }
 

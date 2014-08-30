@@ -1,15 +1,22 @@
 ﻿<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="width:100%">
         <div class="modal-content">
-            <div class="modal-body" >
+            <div class="modal-body">
+
+                <div class="btn-group-vertical" id="research-menu" style="display:none;position:absolute; z-index:999999">
+                    <button class="btn btn-primary">Research</button>
+                </div>
+
+
+
                 <nav class="navbar navbar-inverse" role="navigation">
                     <div class="container-fluid">
 
                         <div class="nav navbar-nav navbar-left" style="min-width:160px">
                             <span id="brand" class="navbar-brand">Supply Board</span>
-
+                            <p class="navbar-text">Discount: 4</p>
                         </div>
-                       <div>
+                        <div>
                             <ul class="nav navbar-nav navbar-right">
                                 <li>
                                     <a class="closemodal" href="javascript:void(0)">
@@ -24,7 +31,7 @@
                 </nav>
 
 
-                <div class="bs-callout bs-callout-primary techsegment" style="overflow-x:scroll;">
+                <div class="bs-callout bs-callout-primary techsegment" style="overflow-x:auto;">
                     <h4 class="techTitle">
                         Military
 
@@ -49,20 +56,12 @@
                             </div>
                         </div>
                     </div>
-
-                    <ul class="list-inline techFooter">
-                        <li><small>Discount: 4</small></li>
-                        <li><small>Next discount: 4</small></li>
-
-                    </ul>
                 </div>
-                </div>
+
+            </div>
         </div>
     </div>
 </div>
-              
-
-
 
 
  <script type="text/javascript">
@@ -104,7 +103,10 @@
          $(obj).css('width', $('.modal').width()-50);
          for (var i = 0; i < segment.Technologies.length; i++) {
              var tech = segment.Technologies[i];
-             btnHtml += '<li><label data-cost="'+tech.CostDescription+'" data-description="'+tech.Description+'" class="btn btn-primary">' + tech.Name + '</label> </li>';
+             var adjustedName = tech.Name;
+             if (tech.SupplyCount > 1)
+                 adjustedName+=" x" + tech.SupplyCount;
+             btnHtml += '<li><label data-name="'+tech.Name+'" data-cost="' + tech.CostDescription + '" data-description="' + tech.Description + '" class="btn btn-primary">' + adjustedName + '</label> </li>';
             
          }
          
@@ -115,16 +117,21 @@
                  return false;
              var firstLeft = $(obj).find('.techButtons').find('label').first().offset().left;
              var marginLeft = $(this).offset().left - firstLeft;
-             debugger;
+        
              $(obj).find('.techDescription').css('margin-left', marginLeft);
              $(desc).find('.panel-heading').html($(this).attr('data-cost'));
              $(desc).find('.panel-body').html($(this).attr('data-description'));
              $(desc).show();
          });
-
-         $(obj).mouseleave(function (event) {
-             $(desc).css('display', 'none');
+         $(obj).find('.techButtons').on('click', 'label', function (event) {
+             if (!_modalShown)
+                 return false;
+             var menu = $('#research-menu');
+             debugger;
+             $(menu).css({ top: event.pageY, left: event.clientX });
+             $(menu).show();
          });
+
      }
 
 
