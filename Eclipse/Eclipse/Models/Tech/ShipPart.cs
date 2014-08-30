@@ -18,7 +18,7 @@ namespace Eclipse.Models.Tech
         public int Initiative { get; set; }
         public int Movement { get; set; }
         public String Name { get; set; }
-
+        public String Description { get { return GetDescription(); } }
         public ShipPart(String name)
         {
             Name = name;

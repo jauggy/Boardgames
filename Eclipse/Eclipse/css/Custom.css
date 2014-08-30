@@ -8,6 +8,13 @@
     height:60px ;
 }
 
+#pbBody li label{
+    width:100px;
+    white-space:normal;
+    height:60px ;
+}
+
+
 #pbBody small{
     width:100px;
 

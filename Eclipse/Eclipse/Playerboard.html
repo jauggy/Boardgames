@@ -33,8 +33,15 @@
 
                                 </ul>
 
-                            
-                            </div><!-- /.navbar-collapse -->
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li><a class="closemodal" href="javascript:void(0)">
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                         </a>
+                                     </li>
+                                 </ul>
+</div><!-- /.navbar-collapse -->
+
+                
                         </div><!-- /.container-fluid -->
                     </nav>
                     <div id="pbPlaceholder">
@@ -76,7 +83,7 @@
     var _model;
     var _viewSelected = "Technologies";
     var _selectedPlayer;
-
+    var _modalShown =false;
 
         $('.nav li').not('.dropdown').on('click', function (event) {
             $('.nav li').removeClass('active'); // remove active class from tabs
@@ -128,9 +135,10 @@
         }
 
         function SetPlayerBoard(playerName) {
-
-            DrawTechnologies(GetSelectedPlayerBoard());
-            
+            if (_viewSelected == "Technologies")
+                DrawTechnologies(GetSelectedPlayerBoard());
+            else
+                DrawBlueprints();
         }
 
         function GetSelectedPlayerBoard() {
@@ -168,13 +176,14 @@
                     $(obj).find('.techButtons').append(techButton);
 
                     $(techButton).mouseenter(function (event) {
-                       
+                        if (!_modalShown)
+                            return false;
                         var firstLeftOffset = $(obj).find('.techButtons').first().offset().left;
                         var desc = $(obj).find('.techDescription');
                        
                             $(desc).css('display', 'block');
                             debugger;
-                            var marginLeft = $(this).offset().left - firstLeftOffset - ($(desc).outerWidth() - $(this).outerWidth()) / 2;
+                            var marginLeft = $(this).offset().left - firstLeftOffset;
                             marginLeft = Math.max(0, marginLeft);
                             $(desc).css({ 'margin-left': marginLeft });
                             //  debugger;
@@ -227,6 +236,27 @@
             $(obj).find('.blueprintTitle').html(blueprint.Name);
             $(obj).find('.bs-callout').addClass(GetClass(index, 'bs-callout'));
             $(obj).find('.panel').addClass(GetClass(index, 'panel'));
+            $(obj).find('.buttonlist').empty();
+            var buttonHtml = "";
+            $(blueprint.ShipParts).each(function (index, part) {
+                buttonHtml += '<li><label class="btn btn-primary" data-description="'+part.Description+'">' + part.Name + '</label></li>';
+            });
+            $(obj).find('.buttonlist').append(buttonHtml);
+            var desc = $(obj).find('.blueprintDescription');
+            $(desc).css('visibility', 'hidden');
+            $(obj).find('.buttonlist').on('mouseenter', 'label', function (event) {
+                var firstLeft = $(obj).find('.buttonlist').first().offset().left;
+                var marginLeft = $(this).offset().left - firstLeft;
+                $(obj).find('.blueprintDescription').css('margin-left', marginLeft);
+                $(desc).find('.panel-body').html($(this).attr('data-description'));
+                $(desc).css('visibility', 'visible');
+            });
+
+            $(obj).find('.hoverable').on('mouseleave', function (event) {
+                $(desc).css('visibility', 'hidden');
+            });
+
+
             $('#pbPlaceholder').append(obj);
         }
 
@@ -239,8 +269,16 @@
                 return prefix + '-primary';
         }
 
-        $(document).ready(function () {
+        $('.modal').on('shown.bs.modal',  function (e) {
+            debugger;
+            var millisecondsToWait = 1000;
+            setTimeout(function() {
+                _modalShown=true;
+            }, millisecondsToWait);
+        });
 
+        $(document).ready(function () {
+         
             $('#myModal').modal();
 
             $('#saveButton').click(function () {
@@ -279,6 +317,12 @@
                 _viewSelected = $(this).find('a').text();
                 DrawBlueprints();
             });
+
+            $('.closemodal').click(function event() {
+                $('.modal').modal('hide');
+            });
+
+
 
         });
 
