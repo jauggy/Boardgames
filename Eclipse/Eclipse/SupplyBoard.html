@@ -24,7 +24,7 @@
                 </nav>
 
 
-                <div class="bs-callout bs-callout-primary techsegment">
+                <div class="bs-callout bs-callout-primary techsegment" style="overflow-x:scroll;">
                     <h4 class="techTitle">
                         Military
 
@@ -42,7 +42,7 @@
                                 <button class="btn btn-default">Tech name</button>
                             </li>
                         </ul>
-                        <div class="panel techDescription" style="width:200px;display:none;">
+                        <div class="panel panel-primary techDescription" style="width:200px;display:none;">
                             <div class="panel-heading">Panel heading without title</div>
                             <div class="panel-body" style="font-size:small;">
                                 Panel content
@@ -66,7 +66,7 @@
 
 
  <script type="text/javascript">
-
+     var _modalShown = false;
      var _supplyBoard;
      function GetSupplyBoard() {
          $.ajax({
@@ -79,40 +79,51 @@
                  var model = data["d"];
                  _supplyBoard = model;
                  debugger;
-                 for(i=0;i<_supplyBoard.TechnologySegments.length;i++){
-                     DrawTechSegment(_supplyBoard.TechnologySegments[i], i);
+                 for (var i = 0; i < _supplyBoard.TechnologySegments.length; i++) {
+                     var index = i;
+                     DrawTechSegment(_supplyBoard.TechnologySegments[index], index);
                  }
              }
          });
      }
 
      function DrawTechSegment(segment, index) {
+
          var btnHtml = "";
          var obj;
-
-         if (index == 0)
+         debugger;
+         if (index == 0) {
              obj = $('.techsegment').first();
+             $(obj).find('.techButtons').empty();
+         }
          else {
              obj = $('.techsegment').first().clone();
-             $(obj).find('.modal-body').append(obj);
+             $(obj).find('.techButtons').empty();
+             $('.modal-body').append(obj);
          }
-
-         for (i = 0; i < segment.Technologies.length; i++) {
+         $(obj).css('width', $('.modal').width()-50);
+         for (var i = 0; i < segment.Technologies.length; i++) {
              var tech = segment.Technologies[i];
-             btnHtml+='<li><button class="btn btn-primary">'+tech.Name+'</button> </li>';
+             btnHtml += '<li><label data-cost="'+tech.CostDescription+'" data-description="'+tech.Description+'" class="btn btn-primary">' + tech.Name + '</label> </li>';
             
          }
-
+         
          $(obj).find('.techButtons').append(btnHtml);
          var desc = $(obj).find('.techDescription');
-         $('.techButtons').on('mouseenter', 'li', function (event) {
-             var firstLeft = $(obj).find('.buttonlist').first().offset().left;
+         $(obj).find('.techButtons').on('mouseenter', 'label', function (event) {
+             if (!_modalShown)
+                 return false;
+             var firstLeft = $(obj).find('.techButtons').find('label').first().offset().left;
              var marginLeft = $(this).offset().left - firstLeft;
-
+             debugger;
              $(obj).find('.techDescription').css('margin-left', marginLeft);
-             $(desc).find('.panel-heading').text($(this).text());
+             $(desc).find('.panel-heading').html($(this).attr('data-cost'));
              $(desc).find('.panel-body').html($(this).attr('data-description'));
              $(desc).show();
+         });
+
+         $(obj).mouseleave(function (event) {
+             $(desc).css('display', 'none');
          });
      }
 
@@ -120,6 +131,14 @@
 $(document).ready(function () {
     $('.modal').modal();
     GetSupplyBoard();
+
+    $('.modal').on('shown.bs.modal', function (e) {
+        _modalShown = true;
+        /*var millisecondsToWait = 1000;
+        setTimeout(function() {
+            _modalShown=true;
+        }, millisecondsToWait);*/
+    });
 
     $('.closemodal').click(function () {
          $('.modal').modal('hide');

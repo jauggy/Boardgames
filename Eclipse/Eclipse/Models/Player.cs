@@ -6,6 +6,7 @@ using Eclipse.Models.Hexes;
 using Eclipse.Models.Unique;
 using System.Xml.Serialization;
 using System.Web.Script.Serialization;
+using Eclipse.Models.Tech;
 
 namespace Eclipse.Models
 {
@@ -46,6 +47,11 @@ namespace Eclipse.Models
             if (String.IsNullOrEmpty(input))
                 throw new ArgumentException("ARGH!");
             return input.First().ToString().ToUpper() + String.Join("", input.Skip(1));
+        }
+
+        public int GetTechnologyDiscount(TechnologyType type)
+        {
+            return PlayerBoard.GetDiscount(type);
         }
 
         

@@ -10,7 +10,9 @@ namespace Eclipse.Models.Tech
     {
         public ShipPart ShipPart { get; set; }
         public String Name { get; set; }
-
+        public int AdjustedCost { get { return GetAdjustedCost(); } }
+        public int DefaultCost { get; set; }
+        public int MinCost { get; set; }
         private String _description;
         public String Description 
         { 
@@ -21,6 +23,8 @@ namespace Eclipse.Models.Tech
             set { _description = value; }
         }
 
+        public String CostDescription { get { return GetCostDescription(); } }
+
         public TechnologyType Type { get; set; }
 
         public Technology() { }
@@ -29,6 +33,8 @@ namespace Eclipse.Models.Tech
         {
             Name = name;
             Type = type;
+            DefaultCost = defaultCost;
+            MinCost = minCost;
         }
 
 
@@ -50,5 +56,18 @@ namespace Eclipse.Models.Tech
                 return ShipPart.GetDescription();
             }
         }
+
+        public int GetAdjustedCost()
+        {
+            var discount= GameState.GetInstance().CurrentPlayer.GetTechnologyDiscount(this.Type);
+            return Math.Max(MinCost, DefaultCost - discount);
+        }
+
+        public String GetCostDescription()
+        {
+            return String.Format("Cost: {0} <small>({1}/{2})</small>",AdjustedCost, DefaultCost,MinCost);
+        }
+
+
     }
 }

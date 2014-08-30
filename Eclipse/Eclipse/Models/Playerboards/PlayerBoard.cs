@@ -32,7 +32,7 @@ namespace Eclipse.Models
 
         public TechnologySegment[] TechnologySegments { get{return   GetTechSegments(); } }
 
-        
+        private List<int> _techDiscounts = new List<int> { 0, 1, 2, 3, 4, 6, 8 };
 
         public PlayerBoard()
         {
@@ -67,12 +67,18 @@ namespace Eclipse.Models
 
         public int GetDiscount(TechnologyType type)
         {
-            return 0;
+            var numTechs = Technologies.Where(x => x.Type == type).Count();
+            if (numTechs >= _techDiscounts.Count) 
+                numTechs = _techDiscounts.Count - 1;
+            return _techDiscounts[numTechs];
         }
 
         public int GetDiscountNext(TechnologyType type)
         {
-            return 0;
+            var numTechs = Technologies.Where(x => x.Type == type).Count();
+            if (numTechs >= _techDiscounts.Count - 1)
+                return _techDiscounts[_techDiscounts.Count - 1];
+            return _techDiscounts[numTechs];
         }
 
         public int GetVP(TechnologyType type)
