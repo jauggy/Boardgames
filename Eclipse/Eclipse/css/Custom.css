@@ -2,20 +2,20 @@
   white-space:nowrap;
 }
 
-#techtable button{
+#pbBody button{
     width:100px;
     white-space:normal;
     height:60px ;
 }
 
-#techtable small{
+#pbBody small{
     width:100px;
 
     white-space:normal;
      display: inline-block;
 }
 
-#techtable .panel{
+#pbBody .panel{
     width:auto;
     display:inline-block;
 }

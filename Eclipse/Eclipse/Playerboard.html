@@ -2,7 +2,7 @@
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog" style="width:100%">
             <div class="modal-content">
-                <div class="modal-body" id="techtable">
+                <div class="modal-body" id="pbBody">
                     <nav class="navbar navbar-inverse" role="navigation">
                         <div class="container-fluid">
                             <!-- Brand and toggle get grouped for better mobile display -->
@@ -74,7 +74,7 @@
 
 <script type="text/javascript">
     var _model;
-    var _viewSelected;
+    var _viewSelected = "Technologies";
     var _selectedPlayer;
 
 
@@ -116,20 +116,15 @@
 
 
         function DrawTechnologies(playerBoard) {
-            $('#pbPlaceholder').empty();
-         
-           
-            
-        
+            if (!playerBoard)
+                playerBoard = GetSelectedPlayerBoard();
 
+            $('#pbPlaceholder').empty();
                 $(playerBoard.TechnologySegments).each(function (index, segment) {
                     
                     AddTechnologySegment(index, segment);
 
                 });
-      
-
-
         }
 
         function SetPlayerBoard(playerName) {
@@ -144,7 +139,17 @@
             });
             return result[0].PlayerBoard;
         }
+        function getPosition(element) {
+            var xPosition = 0;
+            var yPosition = 0;
 
+            while (element) {
+                xPosition += (element.offsetLeft - element.scrollLeft + element.clientLeft);
+                yPosition += (element.offsetTop - element.scrollTop + element.clientTop);
+                element = element.offsetParent;
+            }
+            return { x: xPosition, y: yPosition };
+        }
         function AddTechnologySegment(index, segment)
         {
            
@@ -152,30 +157,39 @@
             var obj = $.parseHTML(userControl);
                
                 $('#pbPlaceholder').append(obj);
-                $(obj).find('.bs-callout').addClass(GetClass(index,'bs-callout'));
+                $(obj).find('.bs-callout').addClass(GetClass(index, 'bs-callout'));
+                $(obj).find('.panel').addClass(GetClass(index, 'panel'));
                 $(obj).find('.techTitle').html(segment.Name);
                 $(segment.Technologies).each(function (index, tech) {
-                    var techButton = $(obj).find('#techButtonExample').clone();
+                    var techButton = $(obj).find('.techButtonExample').first().clone();
+                   // techButton.attr('id', tech.Name + 'button');
                     $(techButton).css('display', 'inline');
                     $(techButton).find('button').html(tech.Name);
                     $(obj).find('.techButtons').append(techButton);
 
-                    $(techButton).click(function (event) {
-                      //  debugger;
+                    $(techButton).mouseenter(function (event) {
+                       
                         var firstLeftOffset = $(obj).find('.techButtons').first().offset().left;
                         var desc = $(obj).find('.techDescription');
-                        $(desc).show();
-                      //  debugger;
-                        var marginLeft = $(this).offset().left - firstLeftOffset - ($(desc).find('.panel-primary').outerWidth()-$(this).outerWidth())/2;
-                        if (marginLeft < 0)
-                            marginLeft = 0;
-                        $(desc).css('margin-left', marginLeft);
-                       // $(desc).css('margin-left', marginLeft).show();
-                        $(obj).find('.panel-heading').text(tech.Name);
-                        var descText = tech.Description;//.split("_").join("<span style='visibility:hidden'>_</span>")
-                        $(obj).find('.panel-body').html(descText);
+                       
+                            $(desc).css('display', 'block');
+                            debugger;
+                            var marginLeft = $(this).offset().left - firstLeftOffset - ($(desc).outerWidth() - $(this).outerWidth()) / 2;
+                            marginLeft = Math.max(0, marginLeft);
+                            $(desc).css({ 'margin-left': marginLeft });
+                            //  debugger;
+
+                            //$(desc).css('margin-left', marginLeft);
+                            // $(desc).css('margin-left', marginLeft).show();
+                            $(obj).find('.panel-heading').text(tech.Name);
+                            var descText = tech.Description;//.split("_").join("<span style='visibility:hidden'>_</span>")
+                            $(obj).find('.panel-body').html(descText);
+                        
+
                         return false;
-                    });
+                    }
+                    
+                    );
                 });
                 $(obj).find('.techFooter').empty();
 
@@ -189,17 +203,21 @@
                 $(obj).find('.techFooter').append(footerList);
                 $(obj).find('.techDescription').addClass(GetClass(index, 'panel'));
 
-         
+                $(obj).find('.hover').mouseleave(function (event) {
+                    $(obj).find('.techDescription').css('display', 'none');
+                });
 
         }
 
         function DrawBlueprints() {
             var board = GetSelectedPlayerBoard();
-            $('#pbPlaceholder').empty();
+            
             var view = syncload('PlayerBlueprintView.html');
-            debugger;
-            var interceptorView = AddBlueprintToView(board.InterceptorBlueprint, view,0);
-            $('#pbPlaceholder').append(interceptorView);
+            $('#pbPlaceholder').empty();
+            AddBlueprintToView(board.InterceptorBlueprint, view,0);
+            AddBlueprintToView(board.CruiserBlueprint, view, 1);
+            AddBlueprintToView(board.DreadnoughtBlueprint, view, 2);
+            AddBlueprintToView(board.StarbaseBlueprint, view, 3);
 
             
         }
@@ -208,13 +226,17 @@
             var obj = $.parseHTML(view);
             $(obj).find('.blueprintTitle').html(blueprint.Name);
             $(obj).find('.bs-callout').addClass(GetClass(index, 'bs-callout'));
-            return obj;
+            $(obj).find('.panel').addClass(GetClass(index, 'panel'));
+            $('#pbPlaceholder').append(obj);
         }
 
         function GetClass(index, prefix)
         {
-            var array = ["-info", "-warning", "-danger", "-info"]
-            return prefix + array[index];
+            var array = ["-info", "-warning", "-danger", "-success"]
+            if (_viewSelected == "Technologies")
+                return prefix + '-primary';
+            else
+                return prefix + '-primary';
         }
 
         $(document).ready(function () {
@@ -247,8 +269,9 @@
             });
 
             $('#technologyView').click(function event() {
+                debugger;
                 _viewSelected = $(this).find('a').text();
-                DrawTechnologies(_selectedPlayer.PlayerBoard);
+                DrawTechnologies();
             });
 
             $('#blueprintView').click(function event() {
