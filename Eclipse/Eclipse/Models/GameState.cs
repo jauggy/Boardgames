@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using Eclipse.Models.Hexes;
 using Eclipse.Models.Supply;
+using Eclipse.Models.Unique;
 
 namespace Eclipse.Models
 {
@@ -37,6 +38,9 @@ namespace Eclipse.Models
             Players = new List<Player>();
             AddRandomPlayer();
             AddRandomPlayer();
+            Players.Add(new Player(new OrionUnique(), "Green"));
+            Players.Add(new Player(new OrionUnique(), "Green"));
+            Players.Add(new Player(new OrionUnique(), "Green"));
             SupplyBoard = new SupplyBoard();
             HexBoard = new HexBoard();
             HexBoard.Setup();
@@ -70,6 +74,8 @@ namespace Eclipse.Models
             Players.Add(player);
             //HexBoard.GetInstance().AddStartingPlayerHex(player);
         }
+
+        
 
         public int NumberPlayers { get { return Players.Count; } }
 

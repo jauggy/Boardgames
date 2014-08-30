@@ -11,8 +11,10 @@ namespace Eclipse.Models
 {
     public class Player
     {
+        [ScriptIgnore]
         public UniqueMethods UniqueMethods { get; set; }
         public String Color { get; set; }
+         [ScriptIgnore]
         public PlayerBoard PlayerBoard { get; set; }
         public String Name { get; set; }
         public Player(UniqueMethods uniqueMethods, string color)
@@ -45,6 +47,8 @@ namespace Eclipse.Models
                 throw new ArgumentException("ARGH!");
             return input.First().ToString().ToUpper() + String.Join("", input.Skip(1));
         }
+
+        
 
     }
 }

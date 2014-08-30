@@ -471,6 +471,10 @@
 
               });
 
+              $('#supplyboardTab').click(function (event) {
+                  $('#modalPlaceholder').load("SupplyBoard.html");
+              });
+
               $('#clearTempMenusTab').click(function (event) {
                   HideTempMenus();
               });

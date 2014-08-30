@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Eclipse.Models.Tech;
+using Eclipse.Models.Playerboards;
 
 namespace Eclipse.Models.Supply
 {
@@ -10,13 +11,15 @@ namespace Eclipse.Models.Supply
     {
         public List<Technology> AllTechnologies { get; set; }
         public List<Technology> AvailableTechnologies { get; set; }
-        public List<Technology> FutureTechnologies { get; set; }
+       // public List<Technology> FutureTechnologies { get; set; }
+        public TechnologySegment[] TechnologySegments { get { return GetTechSegments(); } }
+
 
         public SupplyBoard()
         {
             var factory = new TechnologyFactory();
             AllTechnologies = factory.GetAllTechs();
-            FutureTechnologies = AllTechnologies.Copy();
+           
             AvailableTechnologies = new List<Technology>();
             AddRandomTechToSupplyBoard(GetStartingNumberTech());
         }
@@ -39,9 +42,9 @@ namespace Eclipse.Models.Supply
         {
             for(int i =0;i<num;i++)
             {
-                var index =  RandomGenerator.GetInt(0, FutureTechnologies.Count - 1);
-                AvailableTechnologies.Add(FutureTechnologies[index]);
-                FutureTechnologies.RemoveAt(index);
+                var index = RandomGenerator.GetInt(0, AllTechnologies.Count - 1);
+                AvailableTechnologies.Add(AllTechnologies[index]);
+               // FutureTechnologies.RemoveAt(index);
 
             }
         }
@@ -58,6 +61,22 @@ namespace Eclipse.Models.Supply
             var list = new List<int> { 0, 0, 4, 6, 7, 8, 9 };
             var i = GameState.GetInstance().NumberPlayers;
             return list[i];
+        }
+
+        private TechnologySegment[] GetTechSegments()
+        {
+            var list = new TechnologySegment[3];
+            list[0] = CreateTechSegment(TechnologyType.Military);
+            list[1] = CreateTechSegment(TechnologyType.Grid);
+            list[2] = CreateTechSegment(TechnologyType.Nano);
+            return list;
+        }
+
+        public TechnologySegment CreateTechSegment(TechnologyType type)
+        {
+            var techs = AvailableTechnologies.Where(x => x.Type == type).ToList();
+            var segment = new TechnologySegment(type.ToString(), techs);
+            return segment;
         }
     }
 }

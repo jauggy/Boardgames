@@ -8,9 +8,16 @@ namespace Eclipse.Models.UI
 {
     public class PlayerBoardUI
     {
-        public List<Player> Players { get { return GameState.GetInstance().Players; } }
-        public Player CurrentPlayer { get { return GameState.GetInstance().CurrentPlayer; } }
+        public List<PlayerUI> Players { get; private set; }
+        public PlayerUI CurrentPlayer { get; private set; } 
 
+        public PlayerBoardUI()
+        {
+            Players = GameState.GetInstance().Players.Select(x => new PlayerUI(x)).ToList();
+            var currentPlayer = GameState.GetInstance().CurrentPlayer;
+
+            CurrentPlayer = Players.First(x => x.Name == currentPlayer.Name);
+        }
      
     }
 }

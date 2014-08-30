@@ -1,8 +1,9 @@
 ﻿.list-inline {
   white-space:nowrap;
+  float:none;
 }
 
-#pbBody button{
+#pbBody .list-inline button{
     width:100px;
     white-space:normal;
     height:60px ;
@@ -33,4 +34,25 @@
 
 #pbBody td{
     vertical-align:top;
+}
+
+#pbBody table{
+     table-layout:fixed;
+    overflow:auto; 
+    white-space: nowrap; 
+}
+
+#pbBody .scrollable-col{
+    float:none;
+    display:inline-block;
+    vertical-align:top;
+}
+
+#pbBody .scrollable-container{
+    white-space:nowrap;
+    overflow-x:auto;
+}
+
+#pbBody .resource-view .panel{
+    min-width:200px;
 }

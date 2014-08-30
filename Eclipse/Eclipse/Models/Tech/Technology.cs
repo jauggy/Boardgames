@@ -28,6 +28,7 @@ namespace Eclipse.Models.Tech
         public Technology(String name, int defaultCost, int minCost, TechnologyType type)
         {
             Name = name;
+            Type = type;
         }
 
 

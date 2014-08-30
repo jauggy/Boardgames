@@ -24,6 +24,7 @@
                                 <ul class="nav navbar-nav">
                                     <li class="active" id="technologyView"><a href="javascript:void(0)">Technologies</a></li>
                                     <li id="blueprintView"><a href="javascript:void(0)">Blueprints</a></li>
+                                    <li id="resourceView"><a href="javascript:void(0)">Resources</a></li>
                                     <li class="dropdown">
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span id="selectedPlayer"></span>Switch Player <span class="caret"></span></a>
                                         <ul id="playerList" class="dropdown-menu" role="menu"></ul>
@@ -218,6 +219,13 @@
 
         }
 
+        function DrawResourceView() {
+            var board = GetSelectedPlayerBoard();
+            var view = syncload('PlayerResourceView.html');
+            $('#pbPlaceholder').empty();
+            $('#pbPlaceholder').append(view);
+        }
+
         function DrawBlueprints() {
             var board = GetSelectedPlayerBoard();
             
@@ -233,7 +241,7 @@
 
         function AddBlueprintToView(blueprint, view, index) {
             var obj = $.parseHTML(view);
-            $(obj).find('.blueprintTitle').html(blueprint.Name);
+            $(obj).find('.blueprintTitle').html(blueprint.Name + '<small class="pull-right" style="text-align:right;vertical-align:bottom">Cost: '+blueprint.MaterialCost+'</small>');;
             $(obj).find('.bs-callout').addClass(GetClass(index, 'bs-callout'));
             $(obj).find('.panel').addClass(GetClass(index, 'panel'));
             $(obj).find('.buttonlist').empty();
@@ -309,19 +317,24 @@
 
             });
 
-            $('#technologyView').click(function event() {
+            $('#technologyView').click(function () {
                 debugger;
                 _viewSelected = $(this).find('a').text();
                 DrawTechnologies();
             });
 
-            $('#blueprintView').click(function event() {
+            $('#blueprintView').click(function () {
                 debugger;
                 _viewSelected = $(this).find('a').text();
                 DrawBlueprints();
             });
 
-            $('.closemodal').click(function event() {
+            $('#resourceView').click(function () {
+                _viewSelected = $(this).find('a').text();
+                DrawResourceView();
+            });
+
+            $('.closemodal').click(function () {
                 $('.modal').modal('hide');
             });
 

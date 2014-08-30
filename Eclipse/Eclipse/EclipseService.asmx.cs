@@ -7,6 +7,7 @@ using System.Web.Services;
 using Eclipse.Models.Hexes;
 using Eclipse.Models;
 using Eclipse.Models.UI;
+using Eclipse.Models.Supply;
 
 namespace Eclipse
 {
@@ -112,6 +113,12 @@ namespace Eclipse
         public PlayerBoardUI GetPlayerBoardUI()
         {
             return new PlayerBoardUI();
+        }
+
+        [WebMethod(true)]
+        public SupplyBoard GetSupplyBoard()
+        {
+            return GameState.GetInstance().SupplyBoard;
         }
 
     }

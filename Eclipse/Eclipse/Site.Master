@@ -6,10 +6,11 @@
 <head runat="server">
     <title></title>
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+ 
     <link rel="stylesheet" type="text/css" href="css/Custom.css"/>
       <link rel="stylesheet" type="text/css" href="css/callout.css"/>
                 <script src="Scripts/jquery-2.0.3.min.js" type="text/javascript"></script>
-    <script src="js/bootstrap.js" ></script>
+       <script src="js/bootstrap.js" ></script>
     <script src="Scripts/jquery.actual.js"></script>
       <script src="js/custom.js"></script>
     <asp:ContentPlaceHolder ID="head" runat="server">
@@ -30,6 +31,7 @@
           <ul class="nav navbar-nav">
             <li><span class="navbar-brand">Eclipse</span></li>
              <li id="playerboardTab" ><a href="javascript:void(0)">Player board</a></li>
+               <li id="supplyboardTab" ><a href="javascript:void(0)">Supply board</a></li>
             <li id="exploreTab"><a href="javascript:void(0)">Explore</a></li>
               <li id="populateTab"><a href="javascript:void(0)">Populate</a></li>
 
