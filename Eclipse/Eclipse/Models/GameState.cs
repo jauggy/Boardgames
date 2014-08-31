@@ -15,6 +15,8 @@ namespace Eclipse.Models
         public HexBoard HexBoard { get; set; }
         public Player CurrentPlayer { get; set; }
         public SupplyBoard SupplyBoard { get; set; }
+        public bool HasDoneMainAction { get; set; }
+        private int _currentPlayerIndex = -1;
         public static GameState GetInstance()
         {
             if (HttpContext.Current.Session["GameState"] == null)
@@ -32,6 +34,11 @@ namespace Eclipse.Models
 
         }
 
+        public static String GetLog()
+        {
+            return GetInstance().CurrentPlayer.PlayerBoard.Log;
+        }
+
         public void Setup()
         {
             
@@ -44,7 +51,7 @@ namespace Eclipse.Models
             SupplyBoard = new SupplyBoard();
             HexBoard = new HexBoard();
             HexBoard.Setup();
-            CurrentPlayer = Players[0];
+            
 
             //Give players their starting techs
             foreach (var player in Players)
@@ -52,6 +59,19 @@ namespace Eclipse.Models
                 player.SetupBoard();
                // player.PlayerBoard.AddStartingTechs(player.UniqueMethods.GetStartingTechnolyNames());
             }
+
+            NextPlayer();
+        }
+
+        public void NextPlayer()
+        {
+            HasDoneMainAction = false;
+            _currentPlayerIndex++;
+            if (_currentPlayerIndex >= Players.Count)
+                _currentPlayerIndex = 0;
+
+            CurrentPlayer = Players[_currentPlayerIndex];
+            CurrentPlayer.PreturnSetup();
         }
 
         //I think args should be we copy only hexboard
@@ -88,6 +108,8 @@ namespace Eclipse.Models
         {
             return null;
         }
+
+       
        
     }
 }

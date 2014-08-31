@@ -10,8 +10,9 @@ namespace Eclipse.Models.Hexes
     public class HexBoard
     {
         public List<Hex> Hexes { get; set; }
-        private Hex _lastClickedHex;
-        public Hex LastSelectedHex { get { return _lastClickedHex; } }
+
+        public  Hex LastExploredFromHex { get; private set; }
+        public Hex LastSelectedHex { get; private set;}
         public void Setup()
         {
             var startHex = new Hex();
@@ -83,6 +84,7 @@ namespace Eclipse.Models.Hexes
             return FindHex(new Point(0, 0));
         }
 
+        //Deprecated - used when mouse click canvas
         public Hex GetNearestHexbyCanvasLocation(int x, int y)
         {
             var point = new Point(x, y);
@@ -100,7 +102,7 @@ namespace Eclipse.Models.Hexes
                     }
                 }
             }
-            _lastClickedHex = nearestHex;
+            LastSelectedHex = nearestHex;
             return nearestHex;
 
            
@@ -148,7 +150,10 @@ namespace Eclipse.Models.Hexes
         {
             return p.Select(x => GetOrCreateHex(x)).ToList();
         }
-
+        public Hex FindHex(int x, int y)
+        {
+            return FindHex(new Point(x, y));
+        }
         public Hex FindHex(Point p)
         {
             return Hexes.FirstOrDefault(x => x.AxialCoordinates.Equals(p));
@@ -231,15 +236,18 @@ namespace Eclipse.Models.Hexes
 
         public List<Hex> GetExploreToHexes(Hex hex)
         {
-            _lastClickedHex = hex;
+            LastSelectedHex = hex;
+            LastExploredFromHex = hex;
             return hex.GetExploreToHexes(GameState.GetInstance().CurrentPlayer);
         }
 
         public Hex ExploreTo( Point point)
         {
             var hex = GetOrCreateHex(point);
+            LastSelectedHex = hex;
             PopulateHex(hex);
-            hex.Rotate(_lastClickedHex);
+            hex.Rotate(LastExploredFromHex);
+           
             return hex;
         }
 

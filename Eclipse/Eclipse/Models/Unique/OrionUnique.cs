@@ -59,7 +59,7 @@ namespace Eclipse.Models.Unique
 
         protected override void SetupStorage(PlayerBoard board)
         {
-            board.MaterialsStorage = board.ScienceStorage = 3;
+            board.MoneyStorage = board.ScienceStorage = 3;
             board.MaterialsStorage = 5;
         }
     }

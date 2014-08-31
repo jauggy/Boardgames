@@ -57,6 +57,8 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AddInfluence.html" />
+    <Content Include="ChoosePopulationType.html" />
     <Content Include="css\bootstrap-theme.css" />
     <Content Include="css\bootstrap-theme.min.css" />
     <Content Include="css\bootstrap.css" />
@@ -114,9 +116,14 @@
     <Compile Include="Models\BattleHelper.cs" />
     <Compile Include="Models\Box.cs" />
     <Compile Include="Models\CanvasConstants.cs" />
+    <Compile Include="Models\Playerboards\ResourceSegment.cs" />
     <Compile Include="Models\Playerboards\TechnologySegment.cs" />
     <Compile Include="Models\Ships\IShipPart.cs" />
     <Compile Include="Models\Ships\ShipHelper.cs" />
+    <Compile Include="Models\UI\AddInfluenceUI.cs" />
+    <Compile Include="Models\UI\AfterPopulateUI.cs" />
+    <Compile Include="Models\UI\DropDownMenu.cs" />
+    <Compile Include="Models\UI\MainNavbarUI.cs" />
     <Compile Include="Models\UI\PlayerBoardUI.cs" />
     <Compile Include="Models\UI\PlayerUI.cs" />
     <Compile Include="Models\UI\TempMenu.cs" />

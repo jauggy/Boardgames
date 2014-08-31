@@ -17,30 +17,37 @@ namespace Eclipse.Models
         //Population cubes in the money, science, materials track
         //influce disks on action spaces and influence track
         public int InfluenceDisks { get; private set; }
-        public int MoneyPopulationCubes { get; private set; }
-        public int SciencePopulationCubes { get; private set; }
-        public int MaterialsPopulationCubes { get; private set; }
         public List<Technology> Technologies { get; private set; }
-
+        public String Log { get; set; }
         public ShipBlueprint InterceptorBlueprint { get; set; }
         public ShipBlueprint CruiserBlueprint { get; set; }
         public ShipBlueprint DreadnoughtBlueprint { get; set; }
         public ShipBlueprint StarbaseBlueprint { get; set; }
-        public int MoneyStorage { get; set; }
-        public int MaterialsStorage { get; set; }
-        public int ScienceStorage { get; set; }
-
+        public int MoneyStorage { get { return Storage[PopulationType.Money]; } set { Storage[PopulationType.Money] = value; } }
+        public int MaterialsStorage { get { return Storage[PopulationType.Materials]; } set { Storage[PopulationType.Materials] = value; } }
+        public int ScienceStorage { get { return Storage[PopulationType.Science]; } set { Storage[PopulationType.Science] = value; } }
+        [ScriptIgnore]
+        public Dictionary<PopulationType, int> Storage { get; set; }
+        [ScriptIgnore]
+        public Dictionary<PopulationType, int> PopulationsCubes { get; set; }
         public TechnologySegment[] TechnologySegments { get{return   GetTechSegments(); } }
+        public ResourceSegment[] ResourceSegments { get { return GetResourceSegments(); } }
+
 
         private List<int> _techDiscounts = new List<int> { 0, 1, 2, 3, 4, 6, 8 };
-
+        private List<int> _upkeepCosts = new List<int> { 30, 25, 21, 17, 13, 10, 7, 5, 3, 2, 1, 0, 0 };
         public PlayerBoard()
         {
             InfluenceDisks = 13;
             Technologies = new List<Technology>();
-            MoneyPopulationCubes = 12;
-            SciencePopulationCubes = 12;
-            MaterialsPopulationCubes = 12;
+            PopulationsCubes = new Dictionary<PopulationType, int>();
+            Storage = new Dictionary<PopulationType, int>();
+            Storage[PopulationType.Money] = 0;
+            Storage[PopulationType.Science] = 0;
+            Storage[PopulationType.Materials] = 0;
+            PopulationsCubes.Add(PopulationType.Money, 12);
+            PopulationsCubes.Add(PopulationType.Science, 12);
+            PopulationsCubes.Add(PopulationType.Materials, 12);
         }
 
         public TechnologySegment[] GetTechSegments()       
@@ -50,6 +57,16 @@ namespace Eclipse.Models
             list.Add(CreateTechnologySegment(TechnologyType.Grid));
             list.Add(CreateTechnologySegment(TechnologyType.Nano));
             return list.ToArray();
+        }
+
+        private ResourceSegment[] GetResourceSegments()
+        {
+            ResourceSegment[] list = new ResourceSegment[3];
+            list[0] = new ResourceSegment(PopulationType.Money, this);
+            list[1] = new ResourceSegment(PopulationType.Science, this);
+            list[2] = new ResourceSegment(PopulationType.Materials, this);
+
+            return list;
         }
 
         private TechnologySegment CreateTechnologySegment(TechnologyType type)
@@ -91,17 +108,31 @@ namespace Eclipse.Models
             return 0;
         }
 
-
+        public int GetNextUpkeep()
+        {
+            return _upkeepCosts[Math.Min(_upkeepCosts.Count - 1, InfluenceDisks-1)];
+        }
 
         public int GetUpkeep()
         {
-            var list = new List<int> { -30, -25, -21, -17, -13, -10, -7, -5, -3, -2, -1, 0, 0 };
-            return list[InfluenceDisks];
+            return _upkeepCosts[Math.Min(_upkeepCosts.Count-1,InfluenceDisks)];
+        }
+
+        public void AddInfluenceDisk()
+        {
+            InfluenceDisks++;
         }
 
         public void RemoveInfluenceDisk()
         {
             InfluenceDisks--;
+        }
+
+        public void AddPopulationCube(PopulationType type)
+        {
+            if (type == PopulationType.Unknown)
+                throw new NotImplementedException();
+            PopulationsCubes[type]++;
         }
 
         public void AddStartingTechs(List<String> list)
@@ -114,9 +145,24 @@ namespace Eclipse.Models
             
         }
 
-        public int GetProductionLevel(int numPopCubes)
+        public int GetProduction(PopulationType type)
+        {
+
+                return GetProductionLevel(PopulationsCubes[type]);
+
+        }
+
+        public int GetNextProduction(PopulationType type)
+        {
+            return GetProductionLevel(PopulationsCubes[type]-1);
+        }
+
+
+        private int GetProductionLevel(int numPopCubes)
         {
             var list = new List<int> { 28, 24, 21, 18, 15, 12, 10, 8, 6, 4, 3, 2 };
+            if (numPopCubes >= list.Count)
+                return 0;
             return list[numPopCubes];
         }
 
@@ -127,14 +173,34 @@ namespace Eclipse.Models
 
         private void AdjustPop(PopulationType type, int adjust)
         {
-            if (type == PopulationType.Materials)
-                MaterialsPopulationCubes += adjust;
-            else if (type == PopulationType.Money)
-                MoneyPopulationCubes += adjust;
-            else if (type == PopulationType.Science)
-                SciencePopulationCubes += adjust;
-            else
-                throw new NotImplementedException();
+            var before = GetProduction(type);
+            PopulationsCubes[type] += adjust;
+            var after = GetProduction(type);
+            Log = type.ToString() + " Production " + SignedNumber(after - before) + "</br>" + Log;
         }
+
+        private String SignedNumber(int num)
+        {
+            if(num >=0)
+            {
+                return "+" + num;
+            }
+            else
+            {
+                return "-" + num;
+            }
+        }
+
+        public int GetStorage(PopulationType type)
+        {
+            return Storage[type];
+        }
+
+        public void SetStorage(PopulationType type, int value)
+        {
+            Storage[type] = value;
+        }
+
+
     }
 }

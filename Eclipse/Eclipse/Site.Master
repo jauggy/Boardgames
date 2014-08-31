@@ -27,22 +27,26 @@
             <span class="icon-bar"></span>
           </button>
         </div>
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
+        <div class="navbar-collapse collapse ">
+          <ul class="nav navbar-nav navbar-left">
             <li><span class="navbar-brand">Eclipse</span></li>
              <li id="playerboardTab" ><a href="javascript:void(0)">Player board</a></li>
                <li id="supplyboardTab" ><a href="javascript:void(0)">Supply board</a></li>
-            <li id="exploreTab"><a href="javascript:void(0)">Explore</a></li>
-              <li id="populateTab"><a href="javascript:void(0)">Populate</a></li>
+            <li id="exploreTab" class="mainaction"><a href="javascript:void(0)">Explore</a></li>
+              <li  ><a id="populateTab" href="javascript:void(0)">Populate</a></li>
+              
 
-              <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Other <span class="caret"></span></a>
+               <li class="dropdown mainaction">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Influence <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li id="clearTempMenusTab" ><a href="javascript:void(0)">Clear menus</a></li>
-        
-                 
+                <li id="influenceBoardToHex"><a href="javascript:void(0)">from player board to hex</a></li>
+               <li id="influenceHexToHex"><a href="javascript:void(0)">from hex to hex</a></li>
+                 <li id="influenceHexToBoard"><a href="javascript:void(0)">from hex to player board</a></li>
               </ul>
             </li>
+
+
+ 
 
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Switch View <span class="caret"></span></a>
@@ -54,9 +58,9 @@
             </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="../navbar/">Default</a></li>
-            <li><a href="../navbar-static-top/">Static top</a></li>
-            <li class="active"><a href="./">Fixed top</a></li>
+               <li id="nextPlayerTab"><a  href="javascript:void(0)">Next Player</a></li>
+            <li id="clearTempMenusTab"><a  href="javascript:void(0)">Clear menus</a></li>
+
           </ul>
         </div><!--/.nav-collapse -->
       </div>

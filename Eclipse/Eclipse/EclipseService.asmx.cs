@@ -70,9 +70,30 @@ namespace Eclipse
             return HexBoard.GetInstance().GetExploreToHexes(hex);
         }
 
+        [WebMethod(true)]
+        public List<DropDownMenu> GetExploreToMenus(int x, int y)
+         {
+             var hexes = GetExploreToHexes(x, y);
+             var nextUpkeep = GameState.GetInstance().CurrentPlayer.PlayerBoard.GetNextUpkeep();
+             var upkeep = GameState.GetInstance().CurrentPlayer.PlayerBoard.GetUpkeep();
+             var msg = string.Format("Add influence +{0} upkeep = {1}",nextUpkeep-upkeep,nextUpkeep);
+             var list = new List<DropDownMenu>();
+            foreach(var hex in hexes)
+            {
+                var menu = new DropDownMenu();
+                menu.Heading = "Explore to";
+                menu.Hex = hex;
+                menu.MenuItems = new String[] { msg, "No influence" };
+                list.Add(menu);
+            }
+
+            return list;
+         }
+
          [WebMethod(true)]
         public Hex ExploreTo(int x, int y)
          {
+             GameState.GetInstance().HasDoneMainAction = true;
              return HexBoard.GetInstance().ExploreTo(new Point(x, y));
          }
 
@@ -85,12 +106,17 @@ namespace Eclipse
          }
 
         [WebMethod(true)]
-        public Hex AddPopulationToHex(int x, int y, string popType)
+        public AfterPopulateUI AddPopulationToHex(int x, int y, string popType)
          {
              var pType =(PopulationType) Enum.Parse(typeof(PopulationType), popType);
              var hex = HexBoard.GetInstance().FindHex(new Point(x, y));
              HexBoard.GetInstance().AddPopulationToSelectedHex(pType, hex);
-             return hex;
+
+             var ui = new AfterPopulateUI();
+             ui.Hex = hex;
+             ui.PopulateMenus = GetPopulateMenus();
+             ui.MainNavbarUI = new MainNavbarUI();
+             return ui;
          }
 
         [WebMethod(true)]
@@ -119,6 +145,78 @@ namespace Eclipse
         public SupplyBoard GetSupplyBoard()
         {
             return GameState.GetInstance().SupplyBoard;
+        }
+
+        /// <summary>
+        /// Show hexes that you have an influence disk on
+        /// </summary>
+        /// <returns></returns>
+        [WebMethod(true)]
+        public List<TempMenu> GetInfluenceFromMenus()
+        {
+            var currentPlayer = GameState.GetInstance().CurrentPlayer;
+            var hexes =  HexBoard.GetInstance().Hexes.Where(x => x.Controller==(currentPlayer));
+            var result = new List<TempMenu>();
+            foreach (var hex in hexes)
+            {
+                result.Add(new TempMenu(new List<String> { "Influence from" }, hex));
+            }
+
+            return result;
+        }
+
+        [WebMethod(true)]
+        public List<TempMenu> GetInfluenceToMenus()
+        {
+            var currentPlayer = GameState.GetInstance().CurrentPlayer;
+            var hexesAll = HexBoard.GetInstance().Hexes.ToList();
+            var hexes = hexesAll.Where(x => x.IsInfluenceToPossible(currentPlayer)).ToList();
+            var result = new List<TempMenu>();
+            foreach (var hex in hexes)
+            {
+                result.Add(new TempMenu(new List<String> { "Influence to" }, hex));
+            }
+
+            return result;
+        }
+
+        [WebMethod(true)]
+        public MainNavbarUI GetMainNavbarUI()
+        {
+            return new MainNavbarUI();
+        }
+
+         [WebMethod(true)]
+        public AddInfluenceUI GetAddInfluenceUI()
+        {
+            return new AddInfluenceUI();
+        }
+
+         [WebMethod(true)]
+        public Hex AddInfluenceToLastHex()
+         {
+             var hex = HexBoard.GetInstance().LastSelectedHex;
+             hex.AddInfluence();
+             return hex;
+         }
+
+        [WebMethod(true)]
+        public Hex InfluenceFromHexToPlayerBoard(int x, int y)
+         {
+             return HexBoard.GetInstance().FindHex(x, y).RemoveInfluence();
+         }
+
+        [WebMethod(true)]
+        public void Research(String techname)
+        {
+            GameState.GetInstance().HasDoneMainAction = true;
+        }
+
+        [WebMethod(true)]
+        public MainNavbarUI NextPlayer()
+        {
+            GameState.GetInstance().NextPlayer();
+            return new MainNavbarUI();
         }
 
     }

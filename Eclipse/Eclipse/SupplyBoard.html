@@ -4,7 +4,7 @@
             <div class="modal-body">
                 <div id="research-menu" style="display:none">
            
-                        <button class=" btn btn-success">
+                        <button onclick="ResearchClicked(); return false;" class=" btn btn-success">
                         Research</button>
                      
               
@@ -19,6 +19,7 @@
                         <div class="nav navbar-nav navbar-left" style="min-width:160px">
                             <span id="brand" class="navbar-brand">Supply Board</span>
                             <p class="navbar-text">Discount: 4</p>
+                            <p class="navbar-text">Science Storage: 4</p>
                         </div>
                         <div>
                             <ul class="nav navbar-nav navbar-right">
@@ -54,7 +55,7 @@
                             </li>
                         </ul>
                         <div class="panel panel-primary techDescription" style="width:200px;display:none;">
-                            <div class="panel-heading">Panel heading without title</div>
+                            <div class="panel-heading"><span class="techCost"></span><label style="vertical-align:top" class="researchButton pull-right btn-xs btn btn-success">Research</label></div>
                             <div class="panel-body" style="font-size:small;">
                                 Panel content
                             </div>
@@ -71,6 +72,20 @@
  <script type="text/javascript">
      var _modalShown = false;
      var _supplyBoard;
+     var _lastTechName = "";
+     function ResearchClicked() {
+         args = {techname:_lastTechName}
+         $.ajax({
+             url: "EclipseService.asmx/Research",
+             data: JSON.stringify(args),             dataType: "json",             type: "POST",             contentType: 'application/json; charset=utf-8',
+             success: function (data) {
+                 var model = data["d"];
+                 $('.modal').modal('hide');
+                 RefreshNavbar();
+             }
+         });
+        
+     }
      function GetSupplyBoard() {
          $.ajax({
              url: "EclipseService.asmx/GetSupplyBoard",
@@ -92,7 +107,7 @@
 
      function DrawTechSegment(segment, index) {
 
-         var btnHtml = "";
+        
          var obj;
          debugger;
          if (index == 0) {
@@ -104,27 +119,54 @@
              $(obj).find('.techButtons').empty();
              $('.modal-body').append(obj);
          }
+         $(obj).find('.techTitle').html(segment.Name);
          $(obj).css('width', $('.modal').width()-50);
          for (var i = 0; i < segment.Technologies.length; i++) {
+           
              var tech = segment.Technologies[i];
              var adjustedName = tech.Name;
              if (tech.SupplyCount > 1)
-                 adjustedName+=" x" + tech.SupplyCount;
-             btnHtml += '<li><label data-trigger="focus" onclick="return false;" data-toggle="popover" data-name="' + tech.Name + '" data-cost="' + tech.CostDescription + '" data-description="' + tech.Description + '" class="btn btn-primary">' + adjustedName + '</label> </li>';
+                 adjustedName += " x" + tech.SupplyCount;
+             var btnClass = 'btn btn-primary';
+             if (!tech.IsAffordable) {
+                 btnClass = 'btn btn-default';
+             }
+             btnHtml = $('<li><label data-trigger="focus" onclick="return false;" data-toggle="popover" data-name="' + tech.Name + '" data-cost="' + tech.CostDescription + '" data-description="' + tech.Description + '" class="'+btnClass+'">' + adjustedName + '</label> </li>');
             
+             $(obj).find('.techButtons').append(btnHtml);
+
          }
+        /* $(obj).find('[data-toggle="popover"]').click(function (event) {
+             _lastTechName = $(event.currentTarget).attr('data-name');
+         });
+         $(obj).find('[data-toggle="popover"]').popover({
+             placement: 'top',
+             html: true,
+             content: function () {
+                 return $('#research-menu').html();
+
+             }
+         });*/
          
-         $(obj).find('.techButtons').append(btnHtml);
+         //$(obj).find('.techButtons').append(btnHtml);
          var desc = $(obj).find('.techDescription');
-         $(obj).find('.techButtons').on('mouseenter', '.btn-primary', function (event) {
-             if (!_modalShown)
+         $(obj).find('.techButtons').on('mouseenter', '.btn', function (event) {
+             if (!_modalShown || $(this).hasClass('btn-success'))
                  return false;
-             var firstLeft = $(obj).find('.techButtons').find('.btn-primary').first().offset().left;
+             var firstLeft = $(obj).find('.techButtons').find('.btn').first().offset().left;
              var marginLeft = $(this).offset().left - firstLeft;
-        
+             var techName = $(this).attr('data-name');
              $(obj).find('.techDescription').css('margin-left', marginLeft);
-             $(desc).find('.panel-heading').html($(this).attr('data-cost'));
+             $(desc).find('.techCost').html($(this).attr('data-cost'));
              $(desc).find('.panel-body').html($(this).attr('data-description'));
+             if ($(this).hasClass('btn-primary') && !_navbarUI.HasDoneMainAction)
+             {
+                 $(desc).find('.researchButton').attr('data-name', techName).show();
+               //  $(desc).find('.researchButton').show();
+             }
+             else {
+                 $(desc).find('.researchButton').hide();
+             }
              $(desc).show();
              $('[data-toggle="popover"]').not(this).popover('hide');
              
@@ -142,13 +184,12 @@
              return false;
          });
 
-         $(obj).find('[data-toggle="popover"]').popover({
-             placement: 'top',
-             html: true,
-             content: function () {
-                 return $('#research-menu').html();
-             }
+         $(obj).on('click', '.researchButton', function (event) {
+             _lastTechName = $(this).attr('data-name');
+             ResearchClicked();
          });
+
+
 
      }
 

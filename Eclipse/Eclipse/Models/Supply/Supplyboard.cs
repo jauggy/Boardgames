@@ -44,6 +44,8 @@ namespace Eclipse.Models.Supply
             {
                 var index = RandomGenerator.GetInt(0, AllTechnologies.Count - 1);
                 var randTech = AllTechnologies[index];
+                if (randTech == null)
+                    throw new NotImplementedException();
                 var existing = AvailableTechnologies.FirstOrDefault(x => x.Name == randTech.Name);
                 if(existing==null)
                 {

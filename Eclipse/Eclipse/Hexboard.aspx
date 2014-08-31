@@ -10,9 +10,12 @@
           var _tempScrollTop;
           var _tempScrollLeft;
           var _lastHex;
+          var _navbarUI;
+             
+
           function DrawPopSquare(popSquare) {
               var color = popSquare.Color;
-              var isAdvanced = popSquare.isAdvanced;
+              var isAdvanced = popSquare.IsAdvanced;
               var point = popSquare.CanvasLocation;
               //var ctx = canvas.getContext('2d');
               ctx.beginPath();
@@ -43,6 +46,7 @@
               ctx.lineWidth = 1;
               ctx.font = '10px sans-serif';
               ctx.fillStyle = 'black';
+              
               if (isAdvanced) {
                   ctx.textAlign = 'center';
                   ctx.textBaseline = 'middle';
@@ -80,23 +84,25 @@
                           dataType: "json",
                           type: "POST",
                           contentType: 'application/json; charset=utf-8',
-                          success: function (data) {
-                              var tempMenus = data["d"];
-                              $(tempMenus).each(function(index,menu){
-                                  ShowPopulateMenu(menu.Hex, menu.MenuItems);
-                              });
-                              
-                          }
+                          success: ShowPopulatableHexesCallback
                       });
                   
               
+          }
+
+          function ShowPopulatableHexesCallback(model) {
+              var tempMenus = model["d"];
+              $(tempMenus).each(function (index, menu) {
+                  ShowPopulateMenu(menu.Hex, menu.MenuItems);
+              });
+
           }
 
           function DrawHex(hex, color) {
               if (!hex.IsVisible)
                   return;
 
-            
+             
 
               var center_x = hex.CanvasLocation.X;
               var center_y = hex.CanvasLocation.Y;
@@ -120,7 +126,6 @@
               ctx.fillStyle = 'white';
               ctx.fill();
               DrawWormholes(hex);
-              
                 DrawComponents(hex);
                 DrawController(hex);
               
@@ -167,7 +172,7 @@
 
           function DrawWormholes(hex)
           {
-              debugger;
+          
               $(hex.Sides).each(function (index, side) {
                   if (side.HasWormHole)
                   {
@@ -220,6 +225,7 @@
                       var hexboard = data["d"];
                       _hexBoard = hexboard;
                       DrawHexboard();
+                      RefreshNavbar();
                   }
               });
           }
@@ -235,8 +241,12 @@
                   type: "POST",
                   contentType: 'application/json; charset=utf-8',
                   success: function (data) {
-                      var hex = data["d"];
-                      DrawHex(hex);
+                      var model = data["d"];
+                
+                      DrawHex(model.Hex);
+                      RefreshNavbarCallback({ d: model.MainNavbarUI });
+                      ShowPopulatableHexesCallback({ d: model.PopulateMenus });
+                      $('#log').html(model.Log);
                   }
               });
           }
@@ -299,9 +309,9 @@
                       var hexes = data["d"];
                       HideTempMenus();
                       $(hexes).each(function (index, item) {
-                          var callback = function () { GetExploreToHexes(item);};
+                          var callback = function () { HideMainActions(); GetExploreToHexes(item); };
                           ShowExploreFromMenu(item.CanvasLocation.X, item.CanvasLocation.Y,  callback);
-
+                         
                       });
                   }
               });
@@ -332,7 +342,9 @@
                       var hex = data["d"];
                       HideTempMenus();
                       DrawHex(hex);
-                      var callback = function () { Rotate(hex);};
+                      var callback = function (event) {
+                          RotateHandler(event, hex);
+                      };
                       ShowRotateMenu(hex.CanvasLocation.X, hex.CanvasLocation.Y, callback);
                   }
               });
@@ -346,8 +358,7 @@
                   success: function (data) {
                       var hex = data["d"];
                       DrawHex(hex);
-                      var callback = function () { Rotate(hex); };
-                      ShowRotateMenu(hex.CanvasLocation.X, hex.CanvasLocation.Y, callback);
+
                   }
              });
           }
@@ -364,6 +375,17 @@
               // Disable caching of AJAX responses  
               cache: false
           });
+
+          function RotateHandler(event, hex) {
+            
+              if ($(event.currentTarget).text() == "Rotate")
+                  Rotate(hex);
+              else
+              {
+                  HideTempMenus();
+                  $("#modalPlaceholder").load("addinfluence.html");
+              }
+          }
 
 
 
@@ -399,10 +421,14 @@
               var newId = x + y + '';
               var clone = klon.clone().attr('id', newId);
               $('#tempMenus').append(clone);
-              clone.find('.explorebutton').click(callback);
+              //clone.find('.explorebutton').click(callback);
               clone.css({ 'top': y + canvas.offsetTop + 35, 'left': x + _componentSize, 'position': 'absolute' });
 
               clone.show();
+
+              $(clone).on('click', '.btn', function (event) {
+                  callback(event);
+              });
           }
 
           function HideTempMenus() {
@@ -417,31 +443,172 @@
               
               $('#tempMenus').append(clone);
               $(stringList).each(function (index, o) {
-                  var callback = function () { ajaxAddPopulation(hex, o); HideTempMenus(); };
+                
                   var button = $(' <li><a href="javascript:void(0)">' + o + '</a></li>');
                   clone.find('.dropdown-menu').append(button);
-                  button.click(callback);
+                  
               });
+
+              clone.on('click', 'a', function (event) {
+                  if ($(this).text() == "Unknown")
+                  {
+                      $('#modalPlaceholder').load('ChoosePopulationType.html');
+                  }
+                  else {
+                      ajaxAddPopulation(hex, $(this).text());
+                  }
+                  
+                  HideTempMenus();
+                  
+                  return false;
+              });
+
               clone.css({ 'top': y + canvas.offsetTop + 40, 'left': x - clone.outerWidth() / 2, 'position': 'absolute' });
               clone.show();
           }
 
+          function ShowTempMenuMiddle(tempMenu, callback) {
+              var x = tempMenu.Hex.CanvasLocation.X;
+              var y = tempMenu.Hex.CanvasLocation.Y;
+              var coord = tempMenu.Hex.AxialCoordinates;
+              var btnHtml = "";
+              var mnu = $('#tempMenu').clone();
+              for (var i = 0; i < tempMenu.MenuItems.length; i++) {
+                  btnHtml += '<button type="button" data-x="' + coord.X + '" data-y="' + coord.Y + '" class="btn btn-warning">' + tempMenu.MenuItems + '</button>';
+              }
+              $('#tempMenus').append(mnu);
+              $(mnu).find('.btn-group-vertical').append(btnHtml);
+              $(mnu).find('.btn').click(function (event) {
+                  callback(event);
+              });
+              mnu.css({ top: y + canvas.offsetTop - $(mnu).outerHeight()/2, left: x - $(mnu).outerWidth() / 2 })
 
+          }
+
+          function ShowTempMenuBottom(tempMenu, callback) {
+              var x = tempMenu.Hex.CanvasLocation.X;
+              var y = tempMenu.Hex.CanvasLocation.Y;
+              var coord = tempMenu.Hex.AxialCoordinates;
+              var btnHtml = "";
+              var mnu = $('#tempMenu').clone();
+              for (var i = 0; i < tempMenu.MenuItems.length; i++) {
+                  btnHtml += '<button type="button" data-x="'+coord.X+'" data-y="'+coord.Y+'" class="btn btn-primary">' + tempMenu.MenuItems + '</button>';
+              }
+              $('#tempMenus').append(mnu);
+              $(mnu).find('.btn-group-vertical').append(btnHtml);
+              $(mnu).find('.btn').click(function (event) {
+                  callback(event);
+              });
+              mnu.css({top:y+canvas.offsetTop+40,left:x-$(mnu).outerWidth()/2})
+             
+          }
+
+          function GetInfluenceFromMenus(callback) {
+              HideTempMenus();
+              
+              $.ajax({
+                  url: "EclipseService.asmx/GetInfluenceFromMenus",
+                  data: '{}', dataType: "json", type: "POST", async: false, contentType: 'application/json; charset=utf-8',
+                  success: function (data) {
+                      var menus = data["d"];
+                      $(menus).each(function (index, menu) {
+                          ShowTempMenuBottom(menu, callback);
+                      });
+
+                  }
+              });
+          }
+
+          function InfluenceFromHexToPlayerBoard(x,y) {
+              HideTempMenus();
+              var args = { x: x, y: y };
+              $.ajax({
+                  url: "EclipseService.asmx/InfluenceFromHexToPlayerBoard",
+                  data: JSON.stringify(args), dataType: "json", type: "POST", async: false, contentType: 'application/json; charset=utf-8',
+                  success: function (data) {
+                      var hex = data["d"];
+                      DrawHex(hex);
+
+                  }
+              });
+          }
+
+          function GetInfluenceToMenus(callback) {
+              HideTempMenus();
+              
+              $.ajax({
+                  url: "EclipseService.asmx/GetInfluenceToMenus",
+                  data: '{}', dataType: "json", type: "POST", async: false, contentType: 'application/json; charset=utf-8',
+                  success: function (data) {
+                      var menus = data["d"];
+                      $(menus).each(function (index, menu) {
+                          ShowTempMenuMiddle(menu, callback);
+                      });
+
+                  }
+              });
+          }
+
+          function NextPlayer() {
+              HideTempMenus();
+              $('#log').empty();
+              $.ajax({
+                  url: "EclipseService.asmx/NextPlayer",
+                  data: '{}', dataType: "json", type: "POST", async: false, contentType: 'application/json; charset=utf-8',
+                  success: RefreshNavbarCallback
+              });
+          }
+
+
+          function HideMainActions() {
+              
+              $('.mainaction').css('display', 'none');
+          }
+
+          function RefreshNavbar() {
+              debugger;
+              $.ajax({
+                  url: "EclipseService.asmx/GetMainNavbarUI",
+                  data: '{}', dataType: "json", type: "POST", async: false, contentType: 'application/json; charset=utf-8',
+                  success: RefreshNavbarCallback
+              });
+          }
+
+          function RefreshNavbarCallback(data) {
+              var model = data["d"];
+              _navbarUI = model;
+              $('.navbar-brand').html(model.CurrentPlayerName);
+              if (model.PopulatesRemaining > 0) {
+                  $('#populateTab').text('Populate (' + model.PopulatesRemaining + ')');
+                  $('#populateTab').show();
+              }
+              else {
+                  $('#populateTab').hide();
+              }
+              debugger;
+              if (model.HasDoneMainAction) {
+                  $('.mainaction').css('display', 'none');
+              }
+              else {
+                  $('.mainaction').css('display', 'inline');
+              }
+
+          }
 
 
           $(document).ready(function () {
               canvas = document.getElementById('myCanvas');
               ctx = canvas.getContext('2d');
-
+              $('#log-container').css('top', $('.navbar').first().height())
               InitCanvasConstants();
-              canvas.addEventListener('click', function (evt) {
+           /*   canvas.addEventListener('click', function (evt) {
                   var mousePos = getMousePos(canvas, evt);
                   //var message = alert('Mouse position: ' + mousePos.x + ',' + mousePos.y);
                   GetNearestHex(mousePos.x, mousePos.y);
-              }, false);
+              }, false);*/
 
               GetHexboard();
-
+             
               var windowHeight = $(window).height();
               $(window).scrollTop(canvas.height / 2 - windowHeight / 2 + canvas.offsetTop);
               $(window).scrollLeft(canvas.width / 2 - $(window).width() / 2 + canvas.offsetLeft);
@@ -480,6 +647,25 @@
                   HideTempMenus();
               });
 
+              $('#influenceHexToBoard').click(function (event) {
+                  
+                  GetInfluenceFromMenus(function (event) {
+                      var x = $(event.currentTarget).attr('data-x');
+                      var y = $(event.currentTarget).attr('data-y');
+                      InfluenceFromHexToPlayerBoard(x, y);
+                  });
+              });
+
+              $('#influenceBoardToHex').click(function (event) {
+                  GetInfluenceToMenus(function (event) {
+
+                  });
+              });
+
+              $('#nextPlayerTab').click(function (event) {
+                  NextPlayer();
+              });
+
 
           });
            
@@ -489,7 +675,32 @@
      
  <img style="display:none"  id="ancientImg" src="Images/ancient.png"/>
    <img style="display:none"  id="discoveryImg" src="Images/discoveryshield.png"/> 
-    <div id="exploreFromDiv" style="display:none; background-color:white" class="explore">
+
+    <!--Begin temp menus-->
+    <div style="display:none">
+          <div id="dropMenu" style="position:absolute">
+             <!-- Single button -->
+                <div class="btn-group">
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    Action <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Separated link</a></li>
+                  </ul>
+                </div>
+        </div>
+
+        <div id="tempMenu" style="position:absolute">
+            <div class="btn-group-vertical">
+                         
+            </div>
+        </div>
+
+          <div id="exploreFromDiv" style="display:none; background-color:white" class="explore">
             <div class="btn-group-vertical">
                <button type="button" class="btn btn-primary explorebutton">Explore from</button>
             
@@ -503,12 +714,14 @@
             </div>
         </div>
 
-            <div id="rotateDiv" style="display:none; background-color:white" class="explore">
+       <div id="rotateDiv" style="display:none; background-color:white" class="explore">
             <div class="btn-group-vertical">
                <button type="button" class="btn btn-success explorebutton">Rotate</button>
-             <button type="button" onclick="HideTempMenus(); return false;" class="btn btn-default">Accept</button>
+             <button type="button" data-toggle="popover" class="btn btn-default">Accept</button>
             </div>
         </div>
+
+
 
     
             <div id="populateDiv" style="display:none; background-color:white" >
@@ -519,7 +732,9 @@
                     
                   </ul>
         </div>
-
+    </div>
+  
+    <!--End temp menus-->
      <div id="tempMenus">
     </div>
     <div>
@@ -528,6 +743,13 @@ Your browser does not support the HTML5 canvas tag.
 </canvas>
     </div>
    
+    <div style="position:fixed; top:100px; left:0px; padding:10px"  id="log-container">
+
+                    <div  style="font-size:small;">
+                      <p id="log" class="text-warning">...</p>
+                    </div>
+          
+    </div>
 
 <div id="modalPlaceholder"></div>
 

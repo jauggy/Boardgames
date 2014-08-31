@@ -18,18 +18,25 @@ namespace Eclipse.Models
          [ScriptIgnore]
         public PlayerBoard PlayerBoard { get; set; }
         public String Name { get; set; }
+        public int PopulatesRemaining { get; set; }
         public Player(UniqueMethods uniqueMethods, string color)
         {
             UniqueMethods = uniqueMethods;
             Color = color;
             PlayerBoard = new PlayerBoard();
-            
+            PopulatesRemaining = 2;
             Name = FirstCharToUpper(color) + " " + uniqueMethods.GetName();
         }
 
         public Player():this(UniqueHelper.GetNewRandomUnique(), UniqueHelper.GetRandomColor())
         {
             
+        }
+
+        public void PreturnSetup()
+        {
+            PopulatesRemaining = 2;
+            PlayerBoard.Log = "";
         }
 
         public void SetupBoard()
@@ -54,6 +61,15 @@ namespace Eclipse.Models
             return PlayerBoard.GetDiscount(type);
         }
 
+        public bool HasTechnology(String techName)
+        {
+            return PlayerBoard.Technologies.Any(x => x.Name.Equals(techName, StringComparison.OrdinalIgnoreCase));
+        }
+
+        public bool HasAdvancedTechnology(PopulationType type)
+        {
+            return HasTechnology("Advanced " + type.ToString());
+        }
         
 
     }

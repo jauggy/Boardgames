@@ -14,6 +14,7 @@ namespace Eclipse.Models.Tech
         public int DefaultCost { get; set; }
         public int MinCost { get; set; }
         private String _description;
+        public bool IsAffordable { get { return GetIsAffordable(); } }
         public String Description 
         { 
             get 
@@ -66,6 +67,11 @@ namespace Eclipse.Models.Tech
         public String GetCostDescription()
         {
             return String.Format("Cost: {0} <small>({1}/{2})</small>",AdjustedCost, DefaultCost,MinCost);
+        }
+
+        public bool GetIsAffordable()
+        {
+            return GameState.GetInstance().CurrentPlayer.PlayerBoard.ScienceStorage >= GetAdjustedCost();
         }
 
 

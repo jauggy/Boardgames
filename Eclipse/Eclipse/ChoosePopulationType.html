@@ -1,0 +1,89 @@
+﻿<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Do you want to add influence?</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="panel  panel-primary" style="width:200px;">
+                                <div class="panel-heading">Hex Stats</div>
+                                <div id="hexDescription" class="panel-body" style="font-size:small;">
+                                    1 Money, 1 Advanced Money
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="panel panel-primary" style="width:200px;">
+                                <div class="panel-heading">Upkeep</div>
+                                <div id="upkeepDescription" class="panel-body" style="font-size:small;">
+                                    Current Upkeep: 4</br>
+                                    Next Upkeep: 3</br>
+                                    Money Storage: 5
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+
+
+            </div> <!--modal body end-->
+
+            <div class="modal-footer">
+                <button id="addInfluenceButton" type="button" class="btn btn-primary" data-dismiss="modal">Add influence</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">No influence</button>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    function GetModel() {
+        $.ajax({
+            url: "EclipseService.asmx/GetAddInfluenceUI",
+            data: '{}',            dataType: "json",            type: "POST",            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                var model = data["d"];
+                $('#hexDescription').html(model.HexDescription);
+                $('#upkeepDescription').html(model.UpkeepDescription);
+            }
+        });
+    }
+
+    function AddInfluence() {
+        $.ajax({
+            url: "EclipseService.asmx/AddInfluenceToLastHex",
+            data: '{}', dataType: "json", type: "POST", contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                var model = data["d"];
+                DrawHex(model);
+            }
+        });
+    }
+
+
+
+    $(document).ready(function () {
+        $('#addInfluenceButton').click(function (event) {
+            AddInfluence();
+        });
+
+        GetModel();
+        $('.modal').modal();
+        $('.modal').on('shown.bs.modal', function (e) {
+
+
+        });
+    });
+
+</script>

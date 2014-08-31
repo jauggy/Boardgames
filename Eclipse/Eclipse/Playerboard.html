@@ -22,9 +22,9 @@
                             <!-- Collect the nav links, forms, and other content for toggling -->
                             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-9">
                                 <ul class="nav navbar-nav">
-                                    <li class="active" id="technologyView"><a href="javascript:void(0)">Technologies</a></li>
+                                    <li  id="technologyView"><a href="javascript:void(0)">Technologies</a></li>
                                     <li id="blueprintView"><a href="javascript:void(0)">Blueprints</a></li>
-                                    <li id="resourceView"><a href="javascript:void(0)">Resources</a></li>
+                                    <li class="active" id="resourceView"><a href="javascript:void(0)">Resources</a></li>
                                     <li class="dropdown">
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span id="selectedPlayer"></span>Switch Player <span class="caret"></span></a>
                                         <ul id="playerList" class="dropdown-menu" role="menu"></ul>
@@ -83,7 +83,7 @@
 <script type="text/javascript">
     var _model;
     var _viewSelected = "Technologies";
-    var _selectedPlayer;
+    var _selectedPlayer; //name only 
     var _modalShown =false;
 
         $('.nav li').not('.dropdown').on('click', function (event) {
@@ -116,7 +116,7 @@
                     });
 
                     
-                    DrawTechnologies(_model.CurrentPlayer.PlayerBoard);
+                    DrawResourceView();
                 }
             });
         }
@@ -173,7 +173,7 @@
                     var techButton = $(obj).find('.techButtonExample').first().clone();
                    // techButton.attr('id', tech.Name + 'button');
                     $(techButton).css('display', 'inline');
-                    $(techButton).find('button').html(tech.Name);
+                    $(techButton).find('.techName').html(tech.Name);
                     $(obj).find('.techButtons').append(techButton);
 
                     $(techButton).mouseenter(function (event) {
@@ -213,9 +213,9 @@
                 $(obj).find('.techFooter').append(footerList);
                 $(obj).find('.techDescription').addClass(GetClass(index, 'panel'));
 
-                $(obj).find('.hover').mouseleave(function (event) {
+              /*  $(obj).find('.hover').mouseleave(function (event) {
                     $(obj).find('.techDescription').css('display', 'none');
-                });
+                });*/
 
         }
 

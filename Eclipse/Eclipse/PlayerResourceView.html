@@ -1,72 +1,79 @@
-﻿<div class="resource-view">
-    <div class="bs-callout bs-callout-warning">
-        <h4>
-            Trade Resources
+﻿
+
+<div id="resource-segment-container">
+    <!--Put all the items here-->
+</div>
+<div class="bs-callout bs-callout-success">
+    <h4>
+        Trade Resources
+    </h4>
+    <div class="panel panel-success">
+        <div class="panel-body">
+            <form class="form-horizontal" role="form">
+                <div class="form-inline">
+                    <label>Convert 3 </label>
+                    <select class="form-control">
+                        <option>Science</option>
+                        <option>Materials</option>
+
+                    </select>&nbsp;
+                    <label> to </label>&nbsp;
+                    <select class="form-control">
+                        <option>Science</option>
+                        <option>Materials</option>
+
+                    </select>&nbsp;
+                    <button class="btn btn-default">Convert</button>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+</div>
+<div style="display:none">
+    <div class="bs-callout bs-callout-primary resource-segment">
+        <h4 class="resource-segment-heading">
+            Money
         </h4>
-        <div class="panel panel-warning">
-            <div class="panel-body">
-                <form class="form-horizontal" role="form">
-                    <div class="form-inline">
-                        <label>Convert 3 </label>
-                        <select class="form-control">
-                            <option>Science</option>
-                            <option>Materials</option>
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="panel panel-primary">
+                    <div class="panel-body" style="width:300px">
+                        Production: 4</br>
+                        Upkeep: 7
 
-                        </select>&nbsp;
-                        <label> to </label>&nbsp;
-                        <select class="form-control">
-                            <option>Science</option>
-                            <option>Materials</option>
 
-                        </select>&nbsp;
-                        <button class="btn btn-default">Convert</button>
                     </div>
-                </form>
 
 
+                </div>
             </div>
+           
+
+
         </div>
     </div>
-        <div class="bs-callout bs-callout-primary">
-            <h4>
-                Money
-            </h4>
-            <div class="row">
-                <div class="col-lg-2">
-                    <div class="panel panel-primary">
-                        <div class="panel-body">
-                            Production: 4</br>
-                            Upkeep: 7
-                           
+</div>
 
-                        </div>
-
-
-                    </div>
-                </div>
-                <div class="col-lg-2">
-                    <div class="panel panel-primary">
-                        <div class="panel-body">
-                            Next Production: 4</br>
-                            Next Upkeep: 7</br>
-                            Next Storage: 5
-
-                        </div>
-
-
-                    </div>
-                </div>
-
-
-
-            </div>
-        </div>
-    </div>
 
 <script type="text/javascript">
    
+    function GetResourceSegments() {
+
+        var board = GetSelectedPlayerBoard();
+        for (var i = 0; i < board.ResourceSegments.length; i++) {
+            var obj = $('.resource-segment').first().clone();
+            var seg = board.ResourceSegments[i];
+            $(obj).find('.resource-segment-heading').html(seg.Name);
+            $(obj).find('.panel-body').html(seg.Description);
+            $('#resource-segment-container').append(obj);
+        }
+    }
 
     $(document).ready(function () {
+        debugger;
+        GetResourceSegments();
         $('select').change(function () {
             debugger;
             $(this).val();

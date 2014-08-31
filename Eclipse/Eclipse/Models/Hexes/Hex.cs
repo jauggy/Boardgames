@@ -109,6 +109,15 @@ namespace Eclipse.Models.Hexes
             randomSides.ForEach(x => x.HasWormHole = true);
         }
 
+        public List<Hex> GetNeighbourHexes()
+        {
+            var directions = Direction.GetDirectionsAsPoints();
+            var neighbourPoints = directions.Select(x => x.AddPoint(this.AxialCoordinates));
+            var neighbourHexes = HexBoard.GetInstance().GetHexes(neighbourPoints);
+
+            return neighbourHexes;
+        }
+
         public List<Hex> GetAccessibleHexes()
         {
             var directions = Sides.Where(x => x.HasWormHole).Select(x => x.PointDirection).ToList();
@@ -147,14 +156,19 @@ namespace Eclipse.Models.Hexes
         public void Rotate(Hex fromHex)
         {
             if (fromHex == null)
-                fromHex = HexBoard.GetInstance().LastSelectedHex;
+                fromHex = HexBoard.GetInstance().LastExploredFromHex;
             //rotate but there must be a wormhole that connects to the from hex.
             var wormHoleDirection = fromHex.AxialCoordinates.SubtractPoint(this.AxialCoordinates);
             
             Rotate();
+            int counter = 0;
             while (!Sides.Where(x => x.PointDirection.Equals(wormHoleDirection)).Any(x => x.HasWormHole))
             {
+                if (counter > 6)
+                    throw new Exception("Rotate was called with illegal from hex");
                 Rotate();
+                counter++;
+
             }
 
         }
@@ -345,19 +359,82 @@ namespace Eclipse.Models.Hexes
                 player.PlayerBoard.RemovePop(popType);
                 popSquare.Owner = player;
             }
+            player.PopulatesRemaining--;
 
         }
 
         public List<String> GetPopulatableTypes()
         {
-            if (GameState.GetInstance().CurrentPlayer == this.Controller)
+            var player = GameState.GetInstance().CurrentPlayer;
+            if (player == this.Controller)
             {
-                return PopulationSquares.Where(x=>!x.IsOccupied).Select(x => x.Type.ToString()).Distinct().ToList();
+                return PopulationSquares.Where(x=>!x.IsOccupied && x.IsTechSufficient(player)).Select(x => x.Type.ToString()).Distinct().ToList();
             }
             else
             {
                 return new List<String>();
             }
+        }
+
+        public bool IsInfluenceToPossible(Player currentplayer)
+        {
+
+            if (Controller != null || !IsVisible || HasAncient)
+                return false;
+            if(Ships.Any(x=>x.Owner!=currentplayer))
+                return false;
+
+            if (IsAdjacentToFriendlyShipOrHex(currentplayer))
+                return true;
+
+            if (HasFriendlyShip(currentplayer))
+                return true;
+
+            return false;
+        }
+
+        public bool HasFriendlyShip(Player player)
+        {
+            return Ships.Any(x => x.Owner == player);
+        }
+
+        private bool IsAdjacentToFriendlyShipOrHex(Player player)
+        {
+            var hexes = GetNeighbourHexes();
+            if (hexes.Any(x => x.Controller == player || x.HasFriendlyShip(player)))
+                return true;
+            else
+                return false;
+        }
+
+        public String GetDescription()
+        {
+            var array = PopulationSquares.Select(x => x.GetDescription()).OrderBy(y => y.ToString());
+            return String.Join("</br>", array);
+        }
+
+        public void AddInfluence()
+        {
+            var player = GameState.GetInstance().CurrentPlayer;
+            this.Controller = player;
+            player.PlayerBoard.RemoveInfluenceDisk();
+        }
+
+        public Hex RemoveInfluence()
+        {
+            this.Controller = null;
+            var player = GameState.GetInstance().CurrentPlayer;
+            player.PlayerBoard.AddInfluenceDisk();
+
+            PopulationSquares.ForEach(x =>
+                {
+                    if (x.Owner != null)
+                    {
+                        x.Owner.PlayerBoard.AddPopulationCube(x.Type);
+                        x.Owner = null;
+                    }
+                });
+            return this;
         }
     }
 }

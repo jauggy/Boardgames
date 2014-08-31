@@ -54,9 +54,24 @@ namespace Eclipse.Models
             }
         }
 
-        public void AddPopulation(Player player)
+        public String GetDescription()
         {
-
+            var msg = "";
+            if (IsAdvanced)
+                msg += "Advanced ";
+            msg += Type.ToString();
+            return msg;
         }
+
+        public bool IsTechSufficient(Player player)
+        {
+            if (!IsAdvanced)
+                return true;
+            else
+            {
+                return player.HasAdvancedTechnology(this.Type);
+            }
+        }
+
     }
 }
