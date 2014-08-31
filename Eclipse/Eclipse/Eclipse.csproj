@@ -101,6 +101,7 @@
     <Content Include="Scripts\typeahead.js" />
     <Content Include="Start.aspx" />
     <Content Include="SupplyBoard.html" />
+    <Content Include="UpgradeView.html" />
     <Content Include="Web.config" />
     <Content Include="EclipseService.asmx" />
   </ItemGroup>
@@ -118,6 +119,7 @@
     <Compile Include="Models\CanvasConstants.cs" />
     <Compile Include="Models\Playerboards\ResourceSegment.cs" />
     <Compile Include="Models\Playerboards\TechnologySegment.cs" />
+    <Compile Include="Models\Ships\BonusShipPart.cs" />
     <Compile Include="Models\Ships\IShipPart.cs" />
     <Compile Include="Models\Ships\ShipHelper.cs" />
     <Compile Include="Models\UI\AddInfluenceUI.cs" />
@@ -155,6 +157,7 @@
     <Compile Include="Models\Tech\Technology.cs" />
     <Compile Include="Models\Tech\TechnologyFactory.cs" />
     <Compile Include="Models\Tech\TechnologyType.cs" />
+    <Compile Include="Models\UI\UpgradeUI.cs" />
     <Compile Include="Models\Unique\DracoUnique.cs" />
     <Compile Include="Models\Unique\EridaniUnique.cs" />
     <Compile Include="Models\Unique\HumanUnique.cs" />

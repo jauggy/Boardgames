@@ -28,7 +28,7 @@ namespace Eclipse.Models.Hexes
         public List<HexSide> Sides { get; set; }
         public Player Controller { get; set; }
         public bool HasAncient { get { return Ships.Any(x => x.IsAncient); } }
-
+        public bool HasDiscoveryToken { get; private set; }
         public Hex()
             : this(new Point(0,0))
         {
@@ -435,6 +435,11 @@ namespace Eclipse.Models.Hexes
                     }
                 });
             return this;
+        }
+
+        public void AddDiscoveryToken(int discoveryTokens)
+        {
+            HasDiscoveryToken = discoveryTokens > 0;
         }
     }
 }

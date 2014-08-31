@@ -200,7 +200,23 @@ namespace Eclipse.Models
         {
             Storage[type] = value;
         }
+        public ShipBlueprint GetBlueprint(String name)
+        {
+            if (name == "Interceptor")
+                return InterceptorBlueprint;
+            else if (name == "Cruiser")
+                return CruiserBlueprint;
+            else if (name == "Dreadnought")
+                return DreadnoughtBlueprint;
+            else if (name == "Starbase")
+                return StarbaseBlueprint;
+            else throw new NotImplementedException();
+       }
 
+        public List<ShipPart> GetAvailableShipParts()
+        {
+            return  Technologies.Where(x => x.ShipPart != null).Select(x => x.ShipPart).Distinct().ToList();
+        }
 
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Eclipse.Models.Hexes;
 using Eclipse.Models.Playerboards;
+using Eclipse.Models.Ships;
 using Eclipse.Models.Tech;
 using System;
 using System.Collections.Generic;
@@ -30,8 +31,7 @@ namespace Eclipse.Models.Unique
             print.AddShipPart(BasicShipPart.GetIonCannon());
             print.AddShipPart(BasicShipPart.GetNuclearDrive());
             print.AddShipPart(BasicShipPart.GetNuclearSource());
-            print.ComputerBonus = 1;
-            print.EnergySourceBonus = 2;
+            print.AddShipPart(new BonusShipPart(1, 2, 0));
             return print;
         }
 
@@ -59,10 +59,8 @@ namespace Eclipse.Models.Unique
             var print = new ShipBlueprint(4, 3);
             print.AddShipPart(BasicShipPart.GetHull());
             print.AddShipPart(BasicShipPart.GetHull());
-            print.InitiativeBonus = 2;
+            print.SetBonus(1, 5, 2);
             print.AddShipPart(BasicShipPart.GetElectronComputer());
-            print.EnergySourceBonus = 5;
-            print.ComputerBonus = 1;
             return print;
         }
 

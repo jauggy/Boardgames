@@ -1,4 +1,5 @@
 ﻿using Eclipse.Models.Hexes;
+using Eclipse.Models.Ships;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,7 @@ namespace Eclipse.Models.Unique
         public override Playerboards.ShipBlueprint CreateDreadnoughtBlueprint()
         {
             var print  = base.CreateDreadnoughtBlueprint();
-            print.EnergySourceBonus = 1;
+            print.SetBonus(0, 1, 0);
             return print;
         }
 

@@ -19,9 +19,8 @@ namespace Eclipse.Models.Playerboards
         public int Initiative { get { return ShipParts.Sum(x => x.Initiative); } }
         public int MaterialCost { get; set; }
         public int Size { get; set; }
-        public int EnergySourceBonus { get; set; }
-        public int InitiativeBonus { get; set; }
-        public int ComputerBonus { get; set; }
+
+
         public int Movement { get;set; }
         public List<int> MissileDamage { get { return GetMissileDamage(); } }
         public List<int> CannonDamage { get { return GetCannonDamage(); } }
@@ -41,6 +40,12 @@ namespace Eclipse.Models.Playerboards
         public void AddShipPart(ShipPart part)
         {
             ShipParts.Add(part);
+        }
+
+        public void SetBonus(int computer, int energySource, int initiative)
+        {
+            this.ShipParts.RemoveAll(x => x.IsBonus);
+            AddShipPart(new BonusShipPart(computer, energySource, initiative));
         }
 
         public void RemoveShipPart(ShipPart part)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Eclipse.Models.Playerboards;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -7,6 +8,9 @@ namespace Eclipse.Models.Ships
 {
     public class ShipHelper
     {
+
+        
+
         public static String GetDescription(IShipPart part)
         {
             var list = new List<String>();
@@ -36,5 +40,7 @@ namespace Eclipse.Models.Ships
 
             return String.Join("</br>", list);
         }
+
+
     }
 }

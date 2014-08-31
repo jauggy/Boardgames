@@ -26,17 +26,17 @@ namespace Eclipse.Models.Unique
         {
             var print = base.CreateInterceptorBlueprint();
             print.AddShipPart(BasicShipPart.GetGaussShield());
-            print.InitiativeBonus = 3;
-            print.EnergySourceBonus = 1;
+            print.SetBonus(0, 1, 3);
             return print;
         }
 
         public override Playerboards.ShipBlueprint CreateCruiserBlueprint()
         {
             var print =  base.CreateCruiserBlueprint();
-            print.InitiativeBonus = 2;
+            print.SetBonus(0, 2, 2);
+           
             print.AddShipPart(BasicShipPart.GetGaussShield());
-            print.EnergySourceBonus = 2;
+         
             return print;
         }
 
@@ -44,15 +44,16 @@ namespace Eclipse.Models.Unique
         {
             var print =  base.CreateDreadnoughtBlueprint();
             print.AddShipPart(BasicShipPart.GetGaussShield());
-            print.EnergySourceBonus = 3;
-            print.InitiativeBonus = 1;
+            print.SetBonus(0, 3, 1);
+
             return print;
         }
 
         public override Playerboards.ShipBlueprint CreateStarbaseBlueprint()
         {
             var print = base.CreateStarbaseBlueprint();
-            print.InitiativeBonus = 5;
+            print.SetBonus(0, 0, 5);
+       
             print.AddShipPart(BasicShipPart.GetGaussShield());
             return print;
         }

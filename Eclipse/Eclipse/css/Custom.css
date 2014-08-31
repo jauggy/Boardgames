@@ -1,4 +1,4 @@
-﻿.list-inline {
+﻿ .list-inline {
   white-space:nowrap;
   float:none;
 }
@@ -55,4 +55,8 @@
 
 #pbBody .resource-view .panel{
     min-width:200px;
+}
+
+#upgrade-view li{
+    padding-bottom:10px;
 }

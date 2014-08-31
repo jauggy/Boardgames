@@ -204,7 +204,8 @@ namespace Eclipse.Models.Hexes
             var advancedPop = RandomGenerator.GetInt(new List<int> { 2, 5, 2 });
             hex.AddRandomPopSquare(normalPop, false);
             hex.AddRandomPopSquare(advancedPop, true);
-            
+            var discoveryTokens = RandomGenerator.GetInt(new List<int> {4,4 });
+            hex.AddDiscoveryToken(discoveryTokens);
         }
 
         public void PopulateLevel2Hex(Hex hex)
@@ -213,7 +214,8 @@ namespace Eclipse.Models.Hexes
             var advancedPop = RandomGenerator.GetInt(new List<int> { 6, 3, 2});
             hex.AddRandomPopSquare(normalPop, false);
             hex.AddRandomPopSquare(advancedPop, true);
-  
+            var discoveryTokens = RandomGenerator.GetInt(new List<int> { 5, 6 });
+            hex.AddDiscoveryToken(discoveryTokens);
         }
 
 
@@ -224,6 +226,8 @@ namespace Eclipse.Models.Hexes
             var advancedPop = RandomGenerator.GetInt(new List<int> { 9, 8 });
             hex.AddRandomPopSquare(normalPop, false);
             hex.AddRandomPopSquare(advancedPop, true);
+            var discoveryTokens = RandomGenerator.GetInt(new List<int> { 8, 9 });
+            hex.AddDiscoveryToken(discoveryTokens);
         }
 
         public List<Hex> GetExploreFromHexes()

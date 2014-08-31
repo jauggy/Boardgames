@@ -16,6 +16,7 @@ namespace Eclipse.Models.Ships
          List<int> MissileDamage { get;  }
          int Initiative { get;  }
          int Movement { get;  }
+         bool IsBonus { get; }
 
     }
 }

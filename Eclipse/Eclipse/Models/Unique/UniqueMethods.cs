@@ -53,8 +53,9 @@ namespace Eclipse.Models
             print.AddShipPart(BasicShipPart.GetNuclearDrive());
             print.AddShipPart(BasicShipPart.GetNuclearSource());
             print.Size = 4;
+            print.SetBonus(0, 0, 2);
             print.MaterialCost = 3;
-            print.InitiativeBonus = 2;
+            
             return print;
         }
 
@@ -65,7 +66,8 @@ namespace Eclipse.Models
             print.AddShipPart(BasicShipPart.GetHull());
             print.AddShipPart(BasicShipPart.GetElectronComputer());
             print.MaterialCost = 5;
-            print.InitiativeBonus = 1;
+            print.SetBonus(0, 0, 1);
+            
             return print;
             
         }
@@ -84,8 +86,8 @@ namespace Eclipse.Models
         public virtual ShipBlueprint CreateStarbaseBlueprint()
         {
             var print = new ShipBlueprint();
-            print.InitiativeBonus = 4;
-            print.EnergySourceBonus = 3;
+            print.SetBonus(0, 3, 4);
+           
             print.Size = 4;
             print.MaterialCost = 4;
             print.AddShipPart(BasicShipPart.GetHull());

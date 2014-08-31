@@ -666,6 +666,10 @@
                   NextPlayer();
               });
 
+              $('#upgradeTab').click(function (event) {
+                  $('#modalPlaceholder').load('UpgradeView.html');
+              });
+
 
           });
            
