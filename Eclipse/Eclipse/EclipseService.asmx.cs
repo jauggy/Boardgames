@@ -218,6 +218,11 @@ namespace Eclipse
             GameState.GetInstance().NextPlayer();
             return new MainNavbarUI();
         }
+           [WebMethod(true)]
+        public UpgradeUI GetUpgradeUI(String shipType)
+        {
+            return new UpgradeUI(shipType);
+        }
 
     }
 }

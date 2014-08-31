@@ -10,11 +10,11 @@ namespace Eclipse.Models.UI
     public class UpgradeUI
     {
         //Need array to maintain order in the UI
-        public ShipPart[] WorkshopShipParts { get; set; }
-        public ShipPart[] AvailableShipParts { get; set; }
+        public ShipPart[] WorkshopShipParts { get { return WorkshopParts.ToArray(); } }
+        public ShipPart[] AvailableShipParts { get { return AvailableParts.ToArray(); } }
 
-        public List<ShipPart> WorkshopParts { get; set; }
-        public List<ShipPart> AvailableParts {get;set;}
+        private List<ShipPart> WorkshopParts { get; set; }
+        private List<ShipPart> AvailableParts { get; set; }
         private ShipBlueprint OriginalPrint { get; set; }
 
         public String OriginalDescription { get; set; }
@@ -27,14 +27,14 @@ namespace Eclipse.Models.UI
             WorkshopParts = board.GetBlueprint(shipType).ShipParts;
             AvailableParts = board.GetAvailableShipParts();
 
-            for(var i=0;i<WorkshopShipParts.Count();i++)
+            for (var i = 0; i < WorkshopParts.Count(); i++)
             {
-                WorkshopShipParts[i].ID = i;
+                WorkshopParts[i].ID = i;
             }
-            for(var j = 0; j <AvailableShipParts.Count();j++)
+            for (var j = 0; j < AvailableParts.Count(); j++)
             {
 
-                AvailableShipParts[j].ID = -(j + 1);
+                AvailableParts[j].ID = -(j + 1);
             }
 
         }

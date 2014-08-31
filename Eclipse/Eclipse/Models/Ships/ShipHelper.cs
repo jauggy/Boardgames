@@ -14,11 +14,11 @@ namespace Eclipse.Models.Ships
         public static String GetDescription(IShipPart part)
         {
             var list = new List<String>();
-            if (part.CannonDamage.Count > 0)
+            if (part.CannonDamage!= null && part.CannonDamage.Count > 0)
             {
                 list.Add("Cannon Damage: " + String.Join("+", part.CannonDamage));
             }
-            if (part.MissileDamage.Count > 0)
+            if (part.MissileDamage!=null && part.MissileDamage.Count > 0)
             {
                 list.Add("Missile Damage: " + String.Join("+", part.MissileDamage));
             }

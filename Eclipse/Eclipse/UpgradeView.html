@@ -2,46 +2,76 @@
 <div class="modal fade" id="upgrade-view" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="width:100%">
         <div class="modal-content">
-        <div class="modal-header">
-            <!--close button-->
-            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+       
+            <div class="modal-body">
+                <nav class="navbar navbar-inverse" role="navigation">
+                    <div class="container-fluid">
+                        <div class="nav navbar-nav navbar-left" style="min-width:160px">
+                            <span class="navbar-brand">Brand</span>
+
+                        </div>
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-9">
+                            <ul class="nav navbar-nav">
+                              
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span id="selectedPlayer"></span>Switch Blueprint <span class="caret"></span></a>
+                                    <ul class="dropdown-menu upgrade-blueprint-select" role="menu">
+                                        <li ><a href="javascript:void(0)">Interceptor</a></li>
+                                        <li ><a href="javascript:void(0)">Cruiser</a></li>
+                                        <li ><a href="javascript:void(0)">Dreadnought</a></li>
+                                        <li ><a href="javascript:void(0)">Starbase</a></li>
+                                    </ul>
+                                </li>
 
 
-            <h4 class="modal-title">Upgrade</h4> 
-           
-        </div>
-            <div class="modal-body" >
-                
+
+                            </ul>
+
+                            <ul class="nav navbar-nav navbar-right">
+                                <li>
+                                    <a class="closemodal" href="javascript:void(0)">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div><!-- /.navbar-collapse -->
+
+
+                    </div><!-- /.container-fluid -->
+                </nav>
+
+
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-3"></div>
-                            <div class="col-lg-3">
-                                <div class="panel panel-primary">
-                                    <div class="panel-heading">
-                                        Original Blueprint
-                                    </div>
-                                    <div class="panel-body ">
-                                        Missile: 3
-                                    </div>
+                        <div class="col-lg-3">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    Original Blueprint
+                                </div>
+                                <div class="panel-body ">
+                                    Missile: 3
                                 </div>
                             </div>
-                            <div class="col-lg-3">
-                                <div class="panel panel-primary">
-                                    <div class="panel-heading">
-                                        New Blueprint
-                                    </div>
-                                    <div class="panel-body ">
-                                        Missile: 3
-                                    </div>
-                                </div>
-                            </div>
-                        <div class="col-lg-3"></div>
                         </div>
+                        <div class="col-lg-3">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    New Blueprint
+                                </div>
+                                <div class="panel-body ">
+                                    Missile: 3
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3"></div>
+                    </div>
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="bs-callout bs-callout-primary">
                                 <h4>Ship Parts for New Ship</h4></br>
-                                <ul class="list-inline">
+                                <ul id="upgrade-workshop-list" class="list-inline">
                                     <li>
                                         <label class="btn btn-primary">Tech name</label>
                                     </li>
@@ -61,7 +91,7 @@
                         <div class="col-lg-12">
                             <div class="bs-callout bs-callout-danger">
                                 <h4>Available Ship Parts</h4></br>
-                                <ul class="list-inline" style="white-space:normal">
+                                <ul id="upgrade-available-list" class="list-inline" style="white-space:normal">
                                     <li>
                                         <label class="btn btn-danger">Tech name</label>
                                     </li>
@@ -100,7 +130,7 @@
                                     </li>
                                 </ul>
                             </div>
-                            </div>
+                        </div>
 
                     </div>
                 </div>
@@ -108,16 +138,86 @@
 
 
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="saveButton">Save changes</button>
-            </div>
-        </div><!-- /.modal-content -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="saveButton">Save changes</button>
+                    </div>
+            </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+
+
+
+<div id="tech-description" style="display:none">
+
+    <div class="panel panel-default">
+        <div class="panel-body ">
+           [placeholder]
+        </div>
+    </div>
+
+</div>
+
+
+
 <script type="text/javascript">
+    var _model;
+    function GetUpgradeUI(shipName) {
+        args = { shipType: shipName }
+        $.ajax({
+            url: "EclipseService.asmx/GetUpgradeUI",
+            data: JSON.stringify(args), dataType: "json", type: "POST", contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                var model = data["d"];
+                _model = model;
+                debugger;
+                var temphtml = "";
+                $('.navbar-brand').text(shipName);
+                for (var i = 0; i < model.AvailableShipParts.length; i++) {
+                    var part = model.AvailableShipParts[i];
+                    temphtml += '<li>     <label class="btn btn-danger" data-toggle="popover">' + part.Name + '</label>   </li>'
+                }
+                $('#upgrade-available-list').html(temphtml);
+
+                temphtml = "";
+                for (var i = 0; i < model.WorkshopShipParts.length; i++) {
+                    var part = model.WorkshopShipParts[i];
+                    temphtml += '<li>     <label class="btn btn-primary" data-toggle="popover">' + part.Name + '</label>   </li>'
+                }
+                $('#upgrade-workshop-list').html(temphtml);
+                debugger;
+                InitPopovers();
+            }
+        });
+
+    }
+
+    function InitPopovers() {
+         $('#upgrade-view').find('[data-toggle="popover"]').mouseenter(function (event) {
+             _lastTechName = $(event.currentTarget).text();
+         });
+         $('#upgrade-view').find('[data-toggle="popover"]').each(function(index, obj){
+             
+             $(obj).popover({
+                 placement: 'top',
+                 html: true,
+                 trigger: 'hover',
+                 content: function (event) {
+                     var html = $('#tech-description').html();
+                     return html.replace('[placeholder]', $(obj).text());
+                 }
+             });
+         });
+             
+     
+    }
+
+
     $(document).ready(function () {
+        $('.upgrade-blueprint-select').on('click', 'a', function (event) {
+            GetUpgradeUI($(this).text());
+        });
         $('.modal').modal();
     });
 </script>

@@ -57,6 +57,6 @@
     min-width:200px;
 }
 
-#upgrade-view li{
+#upgrade-view .row li{
     padding-bottom:10px;
 }

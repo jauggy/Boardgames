@@ -19,7 +19,7 @@ namespace Eclipse.Models.Playerboards
         public int Initiative { get { return ShipParts.Sum(x => x.Initiative); } }
         public int MaterialCost { get; set; }
         public int Size { get; set; }
-
+        public bool IsBonus { get; set; }
 
         public int Movement { get;set; }
         public List<int> MissileDamage { get { return GetMissileDamage(); } }
@@ -28,6 +28,7 @@ namespace Eclipse.Models.Playerboards
         public String Description { get { return GetDescription(); } }
         public ShipBlueprint()
         {
+            IsBonus = false;
             ShipParts = new List<ShipPart>();
         }
 
