@@ -4,34 +4,47 @@ using System.Drawing;
 using System.Linq;
 using System.Web;
 using Eclipse.Models.Hexes;
+using Eclipse.Models.Playerboards;
+using Eclipse.Models.Ships;
 
 namespace Eclipse.Models
 {
-    public class Ship
+    public class Ship:ShipBlueprint
     {
         public bool IsAncient { get; set; }
         public Player Owner { get; set; }
-        public List<int> CannonDamage { get; set; }
-        public int Computers { get; set; }
+        public int ID { get; set; }
+        public bool IsAttacker { get; set; }
         public String Code { get; set; }
         public Point CanvasLocation { get; set; }
-
+        public int AssignedDamage { get; set; }
+        public bool IsDestroyed { get { return AssignedDamage > Hull; } }
         public Ship()
         {
-            CannonDamage = new List<int>();
+
         }
 
-        public void AddCannon(int damage)
+        public List<DamageDice> GetMissileDice()
         {
-            CannonDamage.Add(damage);
+            return MissileDamage.Select(x => new DamageDice(x, this.Computer)).ToList();
         }
-      /*  public void MoveTo(Point point)
+
+        public List<DamageDice> GetCannonDice()
         {
-            var hex = HexBoard.GetInstance().GetHex(point); //in this line we make sure we are in the same universe
-            LastCoordinates = CurrentCoordinates;
-            GetCurrentHex().Ships.Remove(this);
-          //  CurrentCoordinates = hex;
-            GetCurrentHex().Ships.Add(this);
-        }*/
+            return CannonDamage.Select(x => new DamageDice(x, this.Computer)).ToList();
+        }
+
+        public bool AssignDamage(DamageDice dice)
+        {
+            if(dice.Value==6 || dice.AdjustedValue - this.Shield>= 6)
+            {
+                AssignedDamage++;
+                return true;
+            }
+            else
+                return false;
+        }
+
+
     }
 }

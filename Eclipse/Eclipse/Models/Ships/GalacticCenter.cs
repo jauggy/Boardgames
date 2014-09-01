@@ -9,12 +9,13 @@ namespace Eclipse.Models.Ships
     {
         public GalacticCenter()
         {
-            AddCannon(1);
-            AddCannon(1);
-            AddCannon(1);
-            AddCannon(1);
-            Computers += 1;
+
             IsAncient = true;
+
+            var part = new BonusShipPart();
+            part.CannonDamage = new List<int>{1,1,1,1};
+            part.Computer = 1;
+            this.AddShipPart(part);
         }
     }
 }
