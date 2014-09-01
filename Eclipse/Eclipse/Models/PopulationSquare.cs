@@ -29,6 +29,14 @@ namespace Eclipse.Models
             Type = type;
         }
 
+        public override string ToString()
+        {
+            var msg = Type.ToString();
+            if (IsAdvanced)
+                msg = "Advanced " + msg;
+            return msg;
+        }
+
         public PopulationSquare Copy()
         {
             return null;

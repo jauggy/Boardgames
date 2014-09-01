@@ -350,10 +350,10 @@ namespace Eclipse.Models.Hexes
             return false;
         }
 
-        public void AddPopulation(PopulationType popType, Player player)
+        public void AddPopulation(PopulationType popType, Player player, bool isAdvanced)
         {
             
-            var popSquare = PopulationSquares.FirstOrDefault(x => x.Type == popType && !x.IsOccupied && !x.IsAdvanced);
+            var popSquare = PopulationSquares.FirstOrDefault(x => x.Type == popType && !x.IsOccupied && x.IsAdvanced==isAdvanced);
             if(popSquare!=null)
             {
                 player.PlayerBoard.RemovePop(popType);
@@ -366,9 +366,12 @@ namespace Eclipse.Models.Hexes
         public List<String> GetPopulatableTypes(bool ignoreController)
         {
             var player = GameState.GetInstance().CurrentPlayer;
+            if (Ships.Any(x => x.Owner != player))
+                return new List<String>();
+
             if (player == this.Controller || ignoreController)
             {
-                return PopulationSquares.Where(x=>!x.IsOccupied && x.IsTechSufficient(player)).Select(x => x.Type.ToString()).Distinct().ToList();
+                return PopulationSquares.Where(x=>!x.IsOccupied && x.IsTechSufficient(player)).Select(x => x.ToString()).ToList();
             }
             else
             {
@@ -440,6 +443,54 @@ namespace Eclipse.Models.Hexes
         public void AddDiscoveryToken(int discoveryTokens)
         {
             HasDiscoveryToken = discoveryTokens > 0;
+        }
+
+        public void ConvertGreyPop(PopulationType type)
+        {
+            PopulationSquares.First(x => x.Type == PopulationType.Unknown && !x.IsOccupied).Type = type;
+        }
+        public void PopulateByString(IEnumerable<String> args)
+        {
+            foreach(var arg in args)
+            {
+                PopulateByString(arg);
+            }
+        }
+        /// <summary>
+        /// Money, Advanced Money, Unknown Money
+        /// </summary>
+        /// <param name="name"></param>
+        public void PopulateByString(String name)
+        {
+            var player = GameState.GetInstance().CurrentPlayer;
+            var poptype = GetPopulationType(name);
+            bool isAdvanced = false;
+            if(name.Contains("Advanced"))
+            {
+                isAdvanced=true;
+            }
+            if(name.Contains("Unknown"))
+            {
+
+                ConvertGreyPop(poptype);
+                
+            }
+
+            AddPopulation(poptype, player, isAdvanced);
+        }
+
+        private PopulationType GetPopulationType(String s)
+        {
+            if (s.Contains("Money"))
+                return PopulationType.Money;
+            else if (s.Contains("Science"))
+                return PopulationType.Science;
+            else if (s.Contains("Materials"))
+                return PopulationType.Materials;
+            else if (s.Contains("Unknown"))
+                return PopulationType.Unknown;
+            else
+                throw new NotImplementedException();
         }
     }
 }

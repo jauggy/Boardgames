@@ -109,7 +109,7 @@ namespace Eclipse
              return hex;
          }
 
-        [WebMethod(true)]
+      /*  [WebMethod(true)]
         public AfterPopulateUI AddPopulationToHex(int x, int y, string popType)
          {
              var pType =(PopulationType) Enum.Parse(typeof(PopulationType), popType);
@@ -121,7 +121,7 @@ namespace Eclipse
              ui.PopulateMenus = GetPopulateMenus();
              ui.MainNavbarUI = new MainNavbarUI();
              return ui;
-         }
+         }*/
 
         [WebMethod(true)]
             public List<TempMenu> GetPopulateMenus()
@@ -262,10 +262,18 @@ namespace Eclipse
             return new AddPopUI(x, y);
         }
 
+        /// <summary>
+        /// arg will be comma seperated string like Money, Advanced Money, Unknown Money Advanced...
+        /// </summary>
+        /// <param name="arg"></param>
          [WebMethod(true)]
-        public void AddInfluenceAndPopulate(int Money, int Science, int Materials, int UnknownMoney, int UnknownScience, int UnknownMaterials, int IgnoreUnknown)
+        public Hex AddInfluenceAndPopulate(IEnumerable<String> args)
          {
+             var lastHex = HexBoard.GetInstance().LastSelectedHex;
+             lastHex.AddInfluence();
+             lastHex.PopulateByString(args);
 
+             return lastHex;
          }
     }
 }

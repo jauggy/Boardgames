@@ -11,7 +11,7 @@
           var _tempScrollLeft;
           var _lastHex;
           var _navbarUI;
-       
+          var _populatesRemaining;
 
           function DrawPopSquare(popSquare) {
               var color = popSquare.Color;
@@ -66,12 +66,16 @@
               var obj = document.getElementById('ancientImg');
               ctx.drawImage(obj, x, y, size, size);
           }
-          function DrawDiscovery(point) {
+          function DrawDiscovery(point, text) {
               var size = 20;
               x = point.X - size / 2;
               y = point.Y - size / 2;
               var obj = document.getElementById('discoveryImg');
               ctx.drawImage(obj, x, y, size, size);
+              ctx.font = '10px sans-serif';
+              ctx.textAlign = 'center';
+              ctx.textBaseline = 'middle';
+              ctx.fillText(text, point.X, point.Y);
           }
 
           function ShowPopulatableHexes()
@@ -137,7 +141,10 @@
                   DrawCircle(hex.CanvasLocation, hex.Controller.Color);
               }
               else if (hex.HasAncient) {
-                  DrawDiscovery(hex.CanvasLocation);
+                  DrawDiscovery(hex.CanvasLocation, 'a');
+              }
+              else if (hex.HasDiscoveryToken) {
+                  DrawDiscovery(hex.CanvasLocation, '');
               }
           }
 
@@ -384,7 +391,13 @@
               {
                   HideTempMenus();
                   _lastHex = hex;
-                  $("#modalPlaceholder").load("ChoosePopulationType.html");
+                  if (hex.HasAncient)
+                  {
+
+                  } else {
+                      $("#modalPlaceholder").load("ChoosePopulationType.html");
+                  }
+                 
               }
           }
 
@@ -573,6 +586,7 @@
               var model = data["d"];
               _navbarUI = model;
               $('.navbar-brand').html(model.CurrentPlayerName);
+              _populatesRemaining = model.PopulatesRemaining;
               if (model.PopulatesRemaining > 0) {
                   $('#populateTab').text('Populate (' + model.PopulatesRemaining + ')');
                   $('#populateTab').show();
@@ -587,6 +601,8 @@
               else {
                   $('.mainaction').css('display', 'inline');
               }
+
+              $('#log').html(model.Log);
 
           }
 

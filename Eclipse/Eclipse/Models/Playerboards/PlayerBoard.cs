@@ -134,7 +134,12 @@ namespace Eclipse.Models
             var before = GetUpkeep();
             InfluenceDisks = InfluenceDisks + adjust;
             var after = GetUpkeep();
-             Log = "Upkeep: " + SignedNumber(before,after) +Log;
+             AddLogLine("Upkeep: " + SignedNumber(before,after));
+        }
+
+        private void AddLogLine(String msg)
+        {
+            Log = msg + "</br>" + Log;
         }
 
         public void AddPopulationCube(PopulationType type)
@@ -185,12 +190,12 @@ namespace Eclipse.Models
             var before = GetProduction(type);
             PopulationsCubes[type] += adjust;
             var after = GetProduction(type);
-            Log = type.ToString() + " Production " + SignedNumber(after - before) + "</br>" + Log;
+           AddLogLine( type.ToString() + " Production: " + SignedNumber(before, after));
         }
 
         public String SignedNumber(int before, int after)
         {
-            return SignedNumber(after - before);
+            return after +" ("+SignedNumber(after - before) + ")";
         }
 
         private String SignedNumber(int num)

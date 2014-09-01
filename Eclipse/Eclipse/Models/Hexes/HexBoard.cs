@@ -31,9 +31,9 @@ namespace Eclipse.Models.Hexes
                 freeHex.Controller = player;
                 freeHex.AddShip(new Interceptor(player));
                 freeHex.AddWormHoles(4);
-                freeHex.AddPopulation(PopulationType.Materials, player);
-                freeHex.AddPopulation(PopulationType.Money, player);
-                freeHex.AddPopulation(PopulationType.Science, player);
+                freeHex.AddPopulation(PopulationType.Materials, player, false);
+                freeHex.AddPopulation(PopulationType.Money, player, false);
+                freeHex.AddPopulation(PopulationType.Science, player, false);
             }
 
 
@@ -261,11 +261,6 @@ namespace Eclipse.Models.Hexes
             return hex;
         }
 
-        public Hex AddPopulationToSelectedHex(PopulationType popType, Hex hex)
-        {
-            hex.AddPopulation(popType, GameState.GetInstance().CurrentPlayer);
-            return hex;
-        }
 
     }
 }

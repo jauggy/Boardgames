@@ -2,7 +2,7 @@
     <div class="modal-dialog" >
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Choose population type</h4>
+                <h4 class="modal-title">You may add influence and populate</h4>
             </div>
             <div class="modal-body container-fluid">
 
@@ -21,19 +21,30 @@
                         <div class="form-group ">
                             <div class="col-lg-6 col-lg-offset-3">
                                 <select class="form-control">
-                                    <option value="IgnoreUnknown">Ignore gray square</option>
-                                    <option value="UnknownMoney">Populate gray square => Money</option>
-                                    <option value="UnknownScience">Populate gray square => Science</option>
-                                    <option value="UnknownMaterials">Populate gray square => Materials</option>
+                                    <option value="ignore">Ignore Grey Square</option>
+                                    <option value="UnknownMoney">Money</option>
+                                    <option value="UnknownScience">Science</option>
+                                    <option value="UnknownMaterials">Materials</option>
                                 </select>
                             </div>
                         </div>
                     </div>
-               
+                <div id="addpop-multi-option-advanced" style="display:none">
+                    <div class="form-group ">
+                        <div class="col-lg-6 col-lg-offset-3">
+                            <select class="form-control">
+                                <option value="ignore">Ignore Advanced Grey Square</option>
+                                <option value="UnknownMoneyAdvanced">Advanced Money</option>
+                                <option value="UnknownScienceAdvanced">Advanced Science</option>
+                                <option value="UnknownMaterialsAdvanced">Advanced Materials</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
 
 
                 <form id="addpop-form" class="form-horizontal " role="form">
-                    
+                    <span id="error-message" class="text-danger"></span>
                     
             </form>
             </div>
@@ -70,29 +81,39 @@
         $('#addpop-form').html(html);
 
         $('#btn-populate').click(function (event) {
-            var args = { Money: 0, Science: 0, Materials: 0, UnknownMoney: 0, UnknownScience: 0, UnknownMaterials: 0 , IgnoreUnknown:0};
-           debugger;
+            var temp = [];
            $('input').each(function (index, obj) {
-                if($(obj).is(':checked'))
+               if ($(obj).is(':checked') && $(obj).is(':visible'))
                 {
-                    args[$(obj).attr('data-value')]++;
+                    temp.push($(obj).attr('data-value'));
                 }
             });
            
            $('select').each(function (index, obj) {
                if ($(obj).is(':visible')) {
-                   args[$(obj).val()]++;
+                   var choice = $(obj).val();
+                   if (choice != "ignore")
+                       temp.push(choice);
                }
             });
 
+           if (temp.length > _populatesRemaining)
+           {
+               $('#error-message').text('You only have '+_populatesRemaining+' populates available');
+               return false;
+           }
+
             $.ajax({
                 url: "EclipseService.asmx/AddInfluenceAndPopulate",
-                data: JSON.stringify(args), dataType: "json", type: "POST", contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify({ args: temp }), dataType: "json", type: "POST", contentType: 'application/json; charset=utf-8',
                 success: function (data) {
                     var model = data["d"];
-                    ProcessModel(model);
+                    DrawHex(model);
+                    RefreshNavbar();
                 }
             });
+
+            $('.modal').modal('hide');
 
             return false;
         });
@@ -103,7 +124,7 @@
     $(document).ready(function () {
   
 
- 
+        $('#choose-pop-modal').find('.modal-title').text('You may add influence and ' + _populatesRemaining + ' population');
 
         var args = { x: _lastHex.AxialCoordinates.X, y: _lastHex.AxialCoordinates.Y };
         $.ajax({
