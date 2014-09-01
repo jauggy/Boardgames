@@ -50,7 +50,7 @@
                                 <div class="panel-heading">
                                     Original Blueprint
                                 </div>
-                                <div class="panel-body ">
+                                <div id="upgrade-original-desc" class="panel-body ">
                                     Missile: 3
                                 </div>
                             </div>
@@ -60,7 +60,7 @@
                                 <div class="panel-heading">
                                     New Blueprint
                                 </div>
-                                <div class="panel-body ">
+                                <div id="upgrade-workshop-desc" class="panel-body ">
                                     Missile: 3
                                 </div>
                             </div>
@@ -70,17 +70,12 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="bs-callout bs-callout-primary">
-                                <h4>Ship Parts for New Ship</h4></br>
+                                <h4>Ship Parts for New Blueprint</h4></br>
                                 <ul id="upgrade-workshop-list" class="list-inline">
                                     <li>
                                         <label class="btn btn-primary">Tech name</label>
                                     </li>
-                                    <li>
-                                        <label class="btn btn-primary">Tech name</label>
-                                    </li>
-                                    <li>
-                                        <label class="btn btn-primary">Tech name</label>
-                                    </li>
+
                                 </ul>
                             </div>
                         </div>
@@ -95,39 +90,7 @@
                                     <li>
                                         <label class="btn btn-danger">Tech name</label>
                                     </li>
-                                    <li>
-                                        <label class="btn btn-danger">Tech name</label>
-                                    </li>
-                                    <li>
-                                        <label class="btn btn-danger">Tech name</label>
-                                    </li>
-                                    <li>
-                                        <label class="btn btn-danger">Tech name</label>
-                                    </li>
-                                    <li>
-                                        <label class="btn btn-danger">Tech name</label>
-                                    </li>
-                                    <li>
-                                        <label class="btn btn-danger">Tech name</label>
-                                    </li>
-                                    <li>
-                                        <label class="btn btn-danger">Tech name</label>
-                                    </li>
-                                    <li>
-                                        <label class="btn btn-danger">Tech name</label>
-                                    </li>
-                                    <li>
-                                        <label class="btn btn-danger">Tech name</label>
-                                    </li>
-                                    <li>
-                                        <label class="btn btn-danger">Tech name</label>
-                                    </li>
-                                    <li>
-                                        <label class="btn btn-danger">Tech name</label>
-                                    </li>
-                                    <li>
-                                        <label class="btn btn-danger">Tech name</label>
-                                    </li>
+
                                 </ul>
                             </div>
                         </div>
@@ -149,48 +112,100 @@
 
 
 
-<div id="tech-description" style="display:none">
-
-    <div class="panel panel-default">
-        <div class="panel-body ">
-           [placeholder]
-        </div>
-    </div>
-
-</div>
-
 
 
 <script type="text/javascript">
     var _model;
+    var _shipParts="";
+    var _availableId;
+    var _workshopId;
+
     function GetUpgradeUI(shipName) {
         args = { shipType: shipName }
         $.ajax({
             url: "EclipseService.asmx/GetUpgradeUI",
             data: JSON.stringify(args), dataType: "json", type: "POST", contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-                var model = data["d"];
-                _model = model;
-                debugger;
-                var temphtml = "";
-                $('.navbar-brand').text(shipName);
-                for (var i = 0; i < model.AvailableShipParts.length; i++) {
-                    var part = model.AvailableShipParts[i];
-                    temphtml += '<li>     <label class="btn btn-danger" data-toggle="popover">' + part.Name + '</label>   </li>'
-                }
-                $('#upgrade-available-list').html(temphtml);
-
-                temphtml = "";
-                for (var i = 0; i < model.WorkshopShipParts.length; i++) {
-                    var part = model.WorkshopShipParts[i];
-                    temphtml += '<li>     <label class="btn btn-primary" data-toggle="popover">' + part.Name + '</label>   </li>'
-                }
-                $('#upgrade-workshop-list').html(temphtml);
-                debugger;
-                InitPopovers();
-            }
+            success: GetUpgradeUICallback
+                
         });
 
+    }
+
+    function GetUpgradeUICallback(data)
+    {
+        var model = data["d"];
+
+        _model = model;
+
+        var temphtml = "";
+        _shipParts = {};
+        var shipName = model.ShipType;
+        $('.navbar-brand').text(shipName);
+        for (var i = 0; i < model.AvailableShipParts.length; i++) {
+            var part = model.AvailableShipParts[i];
+            _shipParts[part.Name] = part;
+            temphtml += PartToHtml(part);
+        }
+        $('#upgrade-available-list').html(temphtml);
+
+        temphtml = "";
+                
+        for (var i = 0; i < model.WorkshopShipParts.length; i++) {
+            var part = model.WorkshopShipParts[i];
+            _shipParts[part.Name] = part;
+            temphtml+=PartToHtml(part);
+        }
+        $('#upgrade-workshop-list').html(temphtml);
+        debugger;
+        InitPopovers();
+
+        $('#upgrade-original-desc').html(model.OriginalDescription);
+        $('#upgrade-workshop-desc').html(model.WorkshopDescription);
+
+
+        $('#upgrade-available-list').on('click', '.btn', function (event) {
+            _availableId = $(this).attr('data-ID');
+            SwapParts();
+        });
+
+        $('#upgrade-workshop-list').on('click', '.btn', function (event) {
+            _workshopId = $(this).attr('data-ID');
+            SwapParts();
+        });
+    
+    }
+
+    function SwapParts() {
+        debugger;
+        if (_workshopId != null && _availableId != null) {
+            
+            var args = { workshopId: _workshopId, availableId: _availableId };
+            _workshopId = null;
+            _availableId = null;
+            $.ajax({
+                url: "EclipseService.asmx/SwapUpgradeParts",
+                data: JSON.stringify(args), dataType: "json", type: "POST", contentType: 'application/json; charset=utf-8',
+                success: GetUpgradeUICallback
+            });
+
+            
+        }
+    }
+
+    function PartToHtml(part) {
+        var li = '<li>     <button onclick="return false;" data-id="' + part.ID + '" class="btn btn-primary" data-toggle="popover">' + part.Name + '</button>   </li>';
+        if (part.IsBonus)
+            li = li.replace('btn-primary', 'btn-success');
+        if (part.ID < 0)
+        {
+
+            if (part.IsBasic)
+                li = li.replace('btn-primary', 'btn-warning');
+            else
+                li = li.replace('btn-primary', 'btn-danger');
+
+        }
+        return li;
     }
 
     function InitPopovers() {
@@ -205,7 +220,9 @@
                  trigger: 'hover',
                  content: function (event) {
                      var html = $('#tech-description').html();
-                     return html.replace('[placeholder]', $(obj).text());
+                     var partName = $(obj).text();
+                     return _shipParts[partName].Description;
+                    
                  }
              });
          });
@@ -216,8 +233,11 @@
 
     $(document).ready(function () {
         $('.upgrade-blueprint-select').on('click', 'a', function (event) {
+   
             GetUpgradeUI($(this).text());
         });
+
+        GetUpgradeUI('Interceptor');
         $('.modal').modal();
     });
 </script>

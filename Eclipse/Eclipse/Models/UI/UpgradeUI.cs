@@ -1,4 +1,5 @@
 ﻿using Eclipse.Models.Playerboards;
+using Eclipse.Models.Ships;
 using Eclipse.Models.Tech;
 using System;
 using System.Collections.Generic;
@@ -17,19 +18,23 @@ namespace Eclipse.Models.UI
         private List<ShipPart> AvailableParts { get; set; }
         private ShipBlueprint OriginalPrint { get; set; }
 
-        public String OriginalDescription { get; set; }
-        public String WorkshopDescription { get; set; }
+        public String OriginalDescription { get { return ShipHelper.GetFullDescription(OriginalPrint); } }
+        public String WorkshopDescription { get { return ShipHelper.GetFullDescription(WorkshopParts); } }
+        public String ShipType { get; set; }
 
         public UpgradeUI(String shipType)
         {
+            ShipType = shipType;
             var board =  GameState.GetInstance().CurrentPlayer.PlayerBoard;
             OriginalPrint = board.GetBlueprint(shipType);
-            WorkshopParts = board.GetBlueprint(shipType).ShipParts;
+            var list = new List<ShipPart>();
+             list.AddRange(board.GetBlueprint(shipType).ShipParts);
+             WorkshopParts = list;
             AvailableParts = board.GetAvailableShipParts();
 
             for (var i = 0; i < WorkshopParts.Count(); i++)
             {
-                WorkshopParts[i].ID = i;
+                WorkshopParts[i].ID = i+1;
             }
             for (var j = 0; j < AvailableParts.Count(); j++)
             {
@@ -39,13 +44,33 @@ namespace Eclipse.Models.UI
 
         }
 
-        public void Swap(int leftId, int rightId)
+        public void Swap(int workshopId, int availableId)
         {
-            var leftPart = WorkshopParts.First(x => x.ID == leftId);
-            var rightPart = AvailableParts.First(x => x.ID == rightId);
 
-            WorkshopParts.Add(rightPart);
-            AvailableParts.Add(leftPart);
+            try { 
+                var workshopIndex = WorkshopParts.FindIndex(x => x.ID == workshopId);
+                var availableIndex = AvailableParts.FindIndex(x => x.ID == availableId);
+                var leftPart = WorkshopParts[workshopIndex];
+                var rightPart = AvailableParts[availableIndex];
+
+                WorkshopParts.Remove(leftPart);
+                if (!rightPart.IsBasic || rightPart.ID > 0)
+                    AvailableParts.Remove(rightPart);
+
+                WorkshopParts.Insert(workshopIndex,rightPart);
+
+                if (!leftPart.IsBasic || leftPart.ID >= 0)
+                    AvailableParts.Insert(availableIndex, leftPart);
+                else
+                {
+                }
+
+            }
+            catch (Exception e)
+            {
+              //  throw new NotImplementedException();
+            }
+
         }
 
         public bool IsValid()

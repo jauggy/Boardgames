@@ -215,7 +215,11 @@ namespace Eclipse.Models
 
         public List<ShipPart> GetAvailableShipParts()
         {
-            return  Technologies.Where(x => x.ShipPart != null).Select(x => x.ShipPart).Distinct().ToList();
+            var result = new List<ShipPart>();
+            var list =  Technologies.Where(x => x.ShipPart != null).Select(x => x.ShipPart).Distinct().ToList();
+            result.AddRange(list);
+            result.AddRange(BasicShipPart.GetAllBasics());
+            return result;
         }
 
     }

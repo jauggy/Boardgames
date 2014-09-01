@@ -5,6 +5,7 @@ using System.Web;
 using Eclipse.Models.Hexes;
 using Eclipse.Models.Supply;
 using Eclipse.Models.Unique;
+using Eclipse.Models.UI;
 
 namespace Eclipse.Models
 {
@@ -17,6 +18,7 @@ namespace Eclipse.Models
         public SupplyBoard SupplyBoard { get; set; }
         public bool HasDoneMainAction { get; set; }
         private int _currentPlayerIndex = -1;
+        public UpgradeUI UpgradeUI { get; set; }
         public static GameState GetInstance()
         {
             if (HttpContext.Current.Session["GameState"] == null)

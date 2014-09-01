@@ -21,7 +21,7 @@ namespace Eclipse.Models.Playerboards
         public int Size { get; set; }
         public bool IsBonus { get; set; }
 
-        public int Movement { get;set; }
+        public int Movement { get{ return ShipParts.Sum(x => x.Movement); }  }
         public List<int> MissileDamage { get { return GetMissileDamage(); } }
         public List<int> CannonDamage { get { return GetCannonDamage(); } }
         public String Name { get; set; }
@@ -63,7 +63,8 @@ namespace Eclipse.Models.Playerboards
             var list = new List<int>();
             foreach(var s in ShipParts)
             {
-                list.AddRange(s.CannonDamage);
+                if(s.CannonDamage!=null)
+                    list.AddRange(s.CannonDamage);
             }
 
             return list;
@@ -74,13 +75,14 @@ namespace Eclipse.Models.Playerboards
             var list = new List<int>();
             foreach (var s in ShipParts)
             {
-                list.AddRange(s.MissileDamage);
+                if(s.MissileDamage!=null)
+                    list.AddRange(s.MissileDamage);
             }
 
             return list;
         }
 
-        public ShipBlueprint SetName(String name)
+        public ShipBlueprint SetShipName(String name)
         {
             Name = name;
             return this;

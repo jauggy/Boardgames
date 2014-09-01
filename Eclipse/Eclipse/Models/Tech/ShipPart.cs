@@ -21,6 +21,7 @@ namespace Eclipse.Models.Tech
         public String Description { get { return GetDescription(); } }
         public int ID { get; set; } //only used by UI
         public bool IsBonus { get; set; }
+        public bool IsBasic { get; set; }
         public ShipPart(String name)
         {
             Name = name;

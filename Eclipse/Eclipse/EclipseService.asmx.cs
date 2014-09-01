@@ -221,8 +221,17 @@ namespace Eclipse
            [WebMethod(true)]
         public UpgradeUI GetUpgradeUI(String shipType)
         {
-            return new UpgradeUI(shipType);
+            var ug = new UpgradeUI(shipType);
+            GameState.GetInstance().UpgradeUI = ug;
+            return ug;
         }
 
+        [WebMethod(true)]
+        public UpgradeUI SwapUpgradeParts(int workshopId, int availableId)
+        {
+            var ug = GameState.GetInstance().UpgradeUI;
+            ug.Swap(workshopId, availableId);
+            return ug;
+        }
     }
 }

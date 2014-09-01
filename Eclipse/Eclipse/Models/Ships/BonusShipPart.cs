@@ -11,7 +11,7 @@ namespace Eclipse.Models.Ships
         public BonusShipPart()
         {
             this.Name = "Bonus";
-
+            IsBonus = true;
         }
 
         public BonusShipPart(int computer, int energy, int initiative):this()
@@ -19,6 +19,7 @@ namespace Eclipse.Models.Ships
             Computer = computer;
             EnergySource = energy;
             Initiative = initiative;
+            
         }
     }
 }
