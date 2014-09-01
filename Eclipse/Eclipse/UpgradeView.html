@@ -249,11 +249,19 @@
      
     }
 
+    function Upgrade() {
+
+    }
+
 
     $(document).ready(function () {
         $('.upgrade-blueprint-select').on('click', 'a', function (event) {
    
             GetUpgradeUI($(this).text());
+        });
+
+        $('upgrade-save').click(function (event) {
+
         });
 
         GetUpgradeUI('Interceptor');
