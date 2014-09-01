@@ -76,5 +76,59 @@ namespace Eclipse.Models.Ships
         }
 
 
+        public static String GetShortDescription(IShipPart part)
+        {
+            var list = new List<String>();
+            if (part.CannonDamage != null && part.CannonDamage.Count > 0)
+            {
+                list.Add(MultString("A",part.CannonDamage));
+            }
+            if (part.MissileDamage != null && part.MissileDamage.Count > 0)
+            {
+                list.Add(MultString("M",part.MissileDamage));
+            }
+            if (part.Shield > 0)
+                list.Add(MultString("s", part.Shield));
+            if (part.Hull > 0)
+                list.Add(MultString("h", part.Hull));
+            if (part.Computer > 0)
+                list.Add(MultString("c", part.Computer));
+
+            if (part.EnergySource > 0)
+                list.Add(MultString("e", part.EnergySource));
+            if (part.Initiative > 0)
+                list.Add(MultString("i", part.Initiative));
+            if (part.Movement > 0)
+                list.Add(MultString("v", part.Movement));
+          //  if (part.EnergyRequirement > 0)
+              //  list.Add("Energy Requirement: " + part.EnergyRequirement);
+
+            return String.Join("", list);
+        }
+
+        private static String MultString(string s, int times)
+        {
+            var result = "";
+            for(int i =0; i<times; i++)
+            {
+                result += s;
+            }
+
+            return result;
+        }
+
+        private static String MultString(string s, List<int> damage)
+        {
+            var result = "";
+            for (int i = 0; i < damage.Count; i++)
+            {
+                result += MultString(s, damage[i]);
+            }
+
+            return result;
+        }
+
+
+
     }
 }

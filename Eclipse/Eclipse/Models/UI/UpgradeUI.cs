@@ -22,6 +22,8 @@ namespace Eclipse.Models.UI
         public String WorkshopDescription { get { return ShipHelper.GetFullDescription(WorkshopParts); } }
         public String ShipType { get; set; }
 
+        public String ValidationMessage { get { return GetValidationMessage(); } }
+
         public UpgradeUI(String shipType)
         {
             ShipType = shipType;
@@ -29,12 +31,22 @@ namespace Eclipse.Models.UI
             OriginalPrint = board.GetBlueprint(shipType);
             var list = new List<ShipPart>();
              list.AddRange(board.GetBlueprint(shipType).ShipParts);
-             WorkshopParts = list;
+
+            var emptySpaces =   OriginalPrint.Size - list.Where(x => !x.IsBonus).Count();
+
+            for (int i = 0; i < emptySpaces; i++ )
+            {
+                list.Add(new EmptyShipPart());
+            }
+
+                WorkshopParts = list;
             AvailableParts = board.GetAvailableShipParts();
 
             for (var i = 0; i < WorkshopParts.Count(); i++)
             {
                 WorkshopParts[i].ID = i+1;
+                if (WorkshopParts[i].IsBonus)
+                    WorkshopParts[i].ID = 0;
             }
             for (var j = 0; j < AvailableParts.Count(); j++)
             {
@@ -42,6 +54,20 @@ namespace Eclipse.Models.UI
                 AvailableParts[j].ID = -(j + 1);
             }
 
+        }
+
+        public String GetValidationMessage()
+        {
+            var bp = new ShipBlueprint();
+            bp.ShipParts = WorkshopParts.ToList();
+
+            if (bp.EnergyRequirement > bp.EnergySource)
+                return "You need more Energy Sources to meet Energy Requirements";
+
+            else if (WorkshopParts.Where(x => x.ID < 0).Count() > 2)
+                return "You may only swap in two available ship parts";
+
+            else return "";
         }
 
         public void Swap(int workshopId, int availableId)

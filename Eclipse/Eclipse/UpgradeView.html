@@ -68,6 +68,15 @@
                         <div class="col-lg-3"></div>
                     </div>
                     <div class="row">
+                        <div class="col-lg-6">
+
+                        </div>
+                        <div class="col-lg-6">
+                            <span id="upgrade-validation" class="text-danger">You are asdf</span>
+                        </div>
+                    </div>
+                    <!--Ship parts for new blueprint-->
+                    <div class="row">
                         <div class="col-lg-12">
                             <div class="bs-callout bs-callout-primary">
                                 <h4>Ship Parts for New Blueprint</h4></br>
@@ -103,7 +112,7 @@
             </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="saveButton">Save changes</button>
+                        <button type="button" class="btn btn-primary" id="upgrade-save">Upgrade to new blueprint</button>
                     </div>
             </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -136,7 +145,11 @@
         var model = data["d"];
 
         _model = model;
-
+        $('#upgrade-validation').html(model.ValidationMessage);
+        if (model.ValidationMessage.length > 0)
+            $('#upgrade-save').addClass('disabled');
+        else
+            $('#upgrade-save').removeClass('disabled');
         var temphtml = "";
         _shipParts = {};
         var shipName = model.ShipType;
@@ -166,18 +179,24 @@
         $('#upgrade-available-list').on('click', '.btn', function (event) {
             _availableId = $(this).attr('data-ID');
             SwapParts();
+            event.stopImmediatePropagation();
         });
 
         $('#upgrade-workshop-list').on('click', '.btn', function (event) {
             _workshopId = $(this).attr('data-ID');
             SwapParts();
+            event.stopImmediatePropagation();
         });
-    
+
+        $('.modal').not('.btn').click(function (event) {
+            _workshopId = null;
+            _availableId = null;
+        });
     }
 
     function SwapParts() {
         debugger;
-        if (_workshopId != null && _availableId != null) {
+        if (_workshopId != null &&_workshopId!=0   && _availableId != null) {
             
             var args = { workshopId: _workshopId, availableId: _availableId };
             _workshopId = null;
@@ -193,7 +212,7 @@
     }
 
     function PartToHtml(part) {
-        var li = '<li>     <button onclick="return false;" data-id="' + part.ID + '" class="btn btn-primary" data-toggle="popover">' + part.Name + '</button>   </li>';
+        var li = '<li>     <button data-name="'+part.Name+'" onclick="return false;" data-id="' + part.ID + '" class="btn btn-primary" data-toggle="popover">' + part.Name + '</br>' + part.ShortDescription + '</button>   </li>';
         if (part.IsBonus)
             li = li.replace('btn-primary', 'btn-success');
         if (part.ID < 0)
@@ -210,7 +229,7 @@
 
     function InitPopovers() {
          $('#upgrade-view').find('[data-toggle="popover"]').mouseenter(function (event) {
-             _lastTechName = $(event.currentTarget).text();
+             _lastTechName = $(event.currentTarget).attr('data-name');
          });
          $('#upgrade-view').find('[data-toggle="popover"]').each(function(index, obj){
              
@@ -220,7 +239,7 @@
                  trigger: 'hover',
                  content: function (event) {
                      var html = $('#tech-description').html();
-                     var partName = $(obj).text();
+                     var partName = $(obj).attr('data-name');
                      return _shipParts[partName].Description;
                     
                  }

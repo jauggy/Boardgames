@@ -120,6 +120,7 @@
     <Compile Include="Models\Playerboards\ResourceSegment.cs" />
     <Compile Include="Models\Playerboards\TechnologySegment.cs" />
     <Compile Include="Models\Ships\BonusShipPart.cs" />
+    <Compile Include="Models\Ships\EmptyShipPart.cs" />
     <Compile Include="Models\Ships\IShipPart.cs" />
     <Compile Include="Models\Ships\ShipHelper.cs" />
     <Compile Include="Models\UI\AddInfluenceUI.cs" />
