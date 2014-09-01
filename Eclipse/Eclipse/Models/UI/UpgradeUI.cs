@@ -56,6 +56,11 @@ namespace Eclipse.Models.UI
 
         }
 
+        public void ExecuteUpgrade()
+        {
+            OriginalPrint.ShipParts = WorkshopParts;
+        }
+
         public String GetValidationMessage()
         {
             var bp = new ShipBlueprint();

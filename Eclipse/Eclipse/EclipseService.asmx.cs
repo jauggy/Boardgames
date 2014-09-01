@@ -232,6 +232,15 @@ namespace Eclipse
             var ug = GameState.GetInstance().UpgradeUI;
             ug.Swap(workshopId, availableId);
             return ug;
+        
+        
+        }
+
+         [WebMethod(true)]
+        public void Upgrade()
+        {
+            var ug = GameState.GetInstance().UpgradeUI;
+            ug.ExecuteUpgrade();
         }
     }
 }

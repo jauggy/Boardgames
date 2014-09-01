@@ -250,7 +250,16 @@
     }
 
     function Upgrade() {
-
+        var args = {};
+        $.ajax({
+           
+            url: "EclipseService.asmx/Upgrade",
+            data: JSON.stringify(args), dataType: "json", type: "POST", contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                var model = data["d"];
+                $('.modal').modal('hide');
+            }
+        });
     }
 
 
@@ -260,8 +269,8 @@
             GetUpgradeUI($(this).text());
         });
 
-        $('upgrade-save').click(function (event) {
-
+        $('#upgrade-save').click(function (event) {
+            Upgrade();
         });
 
         GetUpgradeUI('Interceptor');
