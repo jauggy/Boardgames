@@ -94,7 +94,11 @@ namespace Eclipse
         public Hex ExploreTo(int x, int y)
          {
              GameState.GetInstance().HasDoneMainAction = true;
-             return HexBoard.GetInstance().ExploreTo(new Point(x, y));
+             var result =  HexBoard.GetInstance().ExploreTo(new Point(x, y));
+             if (!result.IsVisible)
+                 throw new NotImplementedException();
+
+             return result;
          }
 
          [WebMethod(true)]
@@ -126,7 +130,7 @@ namespace Eclipse
             var hexes = HexBoard.GetInstance().Hexes;
             foreach(var hex in hexes)
             {
-                var types = hex.GetPopulatableTypes();
+                var types = hex.GetPopulatableTypes(false);
                 if (types.Count > 0)
                 {
                     result.Add(new TempMenu(types, hex));
@@ -193,11 +197,11 @@ namespace Eclipse
         }
 
          [WebMethod(true)]
-        public Hex AddInfluenceToLastHex()
+         public AddInfluenceUI AddInfluenceToLastHex()
          {
              var hex = HexBoard.GetInstance().LastSelectedHex;
              hex.AddInfluence();
-             return hex;
+             return new AddInfluenceUI();
          }
 
         [WebMethod(true)]
@@ -241,6 +245,27 @@ namespace Eclipse
         {
             var ug = GameState.GetInstance().UpgradeUI;
             ug.ExecuteUpgrade();
+            GameState.GetInstance().HasDoneMainAction = true;
         }
+
+        [WebMethod(true)]
+        public AfterPopulateUI PopulateUnknown(String popType)
+         {
+             throw new NotImplementedException();
+           //  GameState.GetInstance().HexBoard.LastSelectedHex.AddPopulation(popType);
+         }
+
+        [WebMethod(true)]
+        public AddPopUI GetAddPopUI(int x , int y)
+        {
+
+            return new AddPopUI(x, y);
+        }
+
+         [WebMethod(true)]
+        public void AddInfluenceAndPopulate(int Money, int Science, int Materials, int UnknownMoney, int UnknownScience, int UnknownMaterials, int IgnoreUnknown)
+         {
+
+         }
     }
 }

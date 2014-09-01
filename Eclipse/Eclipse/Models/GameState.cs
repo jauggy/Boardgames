@@ -47,9 +47,10 @@ namespace Eclipse.Models
             Players = new List<Player>();
             AddRandomPlayer();
             AddRandomPlayer();
-            Players.Add(new Player(new OrionUnique(), "Green"));
-           Players.Add(new Player(new OrionUnique(), "Green"));
-            Players.Add(new Player(new OrionUnique(), "Green"));
+            AddRandomPlayer();
+            AddRandomPlayer();
+            AddRandomPlayer();
+
             SupplyBoard = new SupplyBoard();
             HexBoard = new HexBoard();
             HexBoard.Setup();

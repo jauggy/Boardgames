@@ -112,7 +112,7 @@
             </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="upgrade-save">Upgrade to new blueprint</button>
+                        <button type="button" class="btn btn-primary mainaction" id="upgrade-save">Upgrade to new blueprint</button>
                     </div>
             </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -143,7 +143,10 @@
     function GetUpgradeUICallback(data)
     {
         var model = data["d"];
-
+        if (model.HasDoneMainAction)
+        {
+            $('.mainaction').hide();
+        }
         _model = model;
         $('#upgrade-validation').html(model.ValidationMessage);
         if (model.ValidationMessage.length > 0)
@@ -169,7 +172,7 @@
             temphtml+=PartToHtml(part);
         }
         $('#upgrade-workshop-list').html(temphtml);
-        debugger;
+        
         InitPopovers();
 
         $('#upgrade-original-desc').html(model.OriginalDescription);
@@ -195,7 +198,7 @@
     }
 
     function SwapParts() {
-        debugger;
+        
         if (_workshopId != null &&_workshopId!=0   && _availableId != null) {
             
             var args = { workshopId: _workshopId, availableId: _availableId };
@@ -250,6 +253,7 @@
     }
 
     function Upgrade() {
+        HideMainActions();
         var args = {};
         $.ajax({
            
@@ -274,6 +278,7 @@
         });
 
         GetUpgradeUI('Interceptor');
+
         $('.modal').modal();
     });
 </script>

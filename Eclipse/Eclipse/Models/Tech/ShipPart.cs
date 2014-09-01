@@ -34,7 +34,10 @@ namespace Eclipse.Models.Tech
         public ShipPart() { }
 
 
-
+        public ShipPart Copy()
+        {
+            return (ShipPart)this.MemberwiseClone();
+        }
 
 
         public string GetDescription()

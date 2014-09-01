@@ -120,12 +120,21 @@ namespace Eclipse.Models
 
         public void AddInfluenceDisk()
         {
-            InfluenceDisks++;
+            AdjustInfluenceDisks(1);
         }
 
         public void RemoveInfluenceDisk()
         {
-            InfluenceDisks--;
+            AdjustInfluenceDisks(-1);
+           
+        }
+
+        public void AdjustInfluenceDisks(int adjust)
+        {
+            var before = GetUpkeep();
+            InfluenceDisks = InfluenceDisks + adjust;
+            var after = GetUpkeep();
+             Log = "Upkeep: " + SignedNumber(before,after) +Log;
         }
 
         public void AddPopulationCube(PopulationType type)
@@ -177,6 +186,11 @@ namespace Eclipse.Models
             PopulationsCubes[type] += adjust;
             var after = GetProduction(type);
             Log = type.ToString() + " Production " + SignedNumber(after - before) + "</br>" + Log;
+        }
+
+        public String SignedNumber(int before, int after)
+        {
+            return SignedNumber(after - before);
         }
 
         private String SignedNumber(int num)

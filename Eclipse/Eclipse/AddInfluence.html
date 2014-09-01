@@ -62,7 +62,9 @@
             data: '{}', dataType: "json", type: "POST", contentType: 'application/json; charset=utf-8',
             success: function (data) {
                 var model = data["d"];
-                DrawHex(model);
+                DrawHex(model.Hex);
+               // alert(model.Log)
+                $('#log').html(model.Log);
             }
         });
     }

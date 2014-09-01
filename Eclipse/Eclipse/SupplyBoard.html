@@ -96,7 +96,7 @@
              success: function (data) {
                  var model = data["d"];
                  _supplyBoard = model;
-                 debugger;
+                 
                  for (var i = 0; i < _supplyBoard.TechnologySegments.length; i++) {
                      var index = i;
                      DrawTechSegment(_supplyBoard.TechnologySegments[index], index);
@@ -109,7 +109,7 @@
 
         
          var obj;
-         debugger;
+         
          if (index == 0) {
              obj = $('.techsegment').first();
              $(obj).find('.techButtons').empty();

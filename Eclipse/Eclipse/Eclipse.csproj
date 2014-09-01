@@ -124,9 +124,11 @@
     <Compile Include="Models\Ships\IShipPart.cs" />
     <Compile Include="Models\Ships\ShipHelper.cs" />
     <Compile Include="Models\UI\AddInfluenceUI.cs" />
+    <Compile Include="Models\UI\AddPopUI.cs" />
     <Compile Include="Models\UI\AfterPopulateUI.cs" />
     <Compile Include="Models\UI\DropDownMenu.cs" />
     <Compile Include="Models\UI\MainNavbarUI.cs" />
+    <Compile Include="Models\UI\OptionUI.cs" />
     <Compile Include="Models\UI\PlayerBoardUI.cs" />
     <Compile Include="Models\UI\PlayerUI.cs" />
     <Compile Include="Models\UI\TempMenu.cs" />

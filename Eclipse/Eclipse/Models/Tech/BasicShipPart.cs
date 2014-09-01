@@ -13,7 +13,7 @@ namespace Eclipse.Models.Tech
             return new List<ShipPart>
             {
                 GetIonCannon(),
-                GetElectronComputer(),GetNuclearDrive(),GetNuclearSource(), GetHull(),GetGaussShield()
+                GetElectronComputer(),GetNuclearDrive(),GetNuclearSource(), GetHull()
             };
         }
         public static ShipPart GetIonCannon()

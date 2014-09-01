@@ -75,7 +75,8 @@ namespace Eclipse.Models.Hexes
                 result.Add(center.GetRelativeHex(compass, 2));
             }
 
-
+            result.ForEach(x => x.IsVisible = true);
+            GetCenterHex().IsVisible = true;
             return result;
         }
 
@@ -150,13 +151,18 @@ namespace Eclipse.Models.Hexes
         {
             return p.Select(x => GetOrCreateHex(x)).ToList();
         }
-        public Hex FindHex(int x, int y)
+        public Hex FindHex(int x, int y, bool setAsSelected = false)
         {
-            return FindHex(new Point(x, y));
+            return FindHex(new Point(x, y), setAsSelected);
         }
-        public Hex FindHex(Point p)
+        public Hex FindHex(Point p, bool setAsSelected = false)
+
         {
-            return Hexes.FirstOrDefault(x => x.AxialCoordinates.Equals(p));
+
+            var hex= Hexes.FirstOrDefault(x => x.AxialCoordinates.Equals(p));
+            if (setAsSelected)
+                LastSelectedHex = hex;
+            return hex;
         }
 
         public Hex GetOrCreateHex(Point p)
@@ -251,7 +257,7 @@ namespace Eclipse.Models.Hexes
             LastSelectedHex = hex;
             PopulateHex(hex);
             hex.Rotate(LastExploredFromHex);
-           
+            hex.IsVisible = true;
             return hex;
         }
 

@@ -22,7 +22,7 @@ namespace Eclipse.Models.Unique
 
         public static String GetRandomColor()
         {
-            var list = new List<String> { "blue", "red","green", "yellow", "gray", "aqua" };
+            var list = new List<String> { "blue", "red", "green", "purple", "aqua", "maroon" };
 
             var index = GameState.GetInstance().NumberPlayers;
             return list[index];

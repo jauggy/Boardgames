@@ -11,7 +11,7 @@
           var _tempScrollLeft;
           var _lastHex;
           var _navbarUI;
-             
+       
 
           function DrawPopSquare(popSquare) {
               var color = popSquare.Color;
@@ -383,7 +383,8 @@
               else
               {
                   HideTempMenus();
-                  $("#modalPlaceholder").load("addinfluence.html");
+                  _lastHex = hex;
+                  $("#modalPlaceholder").load("ChoosePopulationType.html");
               }
           }
 
@@ -449,17 +450,10 @@
                   
               });
 
-              clone.on('click', 'a', function (event) {
-                  if ($(this).text() == "Unknown")
-                  {
-                      $('#modalPlaceholder').load('ChoosePopulationType.html');
-                  }
-                  else {
-                      ajaxAddPopulation(hex, $(this).text());
-                  }
-                  
-                  HideTempMenus();
-                  
+              clone.on('click', '.btn', function (event) {
+                  _lastHex = hex;
+                  $('#modalPlaceholder').load('ChoosePopulationType.html');
+
                   return false;
               });
 
@@ -550,6 +544,7 @@
           }
 
           function NextPlayer() {
+              _hideMainActions = false;
               HideTempMenus();
               $('#log').empty();
               $.ajax({
@@ -566,7 +561,7 @@
           }
 
           function RefreshNavbar() {
-              debugger;
+              
               $.ajax({
                   url: "EclipseService.asmx/GetMainNavbarUI",
                   data: '{}', dataType: "json", type: "POST", async: false, contentType: 'application/json; charset=utf-8',
@@ -585,7 +580,7 @@
               else {
                   $('#populateTab').hide();
               }
-              debugger;
+              
               if (model.HasDoneMainAction) {
                   $('.mainaction').css('display', 'none');
               }
@@ -726,16 +721,19 @@
         </div>
 
 
-
-    
-            <div id="populateDiv" style="display:none; background-color:white" >
+         <div id="populateDiv" style="display:none; background-color:white" >
+                <button type="button" class="btn btn-primary">Populate</button>
+            
+        </div>
+     <!--End 
+         /*   <div id="populateDiv" style="display:none; background-color:white" >
                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                     Populate <span class="caret"></span>
                   </button>
                   <ul class="dropdown-menu" role="menu">
                     
                   </ul>
-        </div>
+        </div>*/temp menus-->
     </div>
   
     <!--End temp menus-->

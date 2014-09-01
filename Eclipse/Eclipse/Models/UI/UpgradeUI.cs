@@ -21,11 +21,12 @@ namespace Eclipse.Models.UI
         public String OriginalDescription { get { return ShipHelper.GetFullDescription(OriginalPrint); } }
         public String WorkshopDescription { get { return ShipHelper.GetFullDescription(WorkshopParts); } }
         public String ShipType { get; set; }
-
+        public bool HasDoneMainAction { get; set; }
         public String ValidationMessage { get { return GetValidationMessage(); } }
 
         public UpgradeUI(String shipType)
         {
+            HasDoneMainAction = GameState.GetInstance().HasDoneMainAction;
             ShipType = shipType;
             var board =  GameState.GetInstance().CurrentPlayer.PlayerBoard;
             OriginalPrint = board.GetBlueprint(shipType);
@@ -58,7 +59,7 @@ namespace Eclipse.Models.UI
 
         public void ExecuteUpgrade()
         {
-            OriginalPrint.ShipParts = WorkshopParts;
+            OriginalPrint.ShipParts = WorkshopParts.Select(x=>x.Copy()).ToList();
         }
 
         public String GetValidationMessage()

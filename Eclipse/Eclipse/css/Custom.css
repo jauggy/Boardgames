@@ -3,6 +3,11 @@
   float:none;
 }
 
+
+#choose-pop-modal .ul{
+     float: none;
+    margin: 0 auto;
+}
 #pbBody .list-inline button{
     width:100px;
     white-space:normal;

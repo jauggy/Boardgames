@@ -23,7 +23,7 @@ namespace Eclipse.Models.Hexes
             }
         }
         public Point CanvasLocation { get; private set; }
-        public bool IsVisible { get { return PopulationSquares.Count > 0; } }
+        public bool IsVisible { get; set; }
         public int Radius { get; set; }
         public List<HexSide> Sides { get; set; }
         public Player Controller { get; set; }
@@ -363,10 +363,10 @@ namespace Eclipse.Models.Hexes
 
         }
 
-        public List<String> GetPopulatableTypes()
+        public List<String> GetPopulatableTypes(bool ignoreController)
         {
             var player = GameState.GetInstance().CurrentPlayer;
-            if (player == this.Controller)
+            if (player == this.Controller || ignoreController)
             {
                 return PopulationSquares.Where(x=>!x.IsOccupied && x.IsTechSufficient(player)).Select(x => x.Type.ToString()).Distinct().ToList();
             }

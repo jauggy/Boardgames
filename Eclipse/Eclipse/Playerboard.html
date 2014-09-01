@@ -165,11 +165,11 @@
                         var desc = $(obj).find('.techDescription');
                        
                             $(desc).css('display', 'block');
-                            debugger;
+                            
                             var marginLeft = $(this).offset().left - firstLeftOffset;
                             marginLeft = Math.max(0, marginLeft);
                             $(desc).css({ 'margin-left': marginLeft });
-                            //  debugger;
+                            //  
 
                             //$(desc).css('margin-left', marginLeft);
                             // $(desc).css('margin-left', marginLeft).show();
@@ -185,7 +185,7 @@
                 });
                 $(obj).find('.techFooter').empty();
 
-              //  debugger;
+              //  
                 var footerList = "";
                 $(segment.Footer).each(function (index, item) {
                     footerList += '<li><small>' + item + '</small></li>';
@@ -287,12 +287,12 @@
             $('#playerList').on('click', 'li', function () {
                 _selectedPlayer = $(this).find('a').text();
                 $('#brand').text(_selectedPlayer);
-                debugger;
+                
                 SetPlayerBoard(_selectedPlayer);
             });
 
             $(".dynamic-menu").on('click', 'li',function () {
-                debugger;
+                
                 var button = $(this).parents('.dropdown').find('.dropdown-toggle');
                 button.html($(this).text() + ' <span class="caret">');
                 button.val($(this).text());
@@ -300,13 +300,13 @@
             });
 
             $('#technologyView').click(function () {
-                debugger;
+                
                 _viewSelected = $(this).find('a').text();
                 DrawTechnologies();
             });
 
             $('#blueprintView').click(function () {
-                debugger;
+                
                 _viewSelected = $(this).find('a').text();
                 DrawBlueprints();
             });

@@ -32,14 +32,16 @@
             <li><span class="navbar-brand">Eclipse</span></li>
              <li id="playerboardTab" ><a href="javascript:void(0)">Player board</a></li>
                <li id="supplyboardTab" ><a href="javascript:void(0)">Supply board</a></li>
+                <li  ><a id="populateTab" href="javascript:void(0)">Populate</a></li>
+              <li class="nav-divider"></li>
             <li id="exploreTab" class="mainaction"><a href="javascript:void(0)">Explore</a></li>
-              <li  ><a id="populateTab" href="javascript:void(0)">Populate</a></li>
-               <li  ><a id="upgradeTab" href="javascript:void(0)">Upgrade</a></li>
+            
+               <li class="mainaction"  ><a id="upgradeTab" href="javascript:void(0)">Upgrade</a></li>
 
                <li class="dropdown mainaction">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Influence <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li id="influenceBoardToHex"><a href="javascript:void(0)">from player board to hex</a></li>
+                <li id="influenceBoardToHex"><a  href="javascript:void(0)">from player board to hex</a></li>
                <li id="influenceHexToHex"><a href="javascript:void(0)">from hex to hex</a></li>
                  <li id="influenceHexToBoard"><a href="javascript:void(0)">from hex to player board</a></li>
               </ul>
@@ -48,17 +50,18 @@
 
  
 
-            <li class="dropdown">
+           
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+               <li id="nextPlayerTab"><a  href="javascript:void(0)">Next Player</a></li>
+               <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Switch View <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
                 <li id="resourceViewTab" class="active"><a href="javascript:void(0)">Resource View</a></li>
                <li id="militaryViewTab"><a href="javascript:void(0)">Military View</a></li>
                  
               </ul>
-            </li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-               <li id="nextPlayerTab"><a  href="javascript:void(0)">Next Player</a></li>
             <li id="clearTempMenusTab"><a  href="javascript:void(0)">Clear menus</a></li>
 
           </ul>
