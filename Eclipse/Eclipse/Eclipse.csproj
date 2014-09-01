@@ -117,6 +117,7 @@
     <Compile Include="Models\BattleHelper.cs" />
     <Compile Include="Models\Box.cs" />
     <Compile Include="Models\CanvasConstants.cs" />
+    <Compile Include="Models\Combat\CombatSim.cs" />
     <Compile Include="Models\Playerboards\ResourceSegment.cs" />
     <Compile Include="Models\Playerboards\TechnologySegment.cs" />
     <Compile Include="Models\Ships\BonusShipPart.cs" />

@@ -85,10 +85,10 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
-            $('.nav li').not('.dropdown').on('click', function (event) {
+           /* $('.nav li').not('.dropdown').on('click', function (event) {
                 $('.nav li').removeClass('active'); // remove active class from tabs
                 $(this).addClass('active'); // add active class to clicked tab
-            });
+            });*/
         });
 
         //Global ajax error handler
