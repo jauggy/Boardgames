@@ -18,7 +18,7 @@
 </head>
 <body style="padding-top:70px;">
     <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-      <div class="container">
+      <div class="container-fluid">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="sr-only">Toggle navigation</span>
@@ -29,7 +29,7 @@
         </div>
         <div class="navbar-collapse collapse ">
           <ul class="nav navbar-nav navbar-left">
-            <li><span class="navbar-brand">Eclipse</span></li>
+            <li><span class="navbar-brand" style="min-width:200px">Eclipse</span></li>
              <li id="playerboardTab" ><a href="javascript:void(0)">Player board</a></li>
                <li id="supplyboardTab" ><a href="javascript:void(0)">Supply board</a></li>
                 <li  ><a id="populateTab" href="javascript:void(0)">Populate</a></li>
@@ -50,7 +50,7 @@
 
  
 
-           
+            <li class="mainaction"><a id="moveTab" href="javascript:void(0)">Move</a>
             </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
@@ -58,11 +58,13 @@
                <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Switch View <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li id="resourceViewTab" class="active"><a href="javascript:void(0)">Resource View</a></li>
-               <li id="militaryViewTab"><a href="javascript:void(0)">Military View</a></li>
+                <li id="resourceViewTab" ><a href="javascript:void(0)">Resource View</a></li>
+               <li id="militaryViewTab"><a href="javascript:void(0)">Military View</a>
+
+               </li>
                  
-              </ul>
-            <li id="clearTempMenusTab"><a  href="javascript:void(0)">Clear menus</a></li>
+              </ul></li>
+            
 
           </ul>
         </div><!--/.nav-collapse -->

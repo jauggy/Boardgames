@@ -569,7 +569,7 @@
 
 
           function HideMainActions() {
-              
+              //$('#nextPlayerTab').addClass('active');
               $('.mainaction').css('display', 'none');
           }
 
@@ -675,6 +675,8 @@
 
               $('#nextPlayerTab').click(function (event) {
                   NextPlayer();
+                  $('#nextPlayerTab').removeClass('active');
+                  event.stopImmediatePropagation();
               });
 
               $('#upgradeTab').click(function (event) {

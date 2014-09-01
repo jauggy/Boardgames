@@ -92,8 +92,8 @@ namespace Eclipse.Models
 
         public int GetDiscountNext(TechnologyType type)
         {
-            var numTechs = Technologies.Where(x => x.Type == type).Count();
-            if (numTechs >= _techDiscounts.Count - 1)
+            var numTechs = Technologies.Where(x => x.Type == type).Count()+1;
+            if (numTechs >= _techDiscounts.Count)
                 return _techDiscounts[_techDiscounts.Count - 1];
             return _techDiscounts[numTechs];
         }

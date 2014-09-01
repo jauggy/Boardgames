@@ -1,9 +1,7 @@
 ﻿<div id="choose-pop-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" >
         <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">You may add influence and populate</h4>
-            </div>
+
             <div class="modal-body container-fluid">
 
                 <div id="addpop-single-option" style="display:none" >
@@ -42,11 +40,21 @@
                     </div>
                 </div>
 
+                <h4 id="choose-pop-title">Select the squares to populate</h4>
+                <div class="panel ">
+                    <div class="panel-body">
+                       
+                        <form id="addpop-form" class="form-horizontal " role="form">
+                           
+                           <div class="form-group">
 
-                <form id="addpop-form" class="form-horizontal " role="form">
-                    <span id="error-message" class="text-danger"></span>
-                    
-            </form>
+                           </div>
+
+                        </form>
+                        <span id="error-message" class="text-danger"></span>
+                    </div>
+                </div>
+               
             </div>
             <div class="modal-footer">
                 <button id="btn-populate" class="btn btn-primary pull-left">Add influence and populate</button>
@@ -60,10 +68,18 @@
 
 <script type="text/javascript">
     var _args = {};
-   
+ 
 
     function ProcessModel(model) {
-        
+        var popPossible = Math.min(model.Options.length, _populatesRemaining);
+        var title = 'You may add influence and use ' + popPossible + ' of ' + _populatesRemaining + ' populate actions';
+        if (popPossible == 0) {
+            $('.panel').hide();
+            title = "You may add influence";
+        }
+        debugger;
+        $('#choose-pop-title').html(title);
+
         var html = "";
         var multiop = $('#addpop-multi-option').html();
         var singleop  = $('#addpop-single-option').html();
@@ -124,7 +140,7 @@
     $(document).ready(function () {
   
 
-        $('#choose-pop-modal').find('.modal-title').text('You may add influence and ' + _populatesRemaining + ' population');
+        //$('#choose-pop-modal').find('.modal-title').text('You may add influence and ' + _populatesRemaining + ' population');
 
         var args = { x: _lastHex.AxialCoordinates.X, y: _lastHex.AxialCoordinates.Y };
         $.ajax({
