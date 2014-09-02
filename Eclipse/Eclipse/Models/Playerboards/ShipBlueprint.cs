@@ -11,7 +11,7 @@ namespace Eclipse.Models.Playerboards
     {
         public List<ShipPart> ShipParts { get; set; }
 
-        public int Computer { get { return ShipParts.Sum(x => x.Computer); } }
+        public int Computer { get { return ShipParts.Sum(x => x.Computer); }  }
         public int Shield { get { return ShipParts.Sum(x => x.Shield); } }
         public int Hull { get { return ShipParts.Sum(x => x.Hull); } }
         public int EnergyRequirement { get { return ShipParts.Sum(x => x.EnergyRequirement); } }

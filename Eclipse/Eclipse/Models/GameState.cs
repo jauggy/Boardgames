@@ -6,6 +6,7 @@ using Eclipse.Models.Hexes;
 using Eclipse.Models.Supply;
 using Eclipse.Models.Unique;
 using Eclipse.Models.UI;
+using Eclipse.Models.Combat;
 
 namespace Eclipse.Models
 {
@@ -19,6 +20,8 @@ namespace Eclipse.Models
         public bool HasDoneMainAction { get; set; }
         private int _currentPlayerIndex = -1;
         public UpgradeUI UpgradeUI { get; set; }
+        public CombatSimUI CombatSimUI { get; set; }
+
         public static GameState GetInstance()
         {
             if (HttpContext.Current.Session["GameState"] == null)
@@ -52,9 +55,8 @@ namespace Eclipse.Models
             AddRandomPlayer();
 
             SupplyBoard = new SupplyBoard();
-            HexBoard = new HexBoard();
-            HexBoard.Setup();
-            
+
+
 
             //Give players their starting techs
             foreach (var player in Players)
@@ -62,6 +64,11 @@ namespace Eclipse.Models
                 player.SetupBoard();
                // player.PlayerBoard.AddStartingTechs(player.UniqueMethods.GetStartingTechnolyNames());
             }
+
+            //board setup after players have their boards, otherwise we can't get blueprints
+            HexBoard = new HexBoard();
+            HexBoard.Setup();
+            
 
             NextPlayer();
         }
@@ -112,6 +119,15 @@ namespace Eclipse.Models
             return null;
         }
 
+        public ICombatant GetCombatantByName(String name)
+        {
+            if (name.ToLower().Contains("ancient"))
+            {
+                return new AncientPlayer();
+            }
+            else
+                return Players.FirstOrDefault(x => x.Name == name);
+        }
        
        
     }

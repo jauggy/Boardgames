@@ -275,5 +275,19 @@ namespace Eclipse
 
              return lastHex;
          }
+
+        [WebMethod(true)]
+        public CombatSimUI GetCombatSimUI()
+         {
+             GameState.GetInstance().CombatSimUI =  new CombatSimUI("Ancient");
+             return GameState.GetInstance().CombatSimUI;
+         }
+
+          [WebMethod(true)]
+        public CombatSimUI SetCombatSimDefender(String name)
+        {
+            GameState.GetInstance().CombatSimUI.ChangeEnemy(name);
+            return GameState.GetInstance().CombatSimUI;
+        }
     }
 }

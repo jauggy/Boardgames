@@ -683,6 +683,9 @@
                   $('#modalPlaceholder').load('UpgradeView.html');
               });
 
+              $('#combatSimTab').click(function (event) {
+                  $('#modalPlaceholder').load('CombatSim.html');
+              });
 
           });
            

@@ -29,7 +29,7 @@ namespace Eclipse.Models.Hexes
                 var freeHex = startingHexes.First(x => x.PopulationSquares.Count == 0);
                 player.UniqueMethods.PopulateStartingHex(freeHex);
                 freeHex.Controller = player;
-                freeHex.AddShip(new Interceptor(player));
+                freeHex.AddShip(player.GetInterceptor());
                 freeHex.AddWormHoles(4);
                 freeHex.AddPopulation(PopulationType.Materials, player, false);
                 freeHex.AddPopulation(PopulationType.Money, player, false);

@@ -10,6 +10,7 @@ namespace Eclipse.Models.Ships
         public int Damage { get; set; }
         public int Value { get; set; }
         public int AdjustedValue { get; set; }
+        public bool IsUsed { get; set; }
         public DamageDice(int damage, int computer)
         {
             Damage = damage;

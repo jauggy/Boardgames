@@ -7,10 +7,11 @@ using Eclipse.Models.Unique;
 using System.Xml.Serialization;
 using System.Web.Script.Serialization;
 using Eclipse.Models.Tech;
+using Eclipse.Models.Ships;
 
 namespace Eclipse.Models
 {
-    public class Player
+    public class Player:ICombatant
     {
         [ScriptIgnore]
         public UniqueMethods UniqueMethods { get; set; }
@@ -49,6 +50,48 @@ namespace Eclipse.Models
             return null;
         }
 
+        public Ship GetShipByName(String shipName)
+        {
+            if (shipName == ShipNames.INTERCEPTOR)
+            {
+                return GetInterceptor();
+            }
+            else if (shipName == ShipNames.CRUISER)
+            {
+                return GetCruiser();
+            }
+            else if (shipName == ShipNames.DREADNOUGHT)
+            {
+                return GetDreadnought();
+            }
+            else if (shipName == ShipNames.STARBASE)
+            {
+                return GetStarbase();
+            }
+            else
+                throw new NotImplementedException();
+        }
+
+        public Ship GetInterceptor()
+        {
+            return new Ship(()=>this.PlayerBoard.InterceptorBlueprint, this, "i");
+        }
+
+        public Ship GetCruiser()
+        {
+            return new Ship(()=>this.PlayerBoard.CruiserBlueprint, this, "c");
+        }
+
+        public Ship GetDreadnought()
+        {
+            return new Ship(()=>this.PlayerBoard.DreadnoughtBlueprint, this, "D");
+        }
+
+        public Ship GetStarbase()
+        {
+            return new Ship(()=>this.PlayerBoard.StarbaseBlueprint, this, "s");
+        }
+
         public string FirstCharToUpper(string input)
         {
             if (String.IsNullOrEmpty(input))
@@ -71,6 +114,17 @@ namespace Eclipse.Models
             return HasTechnology("Advanced " + type.ToString());
         }
         
+
+        public List<String> GetPossibleShipNames()
+        {
+            return new List<String> 
+            {
+                ShipNames.INTERCEPTOR,
+                ShipNames.CRUISER,
+                ShipNames.DREADNOUGHT,
+                ShipNames.STARBASE
+            };
+        }
 
     }
 }

@@ -20,14 +20,17 @@ namespace Eclipse.Models.Ships
             _ships.Add(ship);
         }
 
-        public List<DamageDice> GetCannonDamage()
+        public List<DamageDice> GetCannonDamageDice()
         {
             return _ships.Select(x => x.GetCannonDice()).SelectMany(x => x).ToList();
         }
 
-        public List<DamageDice> GetMissileDamage()
+        public List<DamageDice> GetMissileDamageDice()
         {
-            return _ships.Select(x => x.GetMissileDice()).SelectMany(x => x).ToList();
+            return _ships.Where(x=>!x.IsDestroyed).Select(x => x.GetMissileDice()).SelectMany(x => x).ToList();
         }
+
+
+        public bool IsAttacker { get { return _ships[0].IsAttacker; } }
     }
 }

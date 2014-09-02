@@ -8,7 +8,13 @@ namespace Eclipse.Models.Combat
 {
     public class CombatSim
     {
-        public void Simulate(IEnumerable<Ship> attackers, IEnumerable<Ship> defenders)
+        /// <summary>
+        /// Returns true if attackers win
+        /// </summary>
+        /// <param name="attackers"></param>
+        /// <param name="defenders"></param>
+        /// <returns></returns>
+        public  bool Simulate(IEnumerable<Ship> attackers, IEnumerable<Ship> defenders)
         {
             attackers.ToList().ForEach(x => x.IsAttacker = true);
             defenders.ToList().ForEach(x => x.IsAttacker = false);
@@ -16,14 +22,51 @@ namespace Eclipse.Models.Combat
             var list = GetShipsOrdered(attackers, defenders);
             var groups = FormShipGroups(list);
 
+            //Missile round
             foreach(var group in groups)
             {
-                group.GetMissileDamage();
+                var damageDice =  group.GetMissileDamageDice();
+                var targets = attackers;
+                if (group.IsAttacker)
+                    targets = defenders;
+
+                AssignDamage(targets, damageDice);
+
             }
+            attackers.ToList().RemoveAll(x => x.IsDestroyed);
+            defenders.ToList().RemoveAll(x => x.IsDestroyed);
+
+            while(attackers.Count()>0 && defenders.Count()>0)
+            {
+                AllShipsFireCannons(attackers, defenders, groups);
+            }
+
+            return attackers.Count() > 0;
+
             //Fire missiles
             //Initative order //defender if tied
             //Hit >= 6. Add computers subtract sheidls
             //1 damage destroys ship add 1 for each hull
+        }
+
+        private void AllShipsFireCannons(IEnumerable<Ship> attackers, IEnumerable<Ship> defenders, List<ShipGroup> orderedGroups)
+        {
+            //Cannon round
+            foreach (var group in orderedGroups)
+            {
+                var damageDice = group.GetMissileDamageDice();
+                var targets = attackers;
+                if (group.IsAttacker)
+                    targets = defenders;
+
+                AssignDamage(targets, damageDice);
+
+                attackers.ToList().RemoveAll(x => x.IsDestroyed);
+                defenders.ToList().RemoveAll(x => x.IsDestroyed);
+            }
+
+
+
         }
 
         private List<Ship> GetShipsOrdered(IEnumerable<Ship> attackers, IEnumerable<Ship> defenders)
@@ -57,14 +100,25 @@ namespace Eclipse.Models.Combat
             return result;
         }
 
-        public void AssignDamage(IEnumerable<Ship> targets, List<DamageDice> dice)
+        public List<DamageDice> AssignDamage(IEnumerable<Ship> targets, List<DamageDice> dice)
         {
-            var ordered = targets.OrderBy(x => x.Hull).ThenByDescending(x => x.Size).ToList();
+            var damageOrder = targets.OrderByDescending(x => x.Health).ThenBy(x => x.Size);
 
-            foreach(var ship in ordered)
+            //kill assign
+            var killOrder = targets.OrderByDescending(x => x.Size).ToList();
+            //damage assign
+
+            foreach (var ship in killOrder)
             {
-
+                dice = ship.AssignToKill(dice);
             }
+
+            foreach(var ship in damageOrder)
+            {
+                dice = ship.AssignDamage(dice);
+            }
+
+            return dice;
         }
     }
 }

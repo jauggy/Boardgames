@@ -22,7 +22,7 @@ namespace Eclipse.Models.Ships
             if (part.CannonDamage!= null && part.CannonDamage.Count > 0)
             {
                 list.Add("Cannon Damage: " + String.Join("+", part.CannonDamage));
-            }else list.Add("Cannon Datamage:");
+            }else list.Add("Cannon Damage:");
             if (part.MissileDamage!=null && part.MissileDamage.Count > 0)
             {
                 list.Add("Missile Damage: " + String.Join("+", part.MissileDamage));
@@ -43,6 +43,28 @@ namespace Eclipse.Models.Ships
             return String.Join("</br>", list);
         }
 
+        public static String GetDescription(Ship ship)
+        {
+            var list = new List<String>();
+            if (ship.CannonDamage != null && ship.CannonDamage.Count > 0)
+            {
+                list.Add("Cannon Damage: " + String.Join("+", ship.CannonDamage));
+            }
+            else list.Add("Cannon Damage:");
+            if (ship.MissileDamage != null && ship.MissileDamage.Count > 0)
+            {
+                list.Add("Missile Damage: " + String.Join("+", ship.MissileDamage));
+            }
+            else list.Add("Missile Damage:");
+            list.Add("Shield: " + ship.Shield);
+            list.Add("Hull: " + ship.Hull);
+            list.Add("Computer: " + ship.Computer);
+
+            list.Add("Initiative: " + ship.Initiative);
+            list.Add("Movement: " + ship.Movement);
+
+            return String.Join("</br>", list);
+        }
 
 
         public static String GetDescription(IShipPart part)
