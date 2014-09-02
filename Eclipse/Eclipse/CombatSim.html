@@ -222,7 +222,8 @@
              $('#sim-list-players').on('click', 'a', function (event) {
                  
                  ChangeDefender($(this).text());
-                 ClearShips();
+                 _ships = { attacker: [], defender: [] };
+                 $('.sim-ships').clear();
                  //return false;
              });
 
