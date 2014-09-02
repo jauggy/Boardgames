@@ -289,5 +289,13 @@ namespace Eclipse
             GameState.GetInstance().CombatSimUI.ChangeEnemy(name);
             return GameState.GetInstance().CombatSimUI;
         }
+
+          [WebMethod(true)]
+          public CombatSimUI Simulate(IEnumerable<String> attacker, IEnumerable<String> defender, int numberOfSimulations)
+          {
+              var model = GameState.GetInstance().CombatSimUI;
+              model.Simulate(attacker, defender, numberOfSimulations);
+              return model;
+          }
     }
 }

@@ -1,4 +1,5 @@
-﻿ .list-inline {
+﻿
+#pbBody .list-inline {
   white-space:nowrap;
   float:none;
 }
@@ -67,10 +68,19 @@
 }
 
 #combat-sim-modal .row{
-    padding-bottom:20px;
+    padding-bottom:10px;
 }
 
  #combat-sim-modal .list-inline {
   white-space:normal;
   float:none;
 }
+
+  #combat-sim-modal .heading {
+  font-size:large;
+}
+
+  #combat-sim-modal .sim-ships .label{
+    display: inline-block;
+    margin-bottom:5px;
+  }

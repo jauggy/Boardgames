@@ -11,14 +11,14 @@ namespace Eclipse.Models.UI
         public String[] DefenderNameSelection { get; set; }
         public Ship[] AttackerShipSelection { get; set; }
         public Ship[] DefenderShipSelection { get; set; }
-        public Ship[] DefenderShips { get { return _defenderShips.ToArray(); } }
-        public Ship[] AttackerShips { get { return _attackerShips.ToArray(); } }
+
         public ICombatant Enemy { get; set; }
         public ICombatant CurrentPlayer { get; set; }
 
         private List<Ship> _defenderShips = new List<Ship>();
         private List<Ship> _attackerShips = new List<Ship>();
 
+        public String Message { get; set; }
         public CombatSimUI(String enemy)
         {
            // Enemy = enemy;
@@ -50,10 +50,18 @@ namespace Eclipse.Models.UI
             _attackerShips.Add(CurrentPlayer.GetShipByName(name));
         }
 
-        public void Simulate()
+        public void Simulate(IEnumerable<String> attacker, IEnumerable<String> defender, int number)
         {
+            var denom = Convert.ToDouble(number);
+            var shipsA = attacker.Select(x => CurrentPlayer.GetShipByName(x)).ToList();
+            var shipsD = defender.Select(x => Enemy.GetShipByName(x)).ToList();
             var sim = new CombatSim();
-            var attackerWins = sim.Simulate(AttackerShips, DefenderShips);
+            var total = sim.Simulate(shipsA, shipsD, number);
+            var winRate = String.Format("{0:P}", total.Wins / denom);
+            var loseRate = String.Format("{0:P}", total.Losses / denom);
+            var drawRate = String.Format("{0:P}", total.Draws / denom);
+            Message = String.Format("Win: {0}, Lose: {1}, Draw: {2}", winRate, loseRate, drawRate);
+           // return attackerWins;
         }
     }
 }

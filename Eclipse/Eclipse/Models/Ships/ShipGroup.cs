@@ -7,7 +7,7 @@ namespace Eclipse.Models.Ships
 {
     public class ShipGroup
     {
-        private List<Ship> _ships;
+        private List<Ship> _ships = new List<Ship>();
         public ShipGroup(IEnumerable<Ship> ships)
         {
             _ships = ships.ToList();
@@ -22,7 +22,7 @@ namespace Eclipse.Models.Ships
 
         public List<DamageDice> GetCannonDamageDice()
         {
-            return _ships.Select(x => x.GetCannonDice()).SelectMany(x => x).ToList();
+            return _ships.Where(x=>!x.IsDestroyed).Select(x => x.GetCannonDice()).SelectMany(x => x).ToList();
         }
 
         public List<DamageDice> GetMissileDamageDice()

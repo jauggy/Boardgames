@@ -14,6 +14,10 @@ namespace Eclipse.Models.Ships
             this.IsAncient = true;
             this.Name = ShipNames.INTERCEPTOR;
             var part = new ShipPart();
+            part.Initiative = 2;
+            part.Computer = 1;
+            part.Hull = 1;
+            part.CannonDamage = new List<int> { 1,1 };
             var print = new ShipBlueprint();
             print.AddShipPart(part);
 

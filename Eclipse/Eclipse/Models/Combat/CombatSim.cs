@@ -6,66 +6,109 @@ using System.Web;
 
 namespace Eclipse.Models.Combat
 {
+    public enum CombatResult { Default, Win, Lose, Draw };
+
     public class CombatSim
     {
+     
+        public CombatResultTotal Simulate(IEnumerable<Ship> attackers, IEnumerable<Ship> defenders, int numSimulations)
+        {
+            var win = 0;
+            var total = new CombatResultTotal();
+            for(int i = 0; i<numSimulations;i++)
+            {
+                var result = Simulate(attackers, defenders);
+                total.AddResult(result);
+            
+            }
+
+            return total;
+
+        }
         /// <summary>
         /// Returns true if attackers win
         /// </summary>
         /// <param name="attackers"></param>
         /// <param name="defenders"></param>
         /// <returns></returns>
-        public  bool Simulate(IEnumerable<Ship> attackers, IEnumerable<Ship> defenders)
+        public CombatResult Simulate(IEnumerable<Ship> att, IEnumerable<Ship> def)
         {
-            attackers.ToList().ForEach(x => x.IsAttacker = true);
-            defenders.ToList().ForEach(x => x.IsAttacker = false);
-
-            var list = GetShipsOrdered(attackers, defenders);
-            var groups = FormShipGroups(list);
-
-            //Missile round
-            foreach(var group in groups)
+            try
             {
-                var damageDice =  group.GetMissileDamageDice();
-                var targets = attackers;
-                if (group.IsAttacker)
-                    targets = defenders;
+                var attackers = new List<Ship>();
+                attackers.AddRange( att);
+                var defenders = new List<Ship>();
+                defenders.AddRange(def);
 
-                AssignDamage(targets, damageDice);
+                attackers.ForEach(x => x.Reset());
+                defenders.ForEach(x => x.Reset());
+
+                attackers.ToList().ForEach(x => x.IsAttacker = true);
+                defenders.ToList().ForEach(x => x.IsAttacker = false);
+
+                var list = GetShipsOrdered(attackers, defenders);
+                var groups = FormShipGroups(list);
+
+                //Missile round
+                foreach (var group in groups)
+                {
+                    var damageDice = group.GetMissileDamageDice();
+                    var targets = attackers;
+                    if (group.IsAttacker)
+                        targets = defenders;
+
+                    AssignDamage(targets, damageDice);
+
+                }
+                attackers.ToList().RemoveAll(x => x.IsDestroyed);
+                defenders.ToList().RemoveAll(x => x.IsDestroyed);
+
+                var result = CombatResult.Default;
+                while (result == CombatResult.Default)
+                {
+                    result = AllShipsFireCannons(attackers, defenders, groups);
+                }
+
+                return result;
+            }
+            catch(Exception e)
+            {
 
             }
-            attackers.ToList().RemoveAll(x => x.IsDestroyed);
-            defenders.ToList().RemoveAll(x => x.IsDestroyed);
-
-            while(attackers.Count()>0 && defenders.Count()>0)
-            {
-                AllShipsFireCannons(attackers, defenders, groups);
-            }
-
-            return attackers.Count() > 0;
-
+            throw new NotImplementedException();
             //Fire missiles
             //Initative order //defender if tied
             //Hit >= 6. Add computers subtract sheidls
             //1 damage destroys ship add 1 for each hull
         }
 
-        private void AllShipsFireCannons(IEnumerable<Ship> attackers, IEnumerable<Ship> defenders, List<ShipGroup> orderedGroups)
+        private CombatResult AllShipsFireCannons(List<Ship> attackers, List<Ship> defenders, List<ShipGroup> orderedGroups)
         {
-            //Cannon round
-            foreach (var group in orderedGroups)
+            if (attackers.Count() > 0 && defenders.Count() > 0)
             {
-                var damageDice = group.GetMissileDamageDice();
-                var targets = attackers;
-                if (group.IsAttacker)
-                    targets = defenders;
+                //Cannon round
+                foreach (var group in orderedGroups)
+                {
+                    var damageDice = group.GetCannonDamageDice();
+                    var targets = attackers;
+                    if (group.IsAttacker)
+                        targets = defenders;
 
-                AssignDamage(targets, damageDice);
+                    AssignDamage(targets, damageDice);
 
-                attackers.ToList().RemoveAll(x => x.IsDestroyed);
-                defenders.ToList().RemoveAll(x => x.IsDestroyed);
+                    attackers.RemoveAll(x => x.IsDestroyed);
+                    defenders.RemoveAll(x => x.IsDestroyed);
+                }
             }
 
-
+            if (attackers.Count() == 0)
+                return CombatResult.Lose;
+            else if (defenders.Count() == 0)
+                return CombatResult.Win;
+            else if (attackers.Count(x => x.IsArmed()) + defenders.Count(x => x.IsArmed()) == 0)
+                return CombatResult.Draw;
+            else
+                return CombatResult.Default;
 
         }
 

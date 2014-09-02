@@ -27,152 +27,103 @@
                             <label for="add-attacker-buttons">Add ship: </label>
 
                             <!-- Single drop down button button -->
-                            <div id="add-attacker-buttons" class="btn-group">
+                            <div id="add-attacker-buttons" class="btn-group add-ships" data-team="attacker">
                                 
                                 <!--End drop down button-->
-                                <div class="btn btn-default attacker">Interceptor</div>
-                                <div class="btn btn-default attacker">Cruiser</div>
-                                <div class="btn btn-default attacker">Starbase</div>
-                                <div class="btn btn-default attacker">Interceptor</div>
+                                <button class="btn btn-default">1</button>
+                                <button class="btn btn-default">1</button>
+                                <button class="btn btn-default">2</button>
+                                <button class="btn btn-default">2</button>
                             </div>
+                            <div class="clear btn btn-warning" data-team="attacker">Clear Ships</div>
                         </div>
+
+
+
                         <div class="col-lg-6">
                             <!-- Single drop down button button -->
-                            <div class="btn-group">
-                                <!-- Single drop down button button -->
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                        Select player <span class="caret"></span>
-                                    </button>
-                                    <ul id="sim-list-players" class="dropdown-menu" role="menu">
-                                        <li><a href="#">Action</a></li>
-                                        <li><a href="#">Another action</a></li>
-                                        <li><a href="#">Something else here</a></li>
-                                        <li class="divider"></li>
-                                        <li><a href="#">Separated link</a></li>
-                                    </ul>
-                                </div>
-                                <!--End drop down button-->
+                            <label for="add-defender-buttons">Add ship: </label>
 
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                        Add Ship <span class="caret"></span>
-                                    </button>
-                                    <ul id="sim-list-defender-ships" class="dropdown-menu" role="menu">
-                                        <li><a href="#">Action</a></li>
-                                        <li><a href="#">Another action</a></li>
-                                        <li><a href="#">Something else here</a></li>
-                                        <li class="divider"></li>
-                                        <li><a href="#">Separated link</a></li>
-                                    </ul>
-                                </div>  <!--End drop down button-->
-                                <button class="btn btn-default clear defender">Clear Ships</button>
+                            <!-- Single drop down button button -->
+                            <div id="add-defender-buttons" class="btn-group add-ships" data-team="defender">
+
+                                <!--End drop down button-->
+                                <button class="btn btn-default attacker">3</button>
+
                             </div>
 
-
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-6" style="border-right: 1px dashed #333;">
                            
-
-                            <!-- Single drop down button button -->
-                            <div class="btn-group">
-                                <div class=" btn-group">
-                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                        Add Ship <span class="caret"></span>
-                                    </button>
-                                    <ul id="sim-list-attacker-ships" class="dropdown-menu" role="menu">
-                                        <li><a href="#">Action</a></li>
-                                        <li><a href="#">Another action</a></li>
-                                        <li><a href="#">Something else here</a></li>
-                                        <li class="divider"></li>
-                                        <li><a href="#">Separated link</a></li>
-                                    </ul>
-                                </div>
-                                <!--End drop down button-->
-                                <div class="btn btn-default clear attacker">Clear Ships</div>
-                            </div>
-                            </div>
-                        <div class="col-lg-6">
-                            <!-- Single drop down button button -->
-                            <div class="btn-group">
-                                <!-- Single drop down button button -->
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                        Select player <span class="caret"></span>
-                                    </button>
-                                    <ul id="sim-list-players" class="dropdown-menu" role="menu">
-                                        <li><a href="#">Action</a></li>
-                                        <li><a href="#">Another action</a></li>
-                                        <li><a href="#">Something else here</a></li>
-                                        <li class="divider"></li>
-                                        <li><a href="#">Separated link</a></li>
-                                    </ul>
-                                </div>
-                                <!--End drop down button-->
-
-                                <div class="btn-group">
-                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                    Add Ship <span class="caret"></span>
-                                </button>
-                                <ul id="sim-list-defender-ships" class="dropdown-menu" role="menu">
+                            <div class="clear btn btn-warning" data-team="defender">Clear Ships</div>
+                            <div class="btn-group pull-right">
+                                <button class=" btn btn-success dropdown-toggle" data-toggle="dropdown">Select Player <span class="caret"></span></button>
+                                <ul id="sim-list-players" class="dropdown-menu" role="menu">
                                     <li><a href="#">Action</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#">Separated link</a></li>
                                 </ul>
-                                </div>  <!--End drop down button-->
-                                <button class="btn btn-default clear defender">Clear Ships</button>
                             </div>
-                          
-                            
                         </div>
                     </div>
+
 
                     <!--new row-->
                     <div class="row">
                         <div class="col-lg-6">
-                            <span> Your Ships</span>
+                            <span class="heading"> Your Ships</span>
                             
                         </div>
                         <div class="col-lg-6">
-                            <span id="sim-defender-heading">Blue OrionShips</span>
+                         
+                                <span class="heading" id="sim-defender-heading">Blue OrionShips</span>
+
                             
                         </div>
                     </div>
                     <!--Next row-->
                     <div class="row">
                         <div class="col-lg-6">
-                            <ul id="sim-attacker-ships" class="list-inline"></ul>
+                            <ul  class="list-inline sim-ships attacker"></ul>
                         </div>
                         <div class="col-lg-6">
                           
-                                <ul  id="sim-defender-ships" class="list-inline"></ul>
+                                <ul   class="list-inline sim-ships defender"></ul>
               
                         </div>
                     </div>
                 </div>
 
+
             </div>
             <div class="modal-footer">
-                <button id="btn-populate" class="btn btn-primary pull-left">Add influence and populate</button>
-                <button class="btn btn-default">Add influence only</button>
-                <button class="btn btn-default">No influence</button>
+                <div class="pull-left">
+                    <form class="form-inline" role="form">
+                        <div class="form-group" >
+                            <label  for="sim-times">Number of simulations:</label>
+                            <input style="width:100px"  type="text" class="form-control" id="sim-times" value="100">
+                        </div>
+                        <button id="sim-submit" class="btn btn-primary">Simulate</button>
+                        <div class="form-group">
+                            <span id="sim-message" style="margin-left: 20px;" class="text-success">You won 56 out of 100 battles</span>
+                            </div>
+                    </form>
+
+                   
+                </div>
+
+                   
+
+</div>
+              
+           
             </div>
         </div>
     </div>
 
-</div>
 
 
 <script type="text/javascript">
-    var _defenderShips = [];
-    var _attackerShips = [];
-    var _attackerDescriptions; //format will be description['interceptor'] = descr....
-    var _defenderDescriptions;
 
+
+    var _descriptions = { attacker: {}, defender: {} };
+    var _ships = { attacker: [], defender:[]};
     function ChangeDefender(name) {
         debugger;
         var args = { name: name };
@@ -184,44 +135,32 @@
         });
     }
         
-    function ClearShips() {
-        //on change player and first start
-        ClearAttackerShips();
-        ClearDefenderShips();
-    }
 
-    function ClearAttackerShips() {
-        $('#sim-attacker-ships').empty();
-        _attackerShips = [];
-    }
-
-    function ClearDefenderShips() {
-        $('#sim-defender-ships').empty();
-        _defenderShips = [];
-    }
 
     function CombatSimUICallback(data) {
         var model = data["d"];
         var html = "";
 
-        _attackerDescriptions = {};
-        _defenderDescriptions = {};
+        _descriptions['attacker'] = {};
+        _descriptions['defender'] = {};
+        //Attacker ship selection
         for (var i = 0; i < model.AttackerShipSelection.length; i++) {
-            var shipname =  model.AttackerShipSelection[i].Name ;
-            html += '<li><a  href="javascript:void(0)">' + shipname + '</a></li>';
-            _attackerDescriptions[shipname] = model.AttackerShipSelection[i].Description;
+            var shipname = model.AttackerShipSelection[i].Name;
+            html += ' <button class="btn btn-default" data-team="attacker">'+shipname+'</button>';
+          //  html += '<li><a  href="javascript:void(0)">' + shipname + '</a></li>';
+            _descriptions['attacker'][shipname] = model.AttackerShipSelection[i].Description;
         }
-        $('#sim-list-attacker-ships').html(html);
+        $('#add-attacker-buttons').html(html);
 
         html = "";
 
         for (var i = 0; i < model.DefenderShipSelection.length; i++) {
             debugger;
             var shipname = model.DefenderShipSelection[i].Name;
-            html += '<li><a href="javascript:void(0)">' + shipname + '</a></li>';
-            _defenderDescriptions[shipname] = model.DefenderShipSelection[i].Description;
+            html += ' <button class="btn btn-default" data-team="defender">' + shipname + '</button>';
+            _descriptions['defender'][shipname] = model.DefenderShipSelection[i].Description;
         }
-        $('#sim-list-defender-ships').html(html);
+        $('#add-defender-buttons').html(html);
 
         $('#sim-defender-heading').html(model.Enemy.Name + ' Ships');
 
@@ -236,6 +175,30 @@
 
     }
 
+    //team should be attacker or defender
+    function AddShipHandler(classSelector, shipName)
+    {
+        var html = '<li><span style="font-size:inherit" class="label label-default">' + shipName + '</span></li>';
+        _ships[classSelector].push(shipName);
+
+        $('.sim-ships.'+classSelector).append(html);
+
+        $('.sim-ships.' + classSelector).find('.label-default').last().popover({
+            placement: 'top',
+            html: true,
+            trigger: 'hover',
+            content: function (e) {
+                debugger;
+                return '<div style="width:300px">' + _descriptions[classSelector][shipName] + '</div>';
+
+            }
+        });
+
+    }
+
+    function IsValid(checkNum) {
+
+    }
 
     $(document).ready(function(){
             var args = {};
@@ -247,67 +210,55 @@
              });
 
              $('#combat-sim-modal').modal();
+
+        //click handler select player
              $('#sim-list-players').on('click', 'a', function (event) {
                  
                  ChangeDefender($(this).text());
                  ClearShips();
-                 return false;
+                 //return false;
              });
 
 
 
         //click event add defender ship
-             $('#sim-list-defender-ships').on('click', 'a', function (event) {
-                 var html = '<li><span class="label label-default">' + $(this).text() + '</span></li>';
-                 _defenderShips.push($(this).text());
-                 var shipName = $(this).text();
-                 $('#sim-defender-ships').append(html);
+             $('.add-ships').on('click', 'button', function (event) {
+                 debugger;
+                 var team = $(this).attr('data-team');
+                 AddShipHandler(team, $(this).text());
+                 return false;
+             });
 
-                     $('#sim-defender-ships').find('span').last().popover({
-                         placement: 'top',
-                         html: true,
-                         trigger: 'hover',
-                         content: function (e) {
-                             debugger;
-                             return '<div style="width:300px">'+_defenderDescriptions[shipName]+'</div>';
 
+
+             $('#combat-sim-modal').on('click', '.clear', function (event) {
+                 var team = $(this).attr('data-team');
+                 $('.sim-ships.' + team).empty();
+                 _ships[team] = [];
+             });
+
+             $('#sim-submit').click(function (event) {
+     
+                 var number = $('#sim-times').val();
+                 _ships["numberOfSimulations"] = number;
+                 if ($.isNumeric(number))
+                 {
+                     $.ajax({
+                         url: "EclipseService.asmx/Simulate",
+                         data: JSON.stringify(_ships), dataType: "json", type: "POST", contentType: 'application/json; charset=utf-8',
+                         success: function (data) {
+                             var model = data["d"];
+                             $('#sim-message').html(model.Message);
                          }
                      });
-     
-
-               //  event.stopPropagation();
-             });
-
-
-        //click event add attacker ship
-             $('#sim-list-attacker-ships').on('click', 'a', function (event) {
-                 var html = '<li><span class="label label-default">' + $(this).text() + '</span></li>';
-                 _attackerShips.push($(this).text());
-                 var shipName = $(this).text();
-                 $('#sim-attacker-ships').append(html);
-
-                 $('#sim-attacker-ships').find('span').last().popover({
-                     placement: 'right',
-                     html: true,
-                     trigger: 'hover',
-                     content: function (e) {
-                         debugger;
-                         return '<div style="width:300px">' + _attackerDescriptions[shipName] + '</div>';
-
-                     }
-                 });
-             });
-
-             $('#combat-sim-modal').find('.clear').click(function (event) {
-                 if($(this).hasClass('attacker'))
-                 {
-                     ClearAttackerShips();
                  }
-                 if($(this).hasClass('defender'))
-                 {
-                     ClearDefenderShips();
+                 else {
+                     $('#sim-message').html('Input number is invalid');
+
                  }
+
                  return false;
+  
              });
     });
 </script>

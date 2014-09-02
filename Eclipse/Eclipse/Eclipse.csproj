@@ -119,6 +119,7 @@
     <Compile Include="Models\Box.cs" />
     <Compile Include="Models\CanvasConstants.cs" />
     <Compile Include="Models\Combat\AncientPlayer.cs" />
+    <Compile Include="Models\Combat\CombatResultTotal.cs" />
     <Compile Include="Models\Combat\CombatSim.cs" />
     <Compile Include="Models\Combat\ICombatant.cs" />
     <Compile Include="Models\Playerboards\ResourceSegment.cs" />

@@ -111,6 +111,11 @@ namespace Eclipse.Models
             AssignedDamage = 0;
         }
 
+        public bool IsArmed()
+        {
+            
+            return (MissileDamage.Count() + CannonDamage.Count())>0;
+        }
 
     }
 }
