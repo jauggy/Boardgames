@@ -21,9 +21,61 @@
 
                 <!--Body content-->
                 <div class="container-fluid">
+                    <!--first row-->
                     <div class="row">
                         <div class="col-lg-6" style="border-right: 1px dashed #333;">
-                            <span></span>
+                            <label for="add-attacker-buttons">Add ship: </label>
+
+                            <!-- Single drop down button button -->
+                            <div id="add-attacker-buttons" class="btn-group">
+                                
+                                <!--End drop down button-->
+                                <div class="btn btn-default attacker">Interceptor</div>
+                                <div class="btn btn-default attacker">Cruiser</div>
+                                <div class="btn btn-default attacker">Starbase</div>
+                                <div class="btn btn-default attacker">Interceptor</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <!-- Single drop down button button -->
+                            <div class="btn-group">
+                                <!-- Single drop down button button -->
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                        Select player <span class="caret"></span>
+                                    </button>
+                                    <ul id="sim-list-players" class="dropdown-menu" role="menu">
+                                        <li><a href="#">Action</a></li>
+                                        <li><a href="#">Another action</a></li>
+                                        <li><a href="#">Something else here</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">Separated link</a></li>
+                                    </ul>
+                                </div>
+                                <!--End drop down button-->
+
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                        Add Ship <span class="caret"></span>
+                                    </button>
+                                    <ul id="sim-list-defender-ships" class="dropdown-menu" role="menu">
+                                        <li><a href="#">Action</a></li>
+                                        <li><a href="#">Another action</a></li>
+                                        <li><a href="#">Something else here</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">Separated link</a></li>
+                                    </ul>
+                                </div>  <!--End drop down button-->
+                                <button class="btn btn-default clear defender">Clear Ships</button>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6" style="border-right: 1px dashed #333;">
+                           
+
                             <!-- Single drop down button button -->
                             <div class="btn-group">
                                 <div class=" btn-group">
@@ -78,6 +130,8 @@
                             
                         </div>
                     </div>
+
+                    <!--new row-->
                     <div class="row">
                         <div class="col-lg-6">
                             <span> Your Ships</span>
