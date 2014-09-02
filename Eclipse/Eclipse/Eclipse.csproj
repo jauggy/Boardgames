@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AddInfluence.html" />
+    <Content Include="Build.html" />
     <Content Include="ChoosePopulationType.html" />
     <Content Include="css\bootstrap-theme.css" />
     <Content Include="css\bootstrap-theme.min.css" />
@@ -135,6 +136,7 @@
     <Compile Include="Models\UI\AddInfluenceUI.cs" />
     <Compile Include="Models\UI\AddPopUI.cs" />
     <Compile Include="Models\UI\AfterPopulateUI.cs" />
+    <Compile Include="Models\UI\BuildUI.cs" />
     <Compile Include="Models\UI\CombatSimUI.cs" />
     <Compile Include="Models\UI\DropDownMenu.cs" />
     <Compile Include="Models\UI\MainNavbarUI.cs" />

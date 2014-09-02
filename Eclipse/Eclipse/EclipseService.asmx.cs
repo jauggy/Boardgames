@@ -297,5 +297,14 @@ namespace Eclipse
               model.Simulate(attacker, defender, numberOfSimulations);
               return model;
           }
+
+        [WebMethod(true)]
+        public List<TempMenu> GetBuildMenus()
+          {
+              GameState.GetInstance().HasDoneMainAction = true;
+            var currentPlayer = GameState.GetInstance().CurrentPlayer;
+            var hexes = HexBoard.GetInstance().Hexes.Where(x => x.Controller == currentPlayer);
+            return hexes.Select(x => new TempMenu(new List<String> { "Build" }, x)).ToList();
+          }
     }
 }

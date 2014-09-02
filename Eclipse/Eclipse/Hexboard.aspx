@@ -449,6 +449,22 @@
               $('#tempMenus').empty();
           }
 
+          function ShowBuildMenus() {
+              $.ajax({
+                  url: "EclipseService.asmx/GetBuildMenus",
+                  data: '{}', dataType: "json", type: "POST", async: false, contentType: 'application/json; charset=utf-8',
+                  success: function (data) {
+                      var menus = data["d"];
+                      for (var i = 0; i < menus.length; i++) {
+                          var hex = menus[i].Hex;
+                          ShowTempMenuBottom(menus[i], function (event) {
+                              $('#modalPlaceholder').load('Build.html');
+                          });
+                      }
+                  }
+              });
+          }
+
           function ShowPopulateMenu( hex, stringList) {
               var clone= $('#populateDiv').clone();
               clone.attr('id', 'populate' + x + y);
@@ -492,6 +508,7 @@
 
           }
 
+              //Will set the _lastHex variable before callback
           function ShowTempMenuBottom(tempMenu, callback) {
               var x = tempMenu.Hex.CanvasLocation.X;
               var y = tempMenu.Hex.CanvasLocation.Y;
@@ -504,6 +521,7 @@
               $('#tempMenus').append(mnu);
               $(mnu).find('.btn-group-vertical').append(btnHtml);
               $(mnu).find('.btn').click(function (event) {
+                  _lastHex;
                   callback(event);
               });
               mnu.css({top:y+canvas.offsetTop+40,left:x-$(mnu).outerWidth()/2})
@@ -519,6 +537,7 @@
                   success: function (data) {
                       var menus = data["d"];
                       $(menus).each(function (index, menu) {
+
                           ShowTempMenuBottom(menu, callback);
                       });
 
@@ -687,6 +706,9 @@
                   $('#modalPlaceholder').load('CombatSim.html');
               });
 
+              $('#buildTab').click(function (event) {
+                  ShowBuildMenus();
+              });
           });
            
           </script>
