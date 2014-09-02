@@ -7,15 +7,19 @@ namespace Eclipse.Models
 {
     public class RandomGenerator
     {
-      
+        private static Random _random;
+
         public static Random GetRandom()
         {
-            if (HttpContext.Current.Session["Random"] == null)
+           /* if (HttpContext.Current.Session["Random"] == null)
             {
                 HttpContext.Current.Session["Random"] = new Random();
             }
 
-            return (Random)HttpContext.Current.Session["Random"];
+            return (Random)HttpContext.Current.Session["Random"];*/
+            if (_random == null)
+                _random = new Random(DateTime.Now.Millisecond);
+            return _random;
         }
 
         public static int GetDice()

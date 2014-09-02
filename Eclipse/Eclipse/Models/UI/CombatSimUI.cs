@@ -52,6 +52,11 @@ namespace Eclipse.Models.UI
 
         public void Simulate(IEnumerable<String> attacker, IEnumerable<String> defender, int number)
         {
+            if(attacker.Count()==0||defender.Count()==0)
+            {
+                Message = "You have not added enough ships";
+                return;
+            }
             var denom = Convert.ToDouble(number);
             var shipsA = attacker.Select(x => CurrentPlayer.GetShipByName(x)).ToList();
             var shipsD = defender.Select(x => Enemy.GetShipByName(x)).ToList();

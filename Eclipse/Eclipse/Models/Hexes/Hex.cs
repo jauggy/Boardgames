@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Eclipse.Models.Ships;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -318,8 +319,8 @@ namespace Eclipse.Models.Hexes
         {
             for(int i = 0;i<num;i++)
             {
-                var ship  = new Ship();
-                ship.IsAncient = true;
+                var ship  = new AncientInterceptor();
+               
                 this.AddShip(ship);
             }
         }

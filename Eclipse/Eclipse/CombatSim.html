@@ -14,8 +14,15 @@
 
                         </div>
 
-
-
+                        <div>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li>
+                                    <a class="closemodal" href="javascript:void(0)">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div><!-- /.navbar-collapse -->
                     </div><!-- /.container-fluid -->
                 </nav>
 
@@ -97,11 +104,11 @@
                     <form class="form-inline" role="form">
                         <div class="form-group" >
                             <label  for="sim-times">Number of simulations:</label>
-                            <input style="width:100px"  type="text" class="form-control" id="sim-times" value="100">
+                            <input style="width:100px"  type="text" class="form-control" id="sim-times" value="1000">
                         </div>
                         <button id="sim-submit" class="btn btn-primary">Simulate</button>
                         <div class="form-group">
-                            <span id="sim-message" style="margin-left: 20px;" class="text-success">You won 56 out of 100 battles</span>
+                            <span id="sim-message" style="margin-left: 20px;" class="text-success"></span>
                             </div>
                     </form>
 

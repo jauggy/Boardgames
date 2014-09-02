@@ -30,10 +30,11 @@
         <div class="navbar-collapse collapse ">
           <ul class="nav navbar-nav navbar-left">
             <li><span class="navbar-brand" style="min-width:200px">Eclipse</span></li>
-             <li id="playerboardTab" ><a href="javascript:void(0)">Player board</a></li>
-               <li id="supplyboardTab" ><a href="javascript:void(0)">Supply board</a></li>
+            
+     
                 <li  ><a id="populateTab" href="javascript:void(0)">Populate</a></li>
-              <li class="nav-divider"></li>
+                        <li class="mainaction" id="supplyboardTab" ><a href="javascript:void(0)">Research</a></li>
+            
             <li id="exploreTab" class="mainaction"><a href="javascript:void(0)">Explore</a></li>
             
                <li class="mainaction"  ><a id="upgradeTab" href="javascript:void(0)">Upgrade</a></li>
@@ -61,6 +62,7 @@
                 <li id="resourceViewTab" ><a href="javascript:void(0)">Resource View</a></li>
                <li id="militaryViewTab"><a href="javascript:void(0)">Military View</a> </li>
                  <li id="combatSimTab"><a href="javascript:void(0)">Combat Sim</a></li>
+                   <li id="playerboardTab" ><a href="javascript:void(0)">Player board</a></li>
               </ul></li>
             
 
