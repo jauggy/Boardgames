@@ -18,6 +18,12 @@ namespace Eclipse.Models.UI
             MenuItems = items.ToArray();
         }
 
+        public TempMenu(String items, Hex hex)
+            : this(new List<String> { items}, hex)
+        {
+
+        }
+
         public TempMenu() { }
     }
 }

@@ -474,6 +474,8 @@
               var y = hex.CanvasLocation.Y;
               
               $('#tempMenus').append(clone);
+
+
               $(stringList).each(function (index, o) {
                 
                   var button = $(' <li><a href="javascript:void(0)">' + o + '</a></li>');
@@ -507,6 +509,46 @@
                   callback(event);
               });
               mnu.css({ top: y + canvas.offsetTop - $(mnu).outerHeight()/2, left: x - $(mnu).outerWidth() / 2 })
+
+          }
+
+
+          //Will set the _lastHex variable before callback
+          function ShowDropMenuBottom(tempMenu, callback) {
+              var x = tempMenu.Hex.CanvasLocation.X;
+              var y = tempMenu.Hex.CanvasLocation.Y;
+              var coord = tempMenu.Hex.AxialCoordinates;
+              var btnHtml = "";
+              var mnu = $('#dropMenu').clone();
+              for (var i = 0; i < tempMenu.MenuItems.length; i++) {
+                  btnHtml = '  <li><a href="javascript:void(0)">' + tempMenu.MenuItems[i]+ '</a></li>'
+               
+              }
+              $('#tempMenus').append(mnu);
+              $(mnu).find('.dropdown-menu').html(btnHtml);
+              $(mnu).find('.menu-heading').html(tempMenu.Heading);
+              $(mnu).find('a').click(function (event) {
+                  _lastHex = tempMenu.Hex;
+                  callback(event);
+              });
+              mnu.css({ top: y + canvas.offsetTop + 40, left: x - $(mnu).outerWidth() / 2 });
+
+              $(mnu).on('mouseenter', function (evnt) {
+                 
+                  $(evnt.currentTarget).find('.dropdown-menu').css('display','block');
+                  $(evnt.currentTarget).attr('data-triggered', 'true');
+               
+              });
+              
+              /*.on('mouseleave', function (evnt) {
+                  $(evnt.currentTarget).attr('data-triggered', 'false');
+                  setTimeout(function () {
+                      if($(evnt.currentTarget).attr('data-triggered')=='false')
+                        $(evnt.currentTarget).find('.dropdown-menu').css('display', 'none');
+                  }, 1000);*/
+                 
+             // });
+
 
           }
 
@@ -626,7 +668,40 @@
               $('#log').html(model.Log);
 
           }
+          function GetMoveToMenus(hex, shipname) {
+              HideTempMenus();
+              var args = {x:hex.AxialCoordinates.X, y:hex.AxialCoordinates.Y, shipName: shipname};
+              $.ajax({
+                  url: "EclipseService.asmx/GetMoveToMenus",
+                  data: JSON.stringify(args), dataType: "json", type: "POST", async: false, contentType: 'application/json; charset=utf-8',
+                  success: function (data) {
+                      var model = data["d"];
+                      $(model).each(function (index, menu) {
+                          ShowTempMenuBottom(menu, function (event) {
+                              alert('asdf');
+                          });
+                      });
+                  }
+              });
+          }
+          function GetMoveFromMenus() {
+              $.ajax({
+                  url: "EclipseService.asmx/GetMoveFromMenus",
+                  data: '{}', dataType: "json", type: "POST", async: false, contentType: 'application/json; charset=utf-8',
+                  success: function (data) {
+                      var model = data["d"];
+                      
+                      for (var i = 0; i < model.length; i++) {
+                          var menu = model[i];
+                          ShowDropMenuBottom(menu, function (event) {
+                              GetMoveToMenus(menu.Hex, $(event.currentTarget).text());
+                          });
 
+                      }
+                  }
+                  
+              });
+          }
 
           $(document).ready(function () {
               canvas = document.getElementById('myCanvas');
@@ -712,6 +787,15 @@
                   HideTempMenus();
                   ShowBuildMenus();
               });
+
+              $('#moveTab').click(function (event) {
+                  GetMoveFromMenus();
+              });
+
+              $(document).click(function () {
+                  $(".dropdown-menu").hide(); //click came from somewhere else
+              });
+
           });
            
           </script>
@@ -726,8 +810,8 @@
           <div id="dropMenu" style="position:absolute">
              <!-- Single button -->
                 <div class="btn-group">
-                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    Action <span class="caret"></span>
+                  <button type="button" class="btn btn-primary dropdown dropdown-toggle" data-toggle="dropdown">
+                    <span class="menu-heading"></span>&nbsp;<span class="caret"></span>
                   </button>
                   <ul class="dropdown-menu" role="menu">
                     <li><a href="#">Action</a></li>
@@ -744,6 +828,7 @@
                          
             </div>
         </div>
+
 
           <div id="exploreFromDiv" style="display:none; background-color:white" class="explore">
             <div class="btn-group-vertical">

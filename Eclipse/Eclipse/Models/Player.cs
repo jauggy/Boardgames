@@ -22,6 +22,7 @@ namespace Eclipse.Models
         public String Name { get; set; }
         public int PopulatesRemaining { get; set; }
         public int BuildsRemaining { get; set; }
+        public int MovesRemaining { get; set; }
         public Player(UniqueMethods uniqueMethods, string color)
         {
             UniqueMethods = uniqueMethods;
@@ -40,7 +41,7 @@ namespace Eclipse.Models
         {
             PopulatesRemaining = 2;
             BuildsRemaining = 2;
-            
+            MovesRemaining = this.UniqueMethods.GetNumberMovableShips();
             PlayerBoard.ResetLog();
         }
 

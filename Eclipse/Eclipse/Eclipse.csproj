@@ -123,6 +123,7 @@
     <Compile Include="Models\Combat\CombatResultTotal.cs" />
     <Compile Include="Models\Combat\CombatSim.cs" />
     <Compile Include="Models\Combat\ICombatant.cs" />
+    <Compile Include="Models\Discovery\DiscoveryTokenHelper.cs" />
     <Compile Include="Models\Playerboards\IBuildable.cs" />
     <Compile Include="Models\Playerboards\ResourceSegment.cs" />
     <Compile Include="Models\Playerboards\TechnologySegment.cs" />

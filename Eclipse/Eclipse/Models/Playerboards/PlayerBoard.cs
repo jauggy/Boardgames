@@ -131,10 +131,25 @@ namespace Eclipse.Models
 
         public void AdjustInfluenceDisks(int adjust)
         {
-            var before = GetUpkeep();
+            LogNetProductionBefore(PopulationType.Money);
             InfluenceDisks = InfluenceDisks + adjust;
-            var after = GetUpkeep();
-             AddLogLine("Upkeep: " + SignedNumber(before,after));
+            LogNetProductionAfter(PopulationType.Money);
+        }
+
+        private int _beforeLog;
+        private void LogNetProductionBefore(PopulationType popType)
+        {
+            _beforeLog = GetProduction(popType);
+                if(popType==PopulationType.Money)
+                    _beforeLog -= GetUpkeep();
+        }
+
+        private void LogNetProductionAfter(PopulationType popType)
+        {
+            var after = GetProduction(PopulationType.Money);
+            if(popType==PopulationType.Money)
+                after -= GetUpkeep();
+            AddLogLine("Net " + popType+ " Production: " + SignedNumber(_beforeLog, after));
         }
 
         private void AddLogLine(String msg)
@@ -187,19 +202,18 @@ namespace Eclipse.Models
 
         private void AdjustPop(PopulationType type, int adjust)
         {
-            var before = GetProduction(type);
+            LogNetProductionBefore(type);
             PopulationsCubes[type] += adjust;
-            var after = GetProduction(type);
-           AddLogLine( type.ToString() + " Production: " + SignedNumber(before, after));
+            LogNetProductionAfter(type);
         }
 
         public void ResetLog()
         {
-            var before = GetUpkeep();
+            var before = GetProduction(PopulationType.Money)- GetUpkeep();
 
-            var after = GetNextUpkeep();
+            var after = GetProduction(PopulationType.Money) - GetNextUpkeep();
 
-            Log = "The next action will increase upkeep to " + SignedNumber(before, after);
+            Log = "After the next action, net Money production: " + SignedNumber(before, after);
             AddLogLine("Money Storage: " + (GetStorage(PopulationType.Money)));
         }
 

@@ -32,7 +32,7 @@ namespace Eclipse.Models.Hexes
         public bool IsVisible { get; set; }
         public int Radius { get; set; }
         public List<HexSide> Sides { get; set; }
-        public Player Controller { get; set; }
+        public Player Controller { get; private set; }//Use add influence instead
         public bool HasAncient { get { return Ships.Any(x => x.IsAncient); } }
         public bool HasDiscoveryToken { get; private set; }
         public Hex()
@@ -136,8 +136,8 @@ namespace Eclipse.Models.Hexes
         public List<Hex> GetAccessibleHexes()
         {
             var directions = Sides.Where(x => x.HasWormHole).Select(x => x.PointDirection).ToList();
-            var neighbourPoints = directions.Select(x => x.AddPoint(this.AxialCoordinates));
-            var neighbourHexes = HexBoard.GetInstance().GetHexes(neighbourPoints);
+            var neighbourPoints = directions.Select(x => x.AddPoint(this.AxialCoordinates)).ToList();
+            var neighbourHexes = HexBoard.GetInstance().GetHexes(neighbourPoints).ToList();
             var list = new List<Hex>();
             for (int i = 0; i < directions.Count; i++)
             {
@@ -166,7 +166,7 @@ namespace Eclipse.Models.Hexes
 
         public bool HasWormHoleAtDirection(Point p)
         {
-            return false;
+            return Sides.Where(x => x.PointDirection.Equals(p)).Any(x => x.HasWormHole == true);
         }
 
         public void RotateHexToCenter()
@@ -452,6 +452,11 @@ namespace Eclipse.Models.Hexes
             return Ships.Any(x => x.Owner == player);
         }
 
+        public bool HasMovableShip(Player player)
+        {
+            return Ships.Any(x => x.Owner == player && x.Movement>0);
+        }
+
         private bool IsAdjacentToFriendlyShipOrHex(Player player)
         {
             var hexes = GetNeighbourHexes();
@@ -467,11 +472,20 @@ namespace Eclipse.Models.Hexes
             return String.Join("</br>", array);
         }
 
+        public void AddInfluence(Player player)
+        {
+            if (this.Controller != player)
+            {
+                this.Controller = player;
+                player.PlayerBoard.RemoveInfluenceDisk();
+            }
+        }
+
         public void AddInfluence()
         {
             var player = GameState.GetInstance().CurrentPlayer;
-            this.Controller = player;
-            player.PlayerBoard.RemoveInfluenceDisk();
+
+            AddInfluence(player);
         }
 
         public Hex RemoveInfluence()
@@ -542,6 +556,12 @@ namespace Eclipse.Models.Hexes
                 return PopulationType.Unknown;
             else
                 throw new NotImplementedException();
+        }
+
+        public List<Ship> GetShipsCurrentPlayer()
+        {
+            var name = GameState.GetCurrentPlayer();
+            return Ships.Where(x => x.Owner == name).ToList();
         }
     }
 }

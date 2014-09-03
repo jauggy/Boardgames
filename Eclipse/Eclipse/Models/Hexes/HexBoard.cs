@@ -13,6 +13,7 @@ namespace Eclipse.Models.Hexes
 
         public  Hex LastExploredFromHex { get; private set; }
         public Hex LastSelectedHex { get; private set;}
+        public Ship LastSelectedShip { get; set; }
         public void Setup()
         {
             var startHex = new Hex();
@@ -28,7 +29,7 @@ namespace Eclipse.Models.Hexes
             {
                 var freeHex = startingHexes.First(x => x.PopulationSquares.Count == 0);
                 player.UniqueMethods.PopulateStartingHex(freeHex);
-                freeHex.Controller = player;
+                freeHex.AddInfluence(player);
                 freeHex.AddShip(player.GetInterceptor());
                 freeHex.AddWormHoles(4);
                 freeHex.AddPopulation(PopulationType.Materials, player, false);
@@ -125,6 +126,31 @@ namespace Eclipse.Models.Hexes
             }
 
             throw new NotImplementedException();
+        }
+
+        public List<Hex> GetMoveFromHexes()
+        {
+            
+            var hexes = Hexes.Where(x => x.HasFriendlyShip(GameState.GetCurrentPlayer()) == true).ToList();
+            return hexes;
+        }
+
+        public List<Hex> GetMoveToHexes(int x, int y, String shipName)
+        {
+            var hex = FindHex(x, y, true);
+            LastSelectedShip = hex.Ships.First(q => q.Name == shipName);
+            return hex.GetAccessibleHexes();
+        }
+
+        public Hex MoveTo(int x, int y)
+        {
+            LastSelectedHex.Ships.Remove(LastSelectedShip);
+
+            var hex = FindHex(x, y, false);
+            hex.Ships.Add(LastSelectedShip);
+
+            return hex;
+
         }
 
         private List<Point> GetStartingPoints()

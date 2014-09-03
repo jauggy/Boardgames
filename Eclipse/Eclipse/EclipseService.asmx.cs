@@ -328,5 +328,34 @@ namespace Eclipse
 
             return GameState.GetInstance().BuildUI;
         }
+         [WebMethod(true)]
+        public DropDownMenu[] GetMoveFromMenus()
+        {
+            var list = new List<DropDownMenu>();
+            var hexes = HexBoard.GetInstance().GetMoveFromHexes();
+            foreach(var hex in hexes)
+            {
+                var menu = new DropDownMenu();
+                menu.Heading = "Move from";
+                menu.Hex = hex;
+                menu.MenuItems = hex.GetShipsCurrentPlayer().Select(x => x.Name).ToArray();
+                list.Add(menu);
+            }
+
+            return list.ToArray();
+        }
+
+        [WebMethod(true)]
+        public TempMenu[] GetMoveToMenus(int x, int y, string shipName)
+         {
+             var hexes = HexBoard.GetInstance().GetMoveToHexes(x, y, shipName);
+             return  hexes.Select(q => new TempMenu("Move to", q)).ToArray();
+         }
+
+          [WebMethod(true)]
+        public Hex MoveTo(int x, int y)
+        {
+            return HexBoard.GetInstance().MoveTo(x, y);
+        }
     }
 }
