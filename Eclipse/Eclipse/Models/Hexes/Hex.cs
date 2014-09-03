@@ -176,10 +176,14 @@ namespace Eclipse.Models.Hexes
             for(int i =0; i <Sides.Count;i++)
             {
                 Rotate();
-                var hexes = GetAccessibleHexes();
+                var hexes = GetWormholeFacingHexes();
                 var score = hexes.Sum(x => x.GetRingLevel());
                 if (score < scoreBest)
+                {
+                    scoreBest = score;
                     iBest = i;
+                }
+                   
             }
 
             for(int i =0; i<=iBest;i++)
