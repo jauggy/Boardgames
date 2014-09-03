@@ -34,6 +34,7 @@ namespace Eclipse.Models.Hexes
                 freeHex.AddPopulation(PopulationType.Materials, player, false);
                 freeHex.AddPopulation(PopulationType.Money, player, false);
                 freeHex.AddPopulation(PopulationType.Science, player, false);
+                freeHex.RotateHexToCenter();
             }
 
 

@@ -54,7 +54,9 @@
               <ul class="dropdown-menu" role="menu">
                 <li id="resourceViewTab" ><a href="javascript:void(0)">Resource View</a></li>
                <li id="militaryViewTab"><a href="javascript:void(0)">Military View</a> </li>
+                            <li role="presentation" class="divider"></li>
                  <li id="combatSimTab"><a href="javascript:void(0)">Combat Sim</a></li>
+                   <li role="presentation" class="divider"></li>
                    <li id="playerboardTab" ><a href="javascript:void(0)">Player board</a></li>
               </ul></li>
             

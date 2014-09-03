@@ -108,7 +108,7 @@ namespace Eclipse.Models.Playerboards
         private String GetCode()
         {
             
-            var code= this.Name.ToLower();
+            var code= this.Name.ToLower().Substring(0,1);
             if (code == "d")
                 return code.ToUpper();
             else

@@ -13,7 +13,7 @@ namespace Eclipse.Models.Hexes
     public class Hex
     {
         private int _freeIndexMilitary = 0;
-        private int _fressIndexResource = 0;
+        private int _freeIndexResource = 0;
 
         public List<Ship> Ships { get; set; }
         public List<PopulationSquare> PopulationSquares { get; set; }
@@ -67,9 +67,15 @@ namespace Eclipse.Models.Hexes
         {
             int i =0;
             if (viewType == HexView.Military)
+            {
                 i = _freeIndexMilitary;
+                _freeIndexMilitary++;
+            }
             else
-                i = _fressIndexResource;
+            {
+                i = _freeIndexResource;
+                _freeIndexResource++;
+            }
 
             var hexHeight = CanvasHelper.GetHexHeight();
             var compSize = CanvasHelper.GetComponentSize();
@@ -145,9 +151,41 @@ namespace Eclipse.Models.Hexes
             return list;
         }
 
+        /// <summary>
+        /// Get list of hexes that we have a wormhole facing to
+        /// </summary>
+        /// <returns></returns>
+        public List<Hex> GetWormholeFacingHexes()
+        {
+            var directions = Sides.Where(x => x.HasWormHole).Select(x => x.PointDirection).ToList();
+            var neighbourPoints = directions.Select(x => x.AddPoint(this.AxialCoordinates));
+            var neighbourHexes = HexBoard.GetInstance().GetHexes(neighbourPoints);
+            return neighbourHexes.ToList();
+        }
+
+
         public bool HasWormHoleAtDirection(Point p)
         {
             return false;
+        }
+
+        public void RotateHexToCenter()
+        {
+            var iBest = 0;
+            var scoreBest = 6 * 3;
+            for(int i =0; i <Sides.Count;i++)
+            {
+                Rotate();
+                var hexes = GetAccessibleHexes();
+                var score = hexes.Sum(x => x.GetRingLevel());
+                if (score < scoreBest)
+                    iBest = i;
+            }
+
+            for(int i =0; i<=iBest;i++)
+            {
+                Rotate();
+            }
         }
 
         private void Rotate()
