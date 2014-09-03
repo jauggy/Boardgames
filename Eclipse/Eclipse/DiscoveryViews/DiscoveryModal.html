@@ -1,0 +1,272 @@
+﻿
+
+
+<div id="combat-sim-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width:100%">
+        <div class="modal-content">
+
+            <div class="modal-body ">
+                <nav class="navbar navbar-inverse" role="navigation">
+                    <div class="container-fluid">
+
+                        <div class="nav navbar-nav navbar-left" style="min-width:160px">
+                            <span id="brand" class="navbar-brand">Combat Simulator</span>
+
+                        </div>
+
+                        <div>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li>
+                                    <a class="closemodal" href="javascript:void(0)">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div><!-- /.navbar-collapse -->
+                    </div><!-- /.container-fluid -->
+                </nav>
+
+                <!--Body content-->
+                <div class="container-fluid">
+                    <!--first row-->
+                    <div class="row">
+                        <div class="col-lg-6" style="border-right: 1px dashed #333;">
+                            <label for="add-attacker-buttons">Add ship: </label>
+
+                            <!-- Single drop down button button -->
+                            <div id="add-attacker-buttons" class="btn-group add-ships" data-team="attacker">
+                                
+                                <!--End drop down button-->
+                                <button class="btn btn-default">1</button>
+                                <button class="btn btn-default">1</button>
+                                <button class="btn btn-default">2</button>
+                                <button class="btn btn-default">2</button>
+                            </div>
+                            <div class="clear btn btn-warning" data-team="attacker">Clear Ships</div>
+                        </div>
+
+
+
+                        <div class="col-lg-6">
+                            <!-- Single drop down button button -->
+                            <label for="add-defender-buttons">Add ship: </label>
+
+                            <!-- Single drop down button button -->
+                            <div id="add-defender-buttons" class="btn-group add-ships" data-team="defender">
+
+                                <!--End drop down button-->
+                                <button class="btn btn-default attacker">3</button>
+
+                            </div>
+
+                           
+                            <div class="clear btn btn-warning" data-team="defender">Clear Ships</div>
+                            <div class="btn-group pull-right">
+                                <button class=" btn btn-success dropdown-toggle" data-toggle="dropdown">Select Player <span class="caret"></span></button>
+                                <ul id="sim-list-players" class="dropdown-menu" role="menu">
+                                    <li><a href="#">Action</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!--new row-->
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <span class="heading"> Your Ships</span>
+                            
+                        </div>
+                        <div class="col-lg-6">
+                         
+                                <span class="heading" id="sim-defender-heading">Blue OrionShips</span>
+
+                            
+                        </div>
+                    </div>
+                    <!--Next row-->
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <ul  class="list-inline sim-ships attacker"></ul>
+                        </div>
+                        <div class="col-lg-6">
+                          
+                                <ul   class="list-inline sim-ships defender"></ul>
+              
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <div class="pull-left">
+                    <form class="form-inline" role="form">
+                        <div class="form-group" >
+                            <label  for="sim-times">Number of simulations:</label>
+                            <input style="width:100px"  type="text" class="form-control" id="sim-times" value="1000">
+                        </div>
+                        <button id="sim-submit" class="btn btn-primary">Simulate</button>
+                        <div class="form-group">
+                            <span id="sim-message" style="margin-left: 20px;" class="text-success"></span>
+                            </div>
+                    </form>
+
+                   
+                </div>
+
+                   
+
+</div>
+              
+           
+            </div>
+        </div>
+    </div>
+
+
+
+<script type="text/javascript">
+
+
+    var _descriptions = { attacker: {}, defender: {} };
+    var _ships = { attacker: [], defender:[]};
+    function ChangeDefender(name) {
+        debugger;
+        var args = { name: name };
+        $.ajax({
+            url: "EclipseService.asmx/SetCombatSimDefender",
+            data: JSON.stringify(args), dataType: "json", type: "POST", contentType: 'application/json; charset=utf-8',
+            success: CombatSimUICallback
+
+        });
+    }
+        
+
+
+    function CombatSimUICallback(data) {
+        var model = data["d"];
+        var html = "";
+
+        _descriptions['attacker'] = {};
+        _descriptions['defender'] = {};
+        //Attacker ship selection
+        for (var i = 0; i < model.AttackerShipSelection.length; i++) {
+            var shipname = model.AttackerShipSelection[i].Name;
+            html += ' <button class="btn btn-default" data-team="attacker">'+shipname+'</button>';
+          //  html += '<li><a  href="javascript:void(0)">' + shipname + '</a></li>';
+            _descriptions['attacker'][shipname] = model.AttackerShipSelection[i].Description;
+        }
+        $('#add-attacker-buttons').html(html);
+
+        html = "";
+
+        for (var i = 0; i < model.DefenderShipSelection.length; i++) {
+            debugger;
+            var shipname = model.DefenderShipSelection[i].Name;
+            html += ' <button class="btn btn-default" data-team="defender">' + shipname + '</button>';
+            _descriptions['defender'][shipname] = model.DefenderShipSelection[i].Description;
+        }
+        $('#add-defender-buttons').html(html);
+
+        $('#sim-defender-heading').html(model.Enemy.Name + ' Ships');
+
+        html = ""
+        for (var i = 0; i < model.DefenderNameSelection.length; i++) {
+            html += '<li><a href="javascript:void(0)">' + model.DefenderNameSelection[i] + '</a></li>';
+        }
+
+        $('#sim-list-players').html(html);
+       
+        
+
+    }
+
+    //team should be attacker or defender
+    function AddShipHandler(classSelector, shipName)
+    {
+        var html = '<li><span style="font-size:inherit" class="label label-default">' + shipName + '</span></li>';
+        _ships[classSelector].push(shipName);
+
+        $('.sim-ships.'+classSelector).append(html);
+
+        $('.sim-ships.' + classSelector).find('.label-default').last().popover({
+            placement: 'top',
+            html: true,
+            trigger: 'hover',
+            content: function (e) {
+                debugger;
+                return '<div style="width:300px">' + _descriptions[classSelector][shipName] + '</div>';
+
+            }
+        });
+
+    }
+
+    function IsValid(checkNum) {
+
+    }
+
+    $(document).ready(function(){
+            var args = {};
+             $.ajax({
+             url: "EclipseService.asmx/GetCombatSimUI",
+             data: JSON.stringify(args),             dataType: "json",             type: "POST",             contentType: 'application/json; charset=utf-8',
+             success: CombatSimUICallback
+                
+             });
+
+             $('#combat-sim-modal').modal();
+
+        //click handler select player
+             $('#sim-list-players').on('click', 'a', function (event) {
+                 
+                 ChangeDefender($(this).text());
+                 _ships = { attacker: [], defender: [] };
+                 $('.sim-ships').clear();
+                 //return false;
+             });
+
+
+
+        //click event add defender ship
+             $('.add-ships').on('click', 'button', function (event) {
+                 debugger;
+                 var team = $(this).attr('data-team');
+                 AddShipHandler(team, $(this).text());
+                 return false;
+             });
+
+
+
+             $('#combat-sim-modal').on('click', '.clear', function (event) {
+                 var team = $(this).attr('data-team');
+                 $('.sim-ships.' + team).empty();
+                 _ships[team] = [];
+             });
+
+             $('#sim-submit').click(function (event) {
+     
+                 var number = $('#sim-times').val();
+                 _ships["numberOfSimulations"] = number;
+                 if ($.isNumeric(number))
+                 {
+                     $.ajax({
+                         url: "EclipseService.asmx/Simulate",
+                         data: JSON.stringify(_ships), dataType: "json", type: "POST", contentType: 'application/json; charset=utf-8',
+                         success: function (data) {
+                             var model = data["d"];
+                             $('#sim-message').html(model.Message);
+                         }
+                     });
+                 }
+                 else {
+                     $('#sim-message').html('Input number is invalid');
+
+                 }
+
+                 return false;
+  
+             });
+    });
+</script>

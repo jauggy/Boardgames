@@ -60,12 +60,14 @@
     <Content Include="AddInfluence.html" />
     <Content Include="Build.html" />
     <Content Include="ChoosePopulationType.html" />
+    <Content Include="DiscoveryViews\DiscoveryModal.html" />
     <Content Include="css\bootstrap-theme.css" />
     <Content Include="css\bootstrap-theme.min.css" />
     <Content Include="css\bootstrap.css" />
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\callout.css" />
     <Content Include="css\Custom.css" />
+    <Content Include="DiscoveryViews\ResourceDiscovery.html" />
     <Content Include="js\custom.js" />
     <Content Include="OverflowTest.html" />
     <Content Include="PlayerBlueprintView.html" />
@@ -124,6 +126,8 @@
     <Compile Include="Models\Combat\CombatSim.cs" />
     <Compile Include="Models\Combat\ICombatant.cs" />
     <Compile Include="Models\Discovery\DiscoveryTokenHelper.cs" />
+    <Compile Include="Models\Discovery\DiscoveryToken.cs" />
+    <Compile Include="Models\Discovery\ResourceDiscovery.cs" />
     <Compile Include="Models\Playerboards\IBuildable.cs" />
     <Compile Include="Models\Playerboards\ResourceSegment.cs" />
     <Compile Include="Models\Playerboards\TechnologySegment.cs" />

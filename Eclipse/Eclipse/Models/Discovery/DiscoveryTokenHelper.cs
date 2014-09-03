@@ -6,10 +6,10 @@ using System.Web;
 
 namespace Eclipse.Models.Discovery
 {
-    public enum DiscoveryTokenResult { Default, AncientTechnology, Cruiser, ShipPart}
+
     public class DiscoveryTokenHelper
     {
-        public DiscoveryTokenResult ApplyRandomDiscovery(Player player)
+        public DiscoveryToken ApplyRandomDiscovery(Player player)
         {
             int num = RandomGenerator.GetInt(1, 12);
             var result = DiscoveryTokenResult.Default;
