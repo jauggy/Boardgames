@@ -26,7 +26,7 @@ namespace Eclipse.Models
                 if(_hasDoneMainAction!=value)
                 {
                     CurrentPlayer.PlayerBoard.RemoveInfluenceDisk();
-                    _hasDoneMainAction = true;
+                    _hasDoneMainAction = value;
                 }
             }
         }

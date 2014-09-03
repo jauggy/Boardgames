@@ -40,6 +40,7 @@ namespace Eclipse.Models
         {
             PopulatesRemaining = 2;
             BuildsRemaining = 2;
+            
             PlayerBoard.ResetLog();
         }
 

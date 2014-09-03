@@ -200,6 +200,7 @@ namespace Eclipse.Models
             var after = GetNextUpkeep();
 
             Log = "The next action will increase upkeep to " + SignedNumber(before, after);
+            AddLogLine("Money Storage: " + (GetStorage(PopulationType.Money)));
         }
 
         public String SignedNumber(int before, int after)
@@ -215,7 +216,7 @@ namespace Eclipse.Models
             }
             else
             {
-                return "-" + num;
+                return "" + num;
             }
         }
 
@@ -229,7 +230,7 @@ namespace Eclipse.Models
             var before = Storage[type];
             Storage[type] += adjustment;
             var after = Storage[type];
-            AddLogLine(type.ToString() + "Storage: " + SignedNumber(before, after));
+            AddLogLine(type.ToString() + " Storage: " + SignedNumber(before, after));
         }
 
         public void SetStorage(PopulationType type, int value)

@@ -119,13 +119,13 @@
             html: true,
             trigger: 'hover',
             content: function (e) {
-             //   alert($(this).text());
+
                 return '<div style="width:300px">' + _descriptions[$(this).text()] + '</div>';
 
             }
         });
 
-
+        RefreshNavbar();
 
     }
 
@@ -137,7 +137,7 @@
 
         $('#build-buttons').on('click', '.btn', function (event) {
             var ship = $(this).text();
-            alert(ship);
+
             args = { buildname: ship };
             $.ajax({
                 url: "EclipseService.asmx/Build",
