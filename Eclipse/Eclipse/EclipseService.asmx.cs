@@ -315,7 +315,18 @@ namespace Eclipse
         [WebMethod(true)]
         public BuildUI GetBuildUI(int x, int y)
         {
-            return new BuildUI(x, y);
+            var ui =  new BuildUI(x, y);
+            GameState.GetInstance().BuildUI = ui;
+            return ui;
+        }
+
+        [WebMethod(true)]
+        public BuildUI Build(string buildname)
+        {
+            GameState.GetInstance().HasDoneMainAction = true;
+            GameState.GetInstance().BuildUI.ActionOnBuild(buildname);
+
+            return GameState.GetInstance().BuildUI;
         }
     }
 }

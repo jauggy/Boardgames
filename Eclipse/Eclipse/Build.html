@@ -62,26 +62,6 @@
                        </div>
                     </div>
                 </div>
-            <div class="modal-footer">
-                <div class="pull-left">
-                    <form class="form-inline" role="form">
-                        <div class="form-group">
-                            <label for="sim-times">Number of simulations:</label>
-                            <input style="width:100px" type="text" class="form-control" id="sim-times" value="1000">
-                        </div>
-                        <button id="sim-submit" class="btn btn-primary">Build</button>
-                        <div class="form-group">
-                            <span id="sim-message" style="margin-left: 20px;" class="text-success"></span>
-                        </div>
-                    </form>
-
-
-                </div>
-
-
-
-            </div>
-
 
         </div>
     </div>
@@ -109,7 +89,7 @@
 
     function BuildUICallback(data) {
         var model = data["d"];
-        debugger;
+
         var html = "";
         $('#build-production-msg').html(model.ProductionMessage);
         $('#build-storage-msg').html(model.StorageMessage);
@@ -154,5 +134,18 @@
     $(document).ready(function(){
         GetBuildUI();
         $('#build-modal').modal();
+
+        $('#build-buttons').on('click', '.btn', function (event) {
+            var ship = $(this).text();
+            alert(ship);
+            args = { buildname: ship };
+            $.ajax({
+                url: "EclipseService.asmx/Build",
+                data: JSON.stringify(args), dataType: "json", type: "POST", contentType: 'application/json; charset=utf-8',
+                success: BuildUICallback
+            });
+
+            return false;
+        });
     });
 </script>

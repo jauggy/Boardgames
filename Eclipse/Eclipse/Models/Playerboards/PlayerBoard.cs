@@ -18,7 +18,7 @@ namespace Eclipse.Models
         //influce disks on action spaces and influence track
         public int InfluenceDisks { get; private set; }
         public List<Technology> Technologies { get; private set; }
-        public String Log { get; set; }
+        public String Log { get; private set; }
         public ShipBlueprint InterceptorBlueprint { get; set; }
         public ShipBlueprint CruiserBlueprint { get; set; }
         public ShipBlueprint DreadnoughtBlueprint { get; set; }
@@ -193,6 +193,15 @@ namespace Eclipse.Models
            AddLogLine( type.ToString() + " Production: " + SignedNumber(before, after));
         }
 
+        public void ResetLog()
+        {
+            var before = GetUpkeep();
+
+            var after = GetNextUpkeep();
+
+            Log = "The next action will increase upkeep to " + SignedNumber(before, after);
+        }
+
         public String SignedNumber(int before, int after)
         {
             return after +" ("+SignedNumber(after - before) + ")";
@@ -213,6 +222,14 @@ namespace Eclipse.Models
         public int GetStorage(PopulationType type)
         {
             return Storage[type];
+        }
+
+        public void AdjustStorage(PopulationType type, int adjustment)
+        {
+            var before = Storage[type];
+            Storage[type] += adjustment;
+            var after = Storage[type];
+            AddLogLine(type.ToString() + "Storage: " + SignedNumber(before, after));
         }
 
         public void SetStorage(PopulationType type, int value)

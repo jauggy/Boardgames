@@ -20,14 +20,20 @@ namespace Eclipse.Models.UI
             _hex = HexBoard.GetInstance().FindHex(x, y,true);
             _currentPlayer = GameState.GetCurrentPlayer();
             Buildables = _currentPlayer.GetAvailableBuildables().ToArray();
-            StorageMessage = String.Format("Materials Storage: {0}", _currentPlayer.PlayerBoard.MaterialsStorage);
-            ProductionMessage = String.Format("Materials Production: {0}", _currentPlayer.PlayerBoard.GetProduction(PopulationType.Materials));
+            SetMessages();
         }
 
         public void ActionOnBuild(String buildableName)
         {
             var build = Buildables.Where(x => x.Name == buildableName).First();
             build.ActionOnBuild(_hex);
+            SetMessages();
+        }
+
+        private void SetMessages()
+        {
+            StorageMessage = String.Format("Materials Storage: {0}", _currentPlayer.PlayerBoard.MaterialsStorage);
+            ProductionMessage = String.Format("Materials Production: {0}", _currentPlayer.PlayerBoard.GetProduction(PopulationType.Materials));
         }
     }
 }

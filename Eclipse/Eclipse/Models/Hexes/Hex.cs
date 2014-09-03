@@ -8,8 +8,13 @@ using System.Web.Script.Serialization;
 
 namespace Eclipse.Models.Hexes
 {
+    public enum HexView { Military, Resource}
+
     public class Hex
     {
+        private int _freeIndexMilitary = 0;
+        private int _fressIndexResource = 0;
+
         public List<Ship> Ships { get; set; }
         public List<PopulationSquare> PopulationSquares { get; set; }
 
@@ -42,13 +47,10 @@ namespace Eclipse.Models.Hexes
             AxialCoordinates = p;
             InitSides();
             //AddWormHoles();
-            ComponentCanvasLocations = new List<Point>();
+
             PopulationSquares = new List<PopulationSquare>();
             Ships = new List<Ship>();
-            for (int i = 0; i < 24; i++)
-            {
-                ComponentCanvasLocations.Add(GetFreeCanvasLocation(i));
-            }
+
 
         }
 
@@ -61,8 +63,14 @@ namespace Eclipse.Models.Hexes
         public List<Point> ComponentCanvasLocations { get; set; }
 
         //begins at 0
-        public Point GetFreeCanvasLocation(int i )
+        public Point GetFreeCanvasLocation(HexView viewType )
         {
+            int i =0;
+            if (viewType == HexView.Military)
+                i = _freeIndexMilitary;
+            else
+                i = _fressIndexResource;
+
             var hexHeight = CanvasHelper.GetHexHeight();
             var compSize = CanvasHelper.GetComponentSize();
             var dist = 2 / 3.0 * hexHeight;
@@ -78,7 +86,7 @@ namespace Eclipse.Models.Hexes
 
         public void AddShip(Ship ship)
         {
-            ship.CanvasLocation = GetFreeCanvasLocation(Ships.Count);
+            ship.CanvasLocation = GetFreeCanvasLocation(HexView.Military);
             Ships.Add(ship);
         }
 
@@ -291,7 +299,7 @@ namespace Eclipse.Models.Hexes
                 var square = new PopulationSquare(type);
 
                 square.IsAdvanced = i < advanced;
-                square.CanvasLocation = GetFreeCanvasLocation(PopulationSquares.Count);
+                square.CanvasLocation = GetFreeCanvasLocation(HexView.Resource);
                 PopulationSquares.Add(square);
             }
         }
@@ -302,7 +310,7 @@ namespace Eclipse.Models.Hexes
             {
                 var square = new PopulationSquare(GetRandomPopType());
                 square.IsAdvanced = isAdvanced;
-                square.CanvasLocation = GetFreeCanvasLocation(PopulationSquares.Count);
+                square.CanvasLocation = GetFreeCanvasLocation(HexView.Resource);
                 PopulationSquares.Add(square);
             }
 

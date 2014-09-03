@@ -17,11 +17,23 @@ namespace Eclipse.Models
         public HexBoard HexBoard { get; set; }
         public Player CurrentPlayer { get; set; }
         public SupplyBoard SupplyBoard { get; set; }
-        public bool HasDoneMainAction { get; set; }
+        private bool _hasDoneMainAction;
+        public bool HasDoneMainAction
+        {
+            get { return _hasDoneMainAction; }
+            set
+            {
+                if(_hasDoneMainAction!=value)
+                {
+                    CurrentPlayer.PlayerBoard.RemoveInfluenceDisk();
+                    _hasDoneMainAction = true;
+                }
+            }
+        }
         private int _currentPlayerIndex = -1;
         public UpgradeUI UpgradeUI { get; set; }
         public CombatSimUI CombatSimUI { get; set; }
-
+        public BuildUI BuildUI { get; set; }
         public static GameState GetInstance()
         {
             if (HttpContext.Current.Session["GameState"] == null)

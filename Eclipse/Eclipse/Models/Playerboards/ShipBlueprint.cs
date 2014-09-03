@@ -96,7 +96,24 @@ namespace Eclipse.Models.Playerboards
 
         public void ActionOnBuild(Hex hex)
         {
-            throw new NotImplementedException();
+            var player = GameState.GetCurrentPlayer();
+            Func<ShipBlueprint> func = () => { return player.PlayerBoard.GetBlueprint(this.Name); };
+            var ship = new Ship(func,player, GetCode());
+
+            hex.AddShip(ship);
+
+            player.PlayerBoard.AdjustStorage(PopulationType.Materials, -this.MaterialCost);
+        }
+
+        private String GetCode()
+        {
+            
+            var code= this.Name.ToLower();
+            if (code == "d")
+                return code.ToUpper();
+            else
+                return code;
+
         }
 
     }

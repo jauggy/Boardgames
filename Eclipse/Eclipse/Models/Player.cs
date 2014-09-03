@@ -21,6 +21,7 @@ namespace Eclipse.Models
         public PlayerBoard PlayerBoard { get; set; }
         public String Name { get; set; }
         public int PopulatesRemaining { get; set; }
+        public int BuildsRemaining { get; set; }
         public Player(UniqueMethods uniqueMethods, string color)
         {
             UniqueMethods = uniqueMethods;
@@ -38,7 +39,8 @@ namespace Eclipse.Models
         public void PreturnSetup()
         {
             PopulatesRemaining = 2;
-            PlayerBoard.Log = "";
+            BuildsRemaining = 2;
+            PlayerBoard.ResetLog();
         }
 
         public void SetupBoard()
