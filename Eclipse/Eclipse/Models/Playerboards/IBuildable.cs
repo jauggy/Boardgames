@@ -13,5 +13,6 @@ namespace Eclipse.Models.Playerboards
         string Description { get; }
         int MaterialCost { get; }
         void ActionOnBuild(Hex hex);
+        bool IsAffordable { get;  }
     }
 }

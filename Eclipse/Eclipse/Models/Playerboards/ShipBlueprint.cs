@@ -21,7 +21,7 @@ namespace Eclipse.Models.Playerboards
         public int MaterialCost { get; set; }
         public int Size { get; set; }
         public bool IsBonus { get; set; }
-
+        public bool IsAffordable { get { return GameState.GetCurrentPlayer().PlayerBoard.MaterialsStorage >= MaterialCost; } }
         public int Movement { get{ return ShipParts.Sum(x => x.Movement); }  }
         public List<int> MissileDamage { get { return GetMissileDamage(); } }
         public List<int> CannonDamage { get { return GetCannonDamage(); } }

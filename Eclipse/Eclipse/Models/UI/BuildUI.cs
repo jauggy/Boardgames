@@ -10,14 +10,18 @@ namespace Eclipse.Models.UI
     public class BuildUI
     {
         public IBuildable[] Buildables { get; set; }
-        public String ResourceMessage { get; set; } //Materials Storage: 5 //Materials Production: 1
+        public String StorageMessage { get; set; }
+        public String ProductionMessage { get; set; }//Materials Storage: 5 //Materials Production: 1
         private Hex _hex;
         private Player _currentPlayer;
+        
         public BuildUI(int x, int y)
         {
             _hex = HexBoard.GetInstance().FindHex(x, y,true);
             _currentPlayer = GameState.GetCurrentPlayer();
             Buildables = _currentPlayer.GetAvailableBuildables().ToArray();
+            StorageMessage = String.Format("Materials Storage: {0}", _currentPlayer.PlayerBoard.MaterialsStorage);
+            ProductionMessage = String.Format("Materials Production: {0}", _currentPlayer.PlayerBoard.GetProduction(PopulationType.Materials));
         }
 
         public void ActionOnBuild(String buildableName)

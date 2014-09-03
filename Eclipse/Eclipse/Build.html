@@ -28,12 +28,17 @@
 
                 <!--Body content-->
                 <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <span><small id="build-storage-msg">Materials Storage: 7</small><small id="build-production-msg" style="margin-left:50px">Materials Storage: 7</small></span>
+                            </div>
+                        </div>
                     <!--first row-->
                     <div class="row">
                         
                      
                        <div class="col-lg-3">
-                           <span><small>Materials Storage: 7</small><small style="margin-left:50px">Materials Storage: 7</small></span>
+                       
                            <label for="build-buttons">Build: </label>
                            <ul id="build-buttons" class="list-group">
                                <li class="list-group-item">
@@ -90,8 +95,8 @@
     var _descriptions = {};
 
     function GetBuildUI() {
-
-        var args = {};
+        debugger;
+        var args = {x:_lastHex.AxialCoordinates.X, y:_lastHex.AxialCoordinates.Y};
         $.ajax({
             url: "EclipseService.asmx/GetBuildUI",
             data: JSON.stringify(args), dataType: "json", type: "POST", contentType: 'application/json; charset=utf-8',
@@ -104,16 +109,28 @@
 
     function BuildUICallback(data) {
         var model = data["d"];
+        debugger;
         var html = "";
-
+        $('#build-production-msg').html(model.ProductionMessage);
+        $('#build-storage-msg').html(model.StorageMessage);
         _descriptions = {};
 
-        for (var i = 0; i < model.ShipBlueprints.length; i++) {
-            var shipname = model.ShipBlueprints[i];
-            _descriptions[shipname] = model.ShipBlueprints[i].Description;
+        for (var i = 0; i < model.Buildables.length; i++) {
+
+            var shipname = model.Buildables[i].Name;
+            var cost =model.Buildables[i].MaterialCost;
+            var isBuildable = model.Buildables[i].IsAffordable;
+            var disabled = "disabled";
+            if (isBuildable)
+                disabled = "";
+            _descriptions[shipname] = model.Buildables[i].Description;
+
             html += '  <li class="list-group-item">';
-            html += ' <button data class="btn btn-primary">' + shipname + '</button></li>';
-        }
+            
+            html += ' <button data class="btn btn-primary '+ disabled+' ">' + shipname + '</button>';
+            html += '<small class="pull-right text-muted">Cost: ' + cost + '</small></li>';
+
+                    }
 
         $('#build-buttons').html(html);
 
@@ -122,8 +139,8 @@
             html: true,
             trigger: 'hover',
             content: function (e) {
-                debugger;
-                return '<div style="width:300px">' + _descriptions[shipName] + '</div>';
+             //   alert($(this).text());
+                return '<div style="width:300px">' + _descriptions[$(this).text()] + '</div>';
 
             }
         });

@@ -460,6 +460,7 @@
                       for (var i = 0; i < menus.length; i++) {
                           var hex = menus[i].Hex;
                           ShowTempMenuBottom(menus[i], function (event) {
+                              _lastHex = hex;
                               $('#modalPlaceholder').load('Build.html');
                           });
                       }
@@ -523,7 +524,7 @@
               $('#tempMenus').append(mnu);
               $(mnu).find('.btn-group-vertical').append(btnHtml);
               $(mnu).find('.btn').click(function (event) {
-                  _lastHex;
+                  _lastHex = tempMenu.Hex;
                   callback(event);
               });
               mnu.css({top:y+canvas.offsetTop+40,left:x-$(mnu).outerWidth()/2})
@@ -709,6 +710,7 @@
               });
 
               $('#buildTab').click(function (event) {
+                  HideTempMenus();
                   ShowBuildMenus();
               });
           });

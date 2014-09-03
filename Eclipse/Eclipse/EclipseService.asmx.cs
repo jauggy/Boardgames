@@ -299,7 +299,7 @@ namespace Eclipse
           }
 
         [WebMethod(true)]
-        public List<TempMenu> GetBuildMenus(int x, int y)
+        public List<TempMenu> GetBuildMenus()
           {
             var state =   GameState.GetInstance();
             state.HasDoneMainAction = true;
@@ -307,5 +307,15 @@ namespace Eclipse
             var hexes = HexBoard.GetInstance().Hexes.Where(z => z.Controller == currentPlayer);
             return hexes.Select(q => new TempMenu(new List<String> { "Build" }, q)).ToList();
           }
+
+        /// <summary>
+        /// Called by Build popup
+        /// </summary>
+        /// <returns></returns>
+        [WebMethod(true)]
+        public BuildUI GetBuildUI(int x, int y)
+        {
+            return new BuildUI(x, y);
+        }
     }
 }
