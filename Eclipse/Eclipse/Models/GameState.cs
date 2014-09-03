@@ -39,6 +39,11 @@ namespace Eclipse.Models
 
         }
 
+        public static Player GetCurrentPlayer()
+        {
+            return GetInstance().CurrentPlayer;
+        }
+
         public static String GetLog()
         {
             return GetInstance().CurrentPlayer.PlayerBoard.Log;

@@ -299,12 +299,13 @@ namespace Eclipse
           }
 
         [WebMethod(true)]
-        public List<TempMenu> GetBuildMenus()
+        public List<TempMenu> GetBuildMenus(int x, int y)
           {
-              GameState.GetInstance().HasDoneMainAction = true;
-            var currentPlayer = GameState.GetInstance().CurrentPlayer;
-            var hexes = HexBoard.GetInstance().Hexes.Where(x => x.Controller == currentPlayer);
-            return hexes.Select(x => new TempMenu(new List<String> { "Build" }, x)).ToList();
+            var state =   GameState.GetInstance();
+            state.HasDoneMainAction = true;
+            var currentPlayer = state.CurrentPlayer;
+            var hexes = HexBoard.GetInstance().Hexes.Where(z => z.Controller == currentPlayer);
+            return hexes.Select(q => new TempMenu(new List<String> { "Build" }, q)).ToList();
           }
     }
 }

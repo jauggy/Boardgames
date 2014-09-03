@@ -30,20 +30,24 @@
                 <div class="container-fluid">
                     <!--first row-->
                     <div class="row">
-                       <div class="col-lg-12">
+                        
+                     
+                       <div class="col-lg-3">
+                           <span><small>Materials Storage: 7</small><small style="margin-left:50px">Materials Storage: 7</small></span>
                            <label for="build-buttons">Build: </label>
-                           <ul id="build-buttons">
-                              <li><button class="btn btn-primary">Interceptor</button>
+                           <ul id="build-buttons" class="list-group">
+                               <li class="list-group-item">
+                                   <button class="btn btn-primary">Interceptor</button> <small class="pull-right text-muted">Cost: 4</small>
                                </li> 
-                               <li>
+                               <li class="list-group-item">
                                    <button class="btn btn-primary">Interceptor</button>
                                </li> 
-                               <li>
+                               <li class="list-group-item">
                                    <button class="btn btn-primary">Interceptor</button>
                                </li> 
-                               <li>
+                               <li class="list-group-item">
                                    <button class="btn btn-primary">Interceptor</button>
-                               <li>
+                               <li class="list-group-item">
                                    <button class="btn btn-primary">Interceptor</button>
                                </li> 
                               
@@ -107,8 +111,22 @@
         for (var i = 0; i < model.ShipBlueprints.length; i++) {
             var shipname = model.ShipBlueprints[i];
             _descriptions[shipname] = model.ShipBlueprints[i].Description;
-            html += ' <button class="btn btn-default">' + shipname + '</button>';
+            html += '  <li class="list-group-item">';
+            html += ' <button data class="btn btn-primary">' + shipname + '</button></li>';
         }
+
+        $('#build-buttons').html(html);
+
+        $('#build-buttons').find('.btn').popover({
+            placement: 'right',
+            html: true,
+            trigger: 'hover',
+            content: function (e) {
+                debugger;
+                return '<div style="width:300px">' + _descriptions[shipName] + '</div>';
+
+            }
+        });
 
 
 
@@ -117,7 +135,7 @@
 
 
     $(document).ready(function(){
-            
+        GetBuildUI();
         $('#build-modal').modal();
     });
 </script>

@@ -1,4 +1,5 @@
-﻿using Eclipse.Models.Ships;
+﻿using Eclipse.Models.Hexes;
+using Eclipse.Models.Ships;
 using Eclipse.Models.Tech;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Web;
 
 namespace Eclipse.Models.Playerboards
 {
-    public class ShipBlueprint : IShipPart
+    public class ShipBlueprint : IShipPart, IBuildable
     {
         public List<ShipPart> ShipParts { get; set; }
 
@@ -91,6 +92,11 @@ namespace Eclipse.Models.Playerboards
         public String GetDescription()
         {
             return ShipHelper.GetDescription(this);//.Replace(", ","</br>").Replace("_"," ");
+        }
+
+        public void ActionOnBuild(Hex hex)
+        {
+            throw new NotImplementedException();
         }
 
     }

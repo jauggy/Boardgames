@@ -151,9 +151,23 @@ namespace Eclipse.Models.Hexes
         {
             return p.Select(x => GetOrCreateHex(x)).ToList();
         }
+
         public Hex FindHex(int x, int y, bool setAsSelected = false)
         {
             return FindHex(new Point(x, y), setAsSelected);
+        }
+
+        /// <summary>
+        /// Use Find hex(x,y,setasselected) instead
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="setAsSelected"></param>
+        /// <returns></returns>
+        [Obsolete]
+        public Hex FindHex(int x, int y)
+        {
+            return FindHex(new Point(x, y), false);
         }
         public Hex FindHex(Point p, bool setAsSelected = false)
 

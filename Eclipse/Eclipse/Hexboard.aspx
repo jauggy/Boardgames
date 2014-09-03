@@ -103,6 +103,8 @@
           }
 
           function DrawHex(hex, color) {
+              //temp
+              return;
               if (!hex.IsVisible)
                   return;
 

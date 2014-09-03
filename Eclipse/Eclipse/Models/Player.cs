@@ -8,6 +8,7 @@ using System.Xml.Serialization;
 using System.Web.Script.Serialization;
 using Eclipse.Models.Tech;
 using Eclipse.Models.Ships;
+using Eclipse.Models.Playerboards;
 
 namespace Eclipse.Models
 {
@@ -90,6 +91,23 @@ namespace Eclipse.Models
         public Ship GetStarbase()
         {
             return new Ship(()=>this.PlayerBoard.StarbaseBlueprint, this, "s");
+        }
+
+        public List<IBuildable> GetAvailableBuildables()
+        {
+            var list = new List<IBuildable>
+            {
+                PlayerBoard.InterceptorBlueprint,
+                PlayerBoard.CruiserBlueprint, 
+                PlayerBoard.DreadnoughtBlueprint
+            };
+
+           if(this.HasTechnology(TechnologyNames.STARBASE))
+           {
+               list.Add(PlayerBoard.StarbaseBlueprint);
+           }
+
+           return list;
         }
 
         public string FirstCharToUpper(string input)

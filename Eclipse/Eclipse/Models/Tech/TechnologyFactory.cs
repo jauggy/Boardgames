@@ -35,7 +35,7 @@ namespace Eclipse.Models.Tech
                 listAdd(new Technology(GetFusionDrive(), 4, 3, TechnologyType.Nano));
 
                 listAdd(new Technology("Neutron Bombs", 2, 2, TechnologyType.Military)).Description = "You may destroy population without rolling dice";
-                listAdd(new Technology("Starbase", 4, 3, TechnologyType.Military)).Description = "You may build starbases";
+                listAdd(new Technology(TechnologyNames.STARBASE, 4, 3, TechnologyType.Military)).Description = "You may build starbases";
                 listAdd(new Technology("Advanced Mining", 10, 6, TechnologyType.Military)).Description = "You may populate advanced materials squares";
                 listAdd(new Technology("Advanced Economy", 10, 6, TechnologyType.Grid)).Description = "You may populate advanced economy squares";
                 listAdd(new Technology("Nanorobots", 2, 2, TechnologyType.Nano)).Description = "You may build one additional ship or structure";

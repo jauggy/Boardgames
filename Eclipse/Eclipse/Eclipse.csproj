@@ -123,6 +123,7 @@
     <Compile Include="Models\Combat\CombatResultTotal.cs" />
     <Compile Include="Models\Combat\CombatSim.cs" />
     <Compile Include="Models\Combat\ICombatant.cs" />
+    <Compile Include="Models\Playerboards\IBuildable.cs" />
     <Compile Include="Models\Playerboards\ResourceSegment.cs" />
     <Compile Include="Models\Playerboards\TechnologySegment.cs" />
     <Compile Include="Models\Ships\AncientInterceptor.cs" />
@@ -133,6 +134,7 @@
     <Compile Include="Models\Ships\ShipGroup.cs" />
     <Compile Include="Models\Ships\ShipHelper.cs" />
     <Compile Include="Models\Ships\ShipNames.cs" />
+    <Compile Include="Models\Tech\TechnologyNames.cs" />
     <Compile Include="Models\UI\AddInfluenceUI.cs" />
     <Compile Include="Models\UI\AddPopUI.cs" />
     <Compile Include="Models\UI\AfterPopulateUI.cs" />
