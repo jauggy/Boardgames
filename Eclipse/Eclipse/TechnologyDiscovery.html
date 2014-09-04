@@ -1,19 +1,40 @@
-﻿<div class="discovery-heading">
+﻿<h4 class="discovery-heading">
 
-</div>
+</h4>
 
-
+<ul id="discovery-tech-list" class="list-unstyled">
+    <li><button class="btn btn-primary">Tech 1</button></li>
+    <li><button class="btn btn-primary">Tech 1</button></li>
+    <li><button class="btn btn-primary">Tech 1</button></li>
+</ul>
 
 <script type="text/javascript">
+    var techDescriptions = {};
+
+    
 
     $(document).ready(function () {
         $('.discovery-heading').text(_discoveryModel.Name);
-
-        for(var i =0; i< _discoveryModel.length;i++)
+        //_discoveryModel is defined by parent containers
+        var btnHtml = "";
+        debugger;
+        for(var i =0; i< _discoveryModel.Technologies.length;i++)
         {
             var tech = _discoveryModel.Technologies[i];
-
+            btnHtml += ' <li><button class="btn btn-primary">' + tech.Name + '</button></li>'
+           techDescriptions[tech.Name] = tech.Description;
         }
+        $('#discovery-tech-list').html(btnHtml);
+        $('#discovery-tech-list').find('.btn').popover({
+            placement: 'right',
+            html: true,
+            trigger: 'hover',
+            content: function (e) {
+
+                return '<div style="min-width:300px">' + techDescriptions[$(this).text()] + '</div>';
+
+            }
+        });
         
     });
 </script>

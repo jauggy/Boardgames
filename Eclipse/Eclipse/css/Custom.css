@@ -1,4 +1,8 @@
 ﻿
+.list-unstyled li{
+    margin-bottom:5px;
+}
+
 #pbBody .list-inline {
   white-space:nowrap;
   float:none;
@@ -88,3 +92,5 @@
  #build-modal li .btn{
      width:150px;
  }
+
+ 
