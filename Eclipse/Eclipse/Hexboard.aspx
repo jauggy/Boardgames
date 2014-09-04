@@ -649,7 +649,7 @@
           function RefreshNavbarCallback(data) {
               var model = data["d"];
               _navbarUI = model;
-              $('.navbar-brand').html(model.CurrentPlayerName);
+              $('.navbar-player-name').html(model.CurrentPlayerName);
               _populatesRemaining = model.PopulatesRemaining;
               if (model.PopulatesRemaining > 0) {
                   $('#populateTab').text('Populate (' + model.PopulatesRemaining + ')');

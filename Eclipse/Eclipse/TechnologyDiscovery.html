@@ -1,7 +1,4 @@
-﻿<h4 class="discovery-heading">
-
-</h4>
-
+﻿<label for="discovery-tech-list">Choose a technology:</label>
 <ul id="discovery-tech-list" class="list-unstyled">
     <li><button class="btn btn-primary">Tech 1</button></li>
     <li><button class="btn btn-primary">Tech 1</button></li>
@@ -11,10 +8,10 @@
 <script type="text/javascript">
     var techDescriptions = {};
 
-    
+
 
     $(document).ready(function () {
-        $('.discovery-heading').text(_discoveryModel.Name);
+       
         //_discoveryModel is defined by parent containers
         var btnHtml = "";
         debugger;
@@ -31,10 +28,10 @@
             trigger: 'hover',
             content: function (e) {
 
-                return '<div style="min-width:300px">' + techDescriptions[$(this).text()] + '</div>';
+                return '<div style="white-space:wrap;width:auto;display:block "><span>' + techDescriptions[$(this).text()] + '<span></div>';
 
             }
         });
-        
+
     });
 </script>

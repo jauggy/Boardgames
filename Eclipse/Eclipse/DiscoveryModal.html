@@ -2,7 +2,7 @@
 
 
 <div id="discovery-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog" style="width:100%">
+    <div class="modal-dialog">
         <div class="modal-content">
 
             <div class="modal-body ">
@@ -10,7 +10,7 @@
                     <div class="container-fluid">
 
                         <div class="nav navbar-nav navbar-left" style="min-width:160px">
-                            <span id="brand" class="navbar-brand">Combat Simulator</span>
+                            <span id="discovery-brand" class="navbar-brand">Combat Simulator</span>
 
                         </div>
 
@@ -67,7 +67,7 @@
             success: function (data) {
                 var model = data["d"].DiscoveryToken;
                 _discoveryModel = model;
-
+                $('#discovery-brand').html(_discoveryModel.Name);
                 $('#discovery-placeholder').load(model.Html);
             }
 

@@ -22,7 +22,7 @@
         
         <div class="navbar-collapse collapse ">
           <ul class="nav navbar-nav navbar-left">
-            <li><span class="navbar-brand" style="min-width:200px">Eclipse</span></li>
+            <li><span class="navbar-brand navbar-player-name" style="min-width:200px">Eclipse</span></li>
             
      
                 <li  ><a id="populateTab" href="javascript:void(0)">Populate</a></li>
