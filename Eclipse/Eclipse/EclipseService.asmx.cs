@@ -357,5 +357,26 @@ namespace Eclipse
         {
             return HexBoard.GetInstance().MoveTo(x, y);
         }
+
+        [WebMethod(true)]
+        public DiscoveryUI GetDiscoveryUI()
+          {
+              GameState.GetInstance().DiscoveryUI =  new DiscoveryUI();
+              return GameState.GetInstance().DiscoveryUI;
+          }
+
+            [WebMethod(true)]
+        public void TakeDiscoverySpecial()
+        {
+            GameState.GetInstance().DiscoveryUI.DiscoveryToken.ExecuteDiscovery();
+        }
+
+            [WebMethod(true)]
+        public bool TakeDiscoveryDefault()
+        {
+                //Give two points to player
+           // GameState.GetInstance().DiscoveryUI.DiscoveryToken.ExecuteDiscovery();
+            return true;
+        }
     }
 }

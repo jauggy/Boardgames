@@ -34,6 +34,7 @@ namespace Eclipse.Models
         public UpgradeUI UpgradeUI { get; set; }
         public CombatSimUI CombatSimUI { get; set; }
         public BuildUI BuildUI { get; set; }
+        public DiscoveryUI DiscoveryUI { get; set; }
         public static GameState GetInstance()
         {
             if (HttpContext.Current.Session["GameState"] == null)

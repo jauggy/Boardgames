@@ -88,5 +88,11 @@ namespace Eclipse.Models.Supply
             var segment = new TechnologySegment(type.ToString(), techs);
             return segment;
         }
+
+        public Technology[] GetCheapestTechnologies()
+        {
+            var minCost = AvailableTechnologies.Min(x=>x.DefaultCost);
+            return AvailableTechnologies.Where(x => x.DefaultCost == minCost).ToArray();
+        }
     }
 }

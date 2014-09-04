@@ -103,7 +103,8 @@
           }
 
           function DrawHex(hex, color) {
-
+              //temp
+              return;
               if (!hex.IsVisible)
                   return;
 
@@ -795,6 +796,8 @@
               $(document).click(function () {
                   $(".dropdown-menu").hide(); //click came from somewhere else
               });
+
+              $('#modalPlaceholder').load('DiscoveryModal.html');
 
           });
            

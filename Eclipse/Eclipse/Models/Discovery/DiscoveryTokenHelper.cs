@@ -11,7 +11,7 @@ namespace Eclipse.Models.Discovery
     {
         public DiscoveryToken ApplyRandomDiscovery(Player player)
         {
-            int num = RandomGenerator.GetInt(1, 12);
+           /* int num = RandomGenerator.GetInt(1, 12);
             var result = DiscoveryTokenResult.Default;
             if (num <= 3)
             {
@@ -23,7 +23,7 @@ namespace Eclipse.Models.Discovery
             }
             else if(num<=9)
             {
-                player.PlayerBoard.AdjustStorage(PopulationType.Materials,6)
+                player.PlayerBoard.AdjustStorage(PopulationType.Materials, 6);
             }
             else if(num<=12)
             {
@@ -38,7 +38,8 @@ namespace Eclipse.Models.Discovery
                 result=DiscoveryTokenResult.ShipPart;
             }
 
-            return result;
+            return result;*/
+            throw new NotImplementedException();
         }
 
         public ShipPart GetRandomShipPart()

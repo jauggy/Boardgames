@@ -1,0 +1,102 @@
+﻿
+
+
+<div id="discovery-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width:100%">
+        <div class="modal-content">
+
+            <div class="modal-body ">
+                <nav class="navbar navbar-inverse" role="navigation">
+                    <div class="container-fluid">
+
+                        <div class="nav navbar-nav navbar-left" style="min-width:160px">
+                            <span id="brand" class="navbar-brand">Combat Simulator</span>
+
+                        </div>
+
+                        <div>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li>
+                                    <a class="closemodal" href="javascript:void(0)">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div><!-- /.navbar-collapse -->
+                    </div><!-- /.container-fluid -->
+                </nav>
+
+                <!--Body content-->
+                <div id="discovery-placeholder" class="container-fluid">
+                    <!--first row-->
+                    <div class="row">
+                        <div class="col-lg-6" style="border-right: 1px dashed #333;">
+                           
+                        </div>
+
+
+
+                     
+                    </div>
+
+
+                  
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <div class="pull-left">
+                    <form class="form-inline" role="form">
+                        <div class="form-group">
+                            <label for="sim-times">Number of simulations:</label>
+                            <input style="width:100px" type="text" class="form-control" id="sim-times" value="1000">
+                        </div>
+                        <button id="sim-submit" class="btn btn-primary">Simulate</button>
+                        <div class="form-group">
+                            <span id="sim-message" style="margin-left: 20px;" class="text-success"></span>
+                        </div>
+                    </form>
+
+
+                </div>
+
+
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+
+    var _discoveryModel;
+
+    function GetDiscoveryUI(name) {
+        debugger;
+        var args = {  };
+        $.ajax({
+            url: "EclipseService.asmx/GetDiscoveryUI",
+            data: JSON.stringify(args), dataType: "json", type: "POST", contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                var model = data["d"].DiscoveryToken;
+                _discoveryModel = model;
+
+                $('#discovery-placeholder').load(model.Html);
+            }
+
+        });
+    }
+
+
+
+
+    $(document).ready(function(){
+        GetDiscoveryUI();
+        $('#discovery-modal').modal();
+    });
+</script>

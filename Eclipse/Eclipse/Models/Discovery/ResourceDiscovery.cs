@@ -14,6 +14,7 @@ namespace Eclipse.Models.Discovery
         {
             _popType = type;
             _amount = amount;
+            Html = "ResourceDiscovery.html";
         }
 
         public override void ExecuteDiscovery()

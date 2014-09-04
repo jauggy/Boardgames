@@ -10,7 +10,6 @@ namespace Eclipse.Models.Discovery
     {
         public String Html {get;set;}
         public String Name { get;set;  }
-        public String NextPage { get; set; }
         public virtual void ExecuteDiscovery() { }
     }
 }
