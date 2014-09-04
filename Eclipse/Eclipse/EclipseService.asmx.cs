@@ -366,9 +366,10 @@ namespace Eclipse
           }
 
             [WebMethod(true)]
-        public void TakeDiscoverySpecial()
+        //Take technology, or put ship part on ship...
+        public void TakeDiscoverySpecial(String args)
         {
-            GameState.GetInstance().DiscoveryUI.DiscoveryToken.ExecuteDiscovery();
+            GameState.GetInstance().DiscoveryUI.DiscoveryToken.ExecuteDiscovery(args);
         }
 
             [WebMethod(true)]
