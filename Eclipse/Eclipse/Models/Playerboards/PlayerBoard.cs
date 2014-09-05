@@ -18,6 +18,7 @@ namespace Eclipse.Models
         //influce disks on action spaces and influence track
         public int InfluenceDisks { get; private set; }
         public List<Technology> Technologies { get; private set; }
+        public List<ShipPart> AncientShipParts { get; set; }
         public String Log { get; private set; }
         public ShipBlueprint InterceptorBlueprint { get; set; }
         public ShipBlueprint CruiserBlueprint { get; set; }
@@ -38,6 +39,7 @@ namespace Eclipse.Models
         private List<int> _upkeepCosts = new List<int> { 30, 25, 21, 17, 13, 10, 7, 5, 3, 2, 1, 0, 0 };
         public PlayerBoard()
         {
+            AncientShipParts = new List<ShipPart>();
             InfluenceDisks = 13;
             Technologies = new List<Technology>();
             PopulationsCubes = new Dictionary<PopulationType, int>();
@@ -186,6 +188,15 @@ namespace Eclipse.Models
             return GetProductionLevel(PopulationsCubes[type]-1);
         }
 
+        public int GetNetProduction(PopulationType t)
+        {
+            if (t == PopulationType.Money)
+            {
+                return GetProduction(PopulationType.Money) - GetUpkeep();
+            }
+            else
+                return GetProduction(t);
+        }
 
         private int GetProductionLevel(int numPopCubes)
         {
@@ -270,7 +281,18 @@ namespace Eclipse.Models
             var list =  Technologies.Where(x => x.ShipPart != null).Select(x => x.ShipPart).Distinct().ToList();
             result.AddRange(list);
             result.AddRange(BasicShipPart.GetAllBasics());
+            result.AddRange(AncientShipParts);
             return result;
+        }
+
+        public String GetCurrentProductionDescription(PopulationType type)
+        {
+           return  String.Format("Net {0} Production: {1}", type.ToString(), GetNetProduction(type));
+        }
+
+        public String GetCurrentStorageDescription(PopulationType type)
+        {
+            return String.Format("{0} Storage: {1}", type, GetStorage(type));
         }
 
     }

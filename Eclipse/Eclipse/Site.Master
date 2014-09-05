@@ -88,22 +88,25 @@
 
         //Global ajax error handler
         $(document).ajaxError(function myErrorHandler(event, xhr, ajaxOptions, thrownError) {
-            alert("There was an ajax error!");
+            var err = eval("(" + xhr.responseText + ")");
+            alert("ajax error: " + err.Message);
+            //alert("There was an ajax error!");
         });
 
 
         //This allows stacking of modals.
-        $(document).on('show.bs.modal', '.modal', function (event) {
+     /*   $(document).on('show.bs.modal', '.modal', function (event) {
             var zIndex = 1040 + (10 * $('.modal:visible').length);
             $(this).css('z-index', zIndex);
             setTimeout(function () {
                 $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack');
             }, 0);
-        });
+        });*/
 
 
         $(document).on('click', '.closemodal', function (event) {
             $('.modal').modal('hide');
+            return false;
         })
 
         </script>

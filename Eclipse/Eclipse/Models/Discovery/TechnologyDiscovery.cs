@@ -15,5 +15,10 @@ namespace Eclipse.Models.Discovery
             Html = "TechnologyDiscovery.html";
             Technologies = GameState.GetInstance().SupplyBoard.GetCheapestTechnologies();
         }
+
+        public override void ExecuteDiscovery(string args)
+        {
+            GameState.GetCurrentPlayer().PlayerBoard.Technologies.Add(Technologies.First(x => x.Name == args));
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Eclipse.Models.Hexes;
+﻿using Eclipse.Models.Discovery;
+using Eclipse.Models.Hexes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace Eclipse.Models.UI
         public String UpkeepDescription { get; set; }
         public String Log { get; set; }
         public Hex Hex { get; set; }
+        public DiscoveryToken DiscoveryToken { get; set; }
         public AddInfluenceUI()
         {
             var hex = GameState.GetInstance().HexBoard.LastSelectedHex;
@@ -19,6 +21,7 @@ namespace Eclipse.Models.UI
             Log = GameState.GetLog();
             UpkeepDescription = GetUpkeepDescription();
             Hex = hex;
+
         }
 
         private String GetUpkeepDescription()

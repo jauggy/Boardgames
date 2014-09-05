@@ -14,11 +14,11 @@
        
         //_discoveryModel is defined by parent containers
         var btnHtml = "";
-        debugger;
+        
         for(var i =0; i< _discoveryModel.Technologies.length;i++)
         {
             var tech = _discoveryModel.Technologies[i];
-            btnHtml += ' <li><button class="btn btn-primary">' + tech.Name + '</button></li>'
+            btnHtml += ' <li><button class="btn btn-primary discovery-special">' + tech.Name + '</button></li>'
            techDescriptions[tech.Name] = tech.Description;
         }
         $('#discovery-tech-list').html(btnHtml);

@@ -58,13 +58,15 @@
             </div>
             <div class="modal-footer">
                 <button id="btn-populate" class="btn btn-primary pull-left">Add influence and populate</button>
-                <button class="btn btn-default">Add influence only</button>
-                <button class="btn btn-default">No influence</button>
+          
+                <button onclick="return false;" class="closemodal btn btn-default">No influence</button>
             </div>
             </div>
         </div>
 
         </div>
+
+<div id="discoveryPlaceholder"></div>
 
 <script type="text/javascript">
     var _args = {};
@@ -77,7 +79,7 @@
             $('.panel').hide();
             title = "You may add influence";
         }
-        debugger;
+        
         $('#choose-pop-title').html(title);
 
         var html = "";
@@ -124,8 +126,21 @@
                 data: JSON.stringify({ args: temp }), dataType: "json", type: "POST", contentType: 'application/json; charset=utf-8',
                 success: function (data) {
                     var model = data["d"];
+                    
+                    if (model.HasDiscoveryToken)
+                    {
+
+                        $('.modal').modal('hide');
+                        $('#discoveryPlaceholder').load('DiscoveryModal.html');
+                    }
+                        
+                  
+                        RefreshNavbar();
+                   
                     DrawHex(model);
-                    RefreshNavbar();
+                   
+                  
+                    
                 }
             });
 

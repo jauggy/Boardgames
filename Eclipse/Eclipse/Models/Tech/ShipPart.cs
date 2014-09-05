@@ -22,6 +22,7 @@ namespace Eclipse.Models.Tech
         public int ID { get; set; } //only used by UI
         public bool IsBonus { get; set; }
         public bool IsBasic { get; set; }
+        public bool IsAncient { get; set; }
         public String ShortDescription { get { return ShipHelper.GetShortDescription(this); } }
 
         public ShipPart(String name)

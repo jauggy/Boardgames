@@ -201,6 +201,8 @@ namespace Eclipse
          {
              var hex = HexBoard.GetInstance().LastSelectedHex;
              hex.AddInfluence();
+
+            
              return new AddInfluenceUI();
          }
 
@@ -241,7 +243,7 @@ namespace Eclipse
         }
 
          [WebMethod(true)]
-        public void Upgrade()
+        public void Upgrade( )
         {
             var ug = GameState.GetInstance().UpgradeUI;
             ug.ExecuteUpgrade();
@@ -367,9 +369,12 @@ namespace Eclipse
 
             [WebMethod(true)]
         //Take technology, or put ship part on ship...
-        public void TakeDiscoverySpecial(String args)
+        public DiscoveryUI TakeDiscoverySpecial(String buttonArgs)
         {
-            GameState.GetInstance().DiscoveryUI.DiscoveryToken.ExecuteDiscovery(args);
+            var ui = GameState.GetInstance().DiscoveryUI;
+            ui.DiscoveryToken.ExecuteDiscovery(buttonArgs);
+           return ui;
+
         }
 
             [WebMethod(true)]

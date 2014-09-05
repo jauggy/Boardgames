@@ -7,42 +7,41 @@ using System.Web;
 namespace Eclipse.Models.Discovery
 {
 
-    public class DiscoveryTokenHelper
+    public class DiscoveryTokenFactory
     {
-        public DiscoveryToken ApplyRandomDiscovery(Player player)
+        public static DiscoveryToken CreateRandomDiscovery()
         {
-           /* int num = RandomGenerator.GetInt(1, 12);
-            var result = DiscoveryTokenResult.Default;
+            int num = RandomGenerator.GetInt(16, 21);
+
             if (num <= 3)
             {
-                player.PlayerBoard.AdjustStorage(PopulationType.Money, 8);
+               return new ResourceDiscovery(PopulationType.Money, 8);
             }
             else if(num <=6)
             {
-                player.PlayerBoard.AdjustStorage(PopulationType.Science, 5);
+                return new ResourceDiscovery(PopulationType.Science, 5);
             }
             else if(num<=9)
             {
-                player.PlayerBoard.AdjustStorage(PopulationType.Materials, 6);
+                return new ResourceDiscovery(PopulationType.Materials, 6);
             }
             else if(num<=12)
             {
-                result = DiscoveryTokenResult.AncientTechnology;
+                return new TechnologyDiscovery();
             }
             else if(num<=15)
             {
-                result= DiscoveryTokenResult.Cruiser;
+                return new CruiserDiscovery();
             }
             else
             {
-                result=DiscoveryTokenResult.ShipPart;
+                return new ShipPartDiscovery(GetRandomShipPart());
             }
 
-            return result;*/
-            throw new NotImplementedException();
+
         }
 
-        public ShipPart GetRandomShipPart()
+        public static ShipPart GetRandomShipPart()
         {
             var part = new ShipPart();
             var i = RandomGenerator.GetInt(1,6);
@@ -64,6 +63,7 @@ namespace Eclipse.Models.Discovery
             }
             else if (i == 4) {
                 part.Name = "Ion Turrent";
+                part.CannonDamage = new List<int> { 1, 1 };
                 part.EnergyRequirement = 1;
             }
             else if (i == 5) {

@@ -43,6 +43,9 @@
                   
                 </div>
 
+                <div class="modal-footer">
+                    <button class="btn btn-warning pull-left">Take 2 VP instead</button>
+                </div>
 
             </div>
 
@@ -54,31 +57,76 @@
 
 
 
+<div id="discovery-modal2-placeholder"></div>
+
+
 <script type="text/javascript">
 
     var _discoveryModel;
 
-    function GetDiscoveryUI(name) {
-        debugger;
+    function GetDiscoveryUI() {
+        
         var args = {  };
         $.ajax({
             url: "EclipseService.asmx/GetDiscoveryUI",
             data: JSON.stringify(args), dataType: "json", type: "POST", contentType: 'application/json; charset=utf-8',
             success: function (data) {
+                debugger;
                 var model = data["d"].DiscoveryToken;
                 _discoveryModel = model;
+                
                 $('#discovery-brand').html(_discoveryModel.Name);
-                $('#discovery-placeholder').load(model.Html);
+                $('#discovery-placeholder').load('DiscoveryViews/'+model.Html);
             }
 
         });
+
+
     }
 
 
 
 
+
+
     $(document).ready(function(){
+    //    alert('begin discovery modal.html')
         GetDiscoveryUI();
         $('#discovery-modal').modal();
+       
+
+        $('#discovery-modal').on('click','.discovery-special',function (event) {
+            var args = { buttonArgs: $(event.currentTarget).text() };
+            $.ajax({
+                url: "EclipseService.asmx/TakeDiscoverySpecial",
+                data: JSON.stringify(args), dataType: "json", type: "POST", contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+
+                    alert('success');
+                    var model = data["d"];
+
+                    //DrawHex(model.Hex);
+
+                    debugger;
+                    if (model.NextHtml && model.NextHtml != "") {
+
+                        //  $('#discovery-modal').modal('hide');
+                   //     var p = syncload('UpgradeView.html');
+                        //  var obj = $.parseHTML(p);
+                        $('.modal').modal('hide');
+                        $('#discovery-modal2-placeholder').load('UpgradeView.html');
+                        //  $('.modal').modal('hide');
+                        //$('#upgrade-view').modal();
+
+                    }
+                    else {
+                        RefreshNavbar();
+                    }
+                }
+            });
+
+            return false;
+        });
+
     });
 </script>

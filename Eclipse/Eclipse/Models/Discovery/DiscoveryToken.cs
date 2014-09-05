@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Eclipse.Models.Discovery
 {
-    public class DiscoveryToken
+    public abstract class DiscoveryToken
     {
         public String Html {get;set;}
         public String Name { get;set;  }
-        public virtual void ExecuteDiscovery(String args) { }
+        public abstract void ExecuteDiscovery(String args);
     }
 }

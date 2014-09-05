@@ -57,9 +57,9 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="AddInfluence.html" />
     <Content Include="Build.html" />
     <Content Include="ChoosePopulationType.html" />
+    <Content Include="DiscoveryViews\CruiserDiscovery.html" />
     <Content Include="DiscoveryModal.html" />
     <Content Include="css\bootstrap-theme.css" />
     <Content Include="css\bootstrap-theme.min.css" />
@@ -73,7 +73,7 @@
     <Content Include="PlayerResourceView.html" />
     <Content Include="PlayerTechnologyView.html" />
     <Content Include="CombatSim.html" />
-    <Content Include="ResourceDiscovery.html" />
+    <Content Include="DiscoveryViews\ResourceDiscovery.html" />
     <Content Include="Scripts\jquery.actual.js" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Hexboard.aspx" />
@@ -103,9 +103,10 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\spectrum.js" />
     <Content Include="Scripts\typeahead.js" />
+    <Content Include="DiscoveryViews\ShipPartDiscovery.html" />
     <Content Include="Start.aspx" />
     <Content Include="SupplyBoard.html" />
-    <Content Include="TechnologyDiscovery.html" />
+    <Content Include="DiscoveryViews\TechnologyDiscovery.html" />
     <Content Include="UpgradeView.html" />
     <Content Include="Web.config" />
     <Content Include="EclipseService.asmx" />
@@ -126,9 +127,11 @@
     <Compile Include="Models\Combat\CombatResultTotal.cs" />
     <Compile Include="Models\Combat\CombatSim.cs" />
     <Compile Include="Models\Combat\ICombatant.cs" />
-    <Compile Include="Models\Discovery\DiscoveryTokenHelper.cs" />
+    <Compile Include="Models\Discovery\CruiserDiscovery.cs" />
+    <Compile Include="Models\Discovery\DiscoveryTokenFactory.cs" />
     <Compile Include="Models\Discovery\DiscoveryToken.cs" />
     <Compile Include="Models\Discovery\ResourceDiscovery.cs" />
+    <Compile Include="Models\Discovery\ShipPartDiscovery.cs" />
     <Compile Include="Models\Discovery\TechnologyDiscovery.cs" />
     <Compile Include="Models\Playerboards\IBuildable.cs" />
     <Compile Include="Models\Playerboards\ResourceSegment.cs" />
@@ -225,6 +228,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

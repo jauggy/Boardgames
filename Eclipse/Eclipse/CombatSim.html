@@ -132,7 +132,7 @@
     var _descriptions = { attacker: {}, defender: {} };
     var _ships = { attacker: [], defender:[]};
     function ChangeDefender(name) {
-        debugger;
+        
         var args = { name: name };
         $.ajax({
             url: "EclipseService.asmx/SetCombatSimDefender",
@@ -162,7 +162,7 @@
         html = "";
 
         for (var i = 0; i < model.DefenderShipSelection.length; i++) {
-            debugger;
+            
             var shipname = model.DefenderShipSelection[i].Name;
             html += ' <button class="btn btn-default" data-team="defender">' + shipname + '</button>';
             _descriptions['defender'][shipname] = model.DefenderShipSelection[i].Description;
@@ -195,7 +195,7 @@
             html: true,
             trigger: 'hover',
             content: function (e) {
-                debugger;
+                
                 return '<div style="width:300px">' + _descriptions[classSelector][shipName] + '</div>';
 
             }
@@ -231,7 +231,7 @@
 
         //click event add defender ship
              $('.add-ships').on('click', 'button', function (event) {
-                 debugger;
+                 
                  var team = $(this).attr('data-team');
                  AddShipHandler(team, $(this).text());
                  return false;

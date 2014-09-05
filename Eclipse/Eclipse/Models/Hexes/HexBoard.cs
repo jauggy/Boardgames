@@ -239,7 +239,7 @@ namespace Eclipse.Models.Hexes
             {
                 PopulateLevel3Hex(hex);
             }
-            hex.AddRandomAncientShips();
+          //  hex.AddRandomAncientShips();
             hex.AddRandomWormholes();
     
         }

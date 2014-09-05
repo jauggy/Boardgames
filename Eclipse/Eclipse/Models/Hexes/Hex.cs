@@ -507,7 +507,7 @@ namespace Eclipse.Models.Hexes
 
         public void AddDiscoveryToken(int discoveryTokens)
         {
-            HasDiscoveryToken = discoveryTokens > 0;
+            HasDiscoveryToken = true; //discoveryTokens > 0;
         }
 
         public void ConvertGreyPop(PopulationType type)
