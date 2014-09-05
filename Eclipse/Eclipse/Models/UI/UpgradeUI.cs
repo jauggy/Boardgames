@@ -41,7 +41,12 @@ namespace Eclipse.Models.UI
             }
 
                 WorkshopParts = list;
-            AvailableParts = board.GetAvailableShipParts();
+                if (HasDoneMainAction)
+                {
+                    AvailableParts =board.AncientShipParts;
+                }
+                else
+                    AvailableParts = board.GetAvailableShipParts();
 
             for (var i = 0; i < WorkshopParts.Count(); i++)
             {

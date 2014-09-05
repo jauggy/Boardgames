@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="Eclipse.Site" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.Master.cs" Inherits="Eclipse.Site" %>
 
 <!DOCTYPE html>
 
@@ -49,8 +49,9 @@
           </ul>
           <ul class="nav navbar-nav navbar-right">
                <li id="nextPlayerTab"><a  href="javascript:void(0)">Next Player</a></li>
+
                <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Switch View <span class="caret"></span></a>
+              <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">Switch View <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
                 <li id="resourceViewTab" ><a href="javascript:void(0)">Resource View</a></li>
                <li id="militaryViewTab"><a href="javascript:void(0)">Military View</a> </li>
@@ -66,20 +67,20 @@
       </div>
     </div>
 
-    <form id="form1" runat="server">
+
     <div>
         <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
         
         </asp:ContentPlaceHolder>
     </div>
-    </form>
+
 
 
                
 
     <script type="text/javascript">
         $(document).ready(function () {
-
+   
            /* $('.nav li').not('.dropdown').on('click', function (event) {
                 $('.nav li').removeClass('active'); // remove active class from tabs
                 $(this).addClass('active'); // add active class to clicked tab
@@ -105,8 +106,7 @@
 
 
         $(document).on('click', '.closemodal', function (event) {
-            $('.modal').modal('hide');
-            return false;
+           // location.reload();
         })
 
         </script>

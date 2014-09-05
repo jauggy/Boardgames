@@ -1,7 +1,6 @@
-﻿<%@ Page MaintainScrollPositionOnPostback="true" Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Hexboard.aspx.cs" Inherits="Eclipse.Hexboard" %>
+﻿
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-          <script type="text/javascript">
+    <script type="text/javascript">
           var ctx = null;
           var _componentSize = -1;
           var canvas = null;
@@ -46,7 +45,7 @@
               ctx.lineWidth = 1;
               ctx.font = '10px sans-serif';
               ctx.fillStyle = 'black';
-              
+
               if (isAdvanced) {
                   ctx.textAlign = 'center';
                   ctx.textBaseline = 'middle';
@@ -57,7 +56,7 @@
               ctx.beginPath();
               ctx.fillStyle = color;
               ctx.arc(point.X, point.Y,_componentSize/2, 2 * Math.PI, 0, 2 * Math.PI);
-              ctx.fill();   
+              ctx.fill();
           }
           function DrawAncient(point) {
               var size = 25;
@@ -90,8 +89,8 @@
                           contentType: 'application/json; charset=utf-8',
                           success: ShowPopulatableHexesCallback
                       });
-                  
-              
+
+
           }
 
           function ShowPopulatableHexesCallback(model) {
@@ -104,11 +103,11 @@
 
           function DrawHex(hex, color) {
               //temp
-              
+
               if (!hex.IsVisible)
                   return;
 
-             
+
 
               var center_x = hex.CanvasLocation.X;
               var center_y = hex.CanvasLocation.Y;
@@ -134,7 +133,7 @@
               DrawWormholes(hex);
                 DrawComponents(hex);
                 DrawController(hex);
-              
+
           }
 
           function DrawController(hex)
@@ -181,7 +180,7 @@
 
           function DrawWormholes(hex)
           {
-          
+
               $(hex.Sides).each(function (index, side) {
                   if (side.HasWormHole)
                   {
@@ -189,7 +188,7 @@
                      // ctx.strokeStyle = 'Gray';
                       ctx.arc(side.WormholeCanvasLocation.X, side.WormholeCanvasLocation.Y, 10, side.WormholeStartAngle, side.WormholeEndAngle, true);
                       ctx.stroke();
-                
+
                  }
               });
           }
@@ -212,7 +211,7 @@
               var R = GetHexRadius();
               ctx.moveTo(ctx.X, ctx.Y + times * R);
           }
-          
+
           function GetHexRadius(){
           }
 
@@ -223,7 +222,7 @@
           }
 
           function GetHexboard() {
-            
+
               $.ajax({
                   url: "EclipseService.asmx/GetHexBoard",
                   data: '{}',
@@ -251,7 +250,7 @@
                   contentType: 'application/json; charset=utf-8',
                   success: function (data) {
                       var model = data["d"];
-                
+
                       DrawHex(model.Hex);
                       RefreshNavbarCallback({ d: model.MainNavbarUI });
                       ShowPopulatableHexesCallback({ d: model.PopulateMenus });
@@ -320,7 +319,7 @@
                       $(hexes).each(function (index, item) {
                           var callback = function () { HideMainActions(); GetExploreToHexes(item); return false; };
                           ShowExploreFromMenu(item.CanvasLocation.X, item.CanvasLocation.Y,  callback);
-                         
+
                       });
                   }
               });
@@ -381,12 +380,12 @@
           }
 
           $.ajaxSetup({
-              // Disable caching of AJAX responses  
+              // Disable caching of AJAX responses
               cache: false
           });
 
           function RotateHandler(event, hex) {
-            
+
               if ($(event.currentTarget).text() == "Rotate")
                   Rotate(hex);
               else
@@ -399,7 +398,7 @@
                   } else {
                       $("#modalPlaceholder").load("ChoosePopulationType.html");
                   }
-                 
+
               }
           }
 
@@ -407,14 +406,14 @@
 
 
           function ShowExploreFromMenu(x, y,  callback) {
-       
+
                 var klon = $('#exploreFromDiv');
                 var newId = x + y + '';
                 var clone = klon.clone().attr('id', newId);
                 $('#tempMenus').append(clone);
                 clone.find('.explorebutton').click(callback);
                 clone.css({ 'top': y + canvas.offsetTop + 40, 'left': x - clone.outerWidth()/2, 'position': 'absolute' });
-               
+
                 clone.show();
           }
 
@@ -473,15 +472,15 @@
               clone.attr('id', 'populate' + x + y);
               var x = hex.CanvasLocation.X;
               var y = hex.CanvasLocation.Y;
-              
+
               $('#tempMenus').append(clone);
 
 
               $(stringList).each(function (index, o) {
-                
+
                   var button = $(' <li><a href="javascript:void(0)">' + o + '</a></li>');
                   clone.find('.dropdown-menu').append(button);
-                  
+
               });
 
               clone.on('click', '.btn', function (event) {
@@ -523,7 +522,7 @@
               var mnu = $('#dropMenu').clone();
               for (var i = 0; i < tempMenu.MenuItems.length; i++) {
                   btnHtml = '  <li><a href="javascript:void(0)">' + tempMenu.MenuItems[i]+ '</a></li>'
-               
+
               }
               $('#tempMenus').append(mnu);
               $(mnu).find('.dropdown-menu').html(btnHtml);
@@ -535,19 +534,19 @@
               mnu.css({ top: y + canvas.offsetTop + 40, left: x - $(mnu).outerWidth() / 2 });
 
               $(mnu).on('mouseenter', function (evnt) {
-                 
+
                   $(evnt.currentTarget).find('.dropdown-menu').css('display','block');
                   $(evnt.currentTarget).attr('data-triggered', 'true');
-               
+
               });
-              
+
               /*.on('mouseleave', function (evnt) {
                   $(evnt.currentTarget).attr('data-triggered', 'false');
                   setTimeout(function () {
                       if($(evnt.currentTarget).attr('data-triggered')=='false')
                         $(evnt.currentTarget).find('.dropdown-menu').css('display', 'none');
                   }, 1000);*/
-                 
+
              // });
 
 
@@ -570,12 +569,12 @@
                   callback(event);
               });
               mnu.css({top:y+canvas.offsetTop+40,left:x-$(mnu).outerWidth()/2})
-             
+
           }
 
           function GetInfluenceFromMenus(callback) {
               HideTempMenus();
-              
+
               $.ajax({
                   url: "EclipseService.asmx/GetInfluenceFromMenus",
                   data: '{}', dataType: "json", type: "POST", async: false, contentType: 'application/json; charset=utf-8',
@@ -606,7 +605,7 @@
 
           function GetInfluenceToMenus(callback) {
               HideTempMenus();
-              
+
               $.ajax({
                   url: "EclipseService.asmx/GetInfluenceToMenus",
                   data: '{}', dataType: "json", type: "POST", async: false, contentType: 'application/json; charset=utf-8',
@@ -629,6 +628,8 @@
                   data: '{}', dataType: "json", type: "POST", async: false, contentType: 'application/json; charset=utf-8',
                   success: RefreshNavbarCallback
               });
+
+             
           }
 
 
@@ -638,7 +639,7 @@
           }
 
           function RefreshNavbar() {
-              
+
               $.ajax({
                   url: "EclipseService.asmx/GetMainNavbarUI",
                   data: '{}', dataType: "json", type: "POST", async: false, contentType: 'application/json; charset=utf-8',
@@ -647,9 +648,11 @@
           }
 
           function RefreshNavbarCallback(data) {
+
               var model = data["d"];
               _navbarUI = model;
               $('.navbar-player-name').html(model.CurrentPlayerName);
+              $('.navbar-player-name').css('color', model.CurrentPlayerColor);
               _populatesRemaining = model.PopulatesRemaining;
               if (model.PopulatesRemaining > 0) {
                   $('#populateTab').text('Populate (' + model.PopulatesRemaining + ')');
@@ -658,7 +661,7 @@
               else {
                   $('#populateTab').hide();
               }
-              
+
               if (model.HasDoneMainAction) {
                   $('.mainaction').css('display', 'none');
               }
@@ -667,6 +670,8 @@
               }
 
               $('#log').html(model.Log);
+
+              return false;
 
           }
           function GetMoveToMenus(hex, shipname) {
@@ -691,7 +696,7 @@
                   data: '{}', dataType: "json", type: "POST", async: false, contentType: 'application/json; charset=utf-8',
                   success: function (data) {
                       var model = data["d"];
-                      
+
                       for (var i = 0; i < model.length; i++) {
                           var menu = model[i];
                           ShowDropMenuBottom(menu, function (event) {
@@ -700,7 +705,7 @@
 
                       }
                   }
-                  
+
               });
           }
 
@@ -716,7 +721,7 @@
               }, false);*/
 
               GetHexboard();
-             
+
               var windowHeight = $(window).height();
               $(window).scrollTop(canvas.height / 2 - windowHeight / 2 + canvas.offsetTop);
               $(window).scrollLeft(canvas.width / 2 - $(window).width() / 2 + canvas.offsetLeft);
@@ -724,173 +729,183 @@
               $('#militaryViewTab').click(function (event) {
                   _isMilitaryView = true;
                   GetHexboard();//   window.location.href = '/Hexboard.aspx';
-                  //  LoadScroll();
+                 // return false;
               });
 
 
               $('#resourceViewTab').click(function (event) {
                   _isMilitaryView = false;
                   GetHexboard();//   window.location.href = '/Hexboard.aspx';
-
+                //  return false;
               });
 
               $('#exploreTab').click(function (event) {
                   GetExploreFromHexes();
-                  return false;
+                 // return false;
               });
 
               $('#populateTab').click(function (event) {
-                  ShowPopulatableHexes();
+                  ShowPopulatableHexes();// return false;
               })
 
               $('#playerboardTab').click(function (event) {
-                  $("#modalPlaceholder").load("Playerboard.html");
+                  $("#modalPlaceholder").load("Playerboard.html"); //return false;
 
               });
 
               $('#supplyboardTab').click(function (event) {
-                  $('#modalPlaceholder').load("SupplyBoard.html");
+                  $('#modalPlaceholder').load("SupplyBoard.html");// return false;
               });
 
               $('#clearTempMenusTab').click(function (event) {
-                  HideTempMenus();
+                  HideTempMenus();// return false;
               });
 
               $('#influenceHexToBoard').click(function (event) {
-                  
+
                   GetInfluenceFromMenus(function (event) {
                       var x = $(event.currentTarget).attr('data-x');
                       var y = $(event.currentTarget).attr('data-y');
                       InfluenceFromHexToPlayerBoard(x, y);
-                  });
+                  }); //return false;
               });
 
               $('#influenceBoardToHex').click(function (event) {
                   GetInfluenceToMenus(function (event) {
 
-                  });
+                  }); //return false;
+              });
+
+
+              $(document).on('keydown', function (event) {
+                 // alert(String.fromCharCode(event.keyCode));
+                  if (String.fromCharCode(event.keyCode) == 'N') {
+                      NextPlayer();
+                      event.stopImmediatePropagation();
+                      event.preventDefault();
+                  }
+                //  return false;
               });
 
               $('#nextPlayerTab').click(function (event) {
                   NextPlayer();
                   $('#nextPlayerTab').removeClass('active');
-                  event.stopImmediatePropagation();
+                  event.stopImmediatePropagation();// return false;
               });
 
               $('#upgradeTab').click(function (event) {
-                  $('#modalPlaceholder').load('UpgradeView.html');
+                  $('#modalPlaceholder').load('UpgradeView.html'); //return false;
               });
 
               $('#combatSimTab').click(function (event) {
-                  $('#modalPlaceholder').load('CombatSim.html');
+                  $('#modalPlaceholder').load('CombatSim.html'); //return false;
               });
 
               $('#buildTab').click(function (event) {
                   HideTempMenus();
-                  ShowBuildMenus();
+                  ShowBuildMenus();// return false;
               });
 
               $('#moveTab').click(function (event) {
-                  GetMoveFromMenus();
+                  GetMoveFromMenus();// return false;
               });
 
               $(document).click(function () {
-                  $(".dropdown-menu").hide(); //click came from somewhere else
+                  $('#tempMenus').find(".dropdown-menu").hide(); //click came from somewhere else
+                 // return false;
               });
 
              // $('#modalPlaceholder').load('DiscoveryViews/DiscoveryModal.html');
 
           });
-           
-          </script>
-</asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-     
- <img style="display:none"  id="ancientImg" src="Images/ancient.png"/>
-   <img style="display:none"  id="discoveryImg" src="Images/discoveryshield.png"/> 
+
+    </script>
+
+
+
+    <img style="display:none" id="ancientImg" src="Images/ancient.png" />
+    <img style="display:none" id="discoveryImg" src="Images/discoveryshield.png" />
 
     <!--Begin temp menus-->
     <div style="display:none">
-          <div id="dropMenu" style="position:absolute">
-             <!-- Single button -->
-                <div class="btn-group">
-                  <button type="button" class="btn btn-primary dropdown dropdown-toggle" data-toggle="dropdown">
+        <div id="dropMenu" style="position:absolute">
+            <!-- Single button -->
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary dropdown dropdown-toggle" data-toggle="dropdown">
                     <span class="menu-heading"></span>&nbsp;<span class="caret"></span>
-                  </button>
-                  <ul class="dropdown-menu" role="menu">
+                </button>
+                <ul class="dropdown-menu" role="menu">
                     <li><a href="#">Action</a></li>
                     <li><a href="#">Another action</a></li>
                     <li><a href="#">Something else here</a></li>
                     <li class="divider"></li>
                     <li><a href="#">Separated link</a></li>
-                  </ul>
-                </div>
+                </ul>
+            </div>
         </div>
 
         <div id="tempMenu" style="position:absolute">
             <div class="btn-group-vertical">
-                         
+
             </div>
         </div>
 
 
-          <div id="exploreFromDiv" style="display:none; background-color:white" class="explore">
+        <div id="exploreFromDiv" style="display:none; background-color:white" class="explore">
             <div class="btn-group-vertical">
-               <button onclick="return false;" type="button" class="btn btn-primary explorebutton">Explore from</button>
-            
+                <button onclick="return false;" type="button" class="btn btn-primary explorebutton">Explore from</button>
+
             </div>
         </div>
 
         <div id="exploreToDiv" style="display:none; background-color:white" class="explore">
             <div class="btn-group-vertical">
-               <button type="button" class="btn btn-warning explorebutton">Explore to</button>
-            
+                <button type="button" class="btn btn-warning explorebutton">Explore to</button>
+
             </div>
         </div>
 
-       <div id="rotateDiv" style="display:none; background-color:white" class="explore">
+        <div id="rotateDiv" style="display:none; background-color:white" class="explore">
             <div class="btn-group-vertical">
-               <button type="button" class="btn btn-success explorebutton">Rotate</button>
-             <button type="button" data-toggle="popover" class="btn btn-default">Accept</button>
+                <button type="button" class="btn btn-success explorebutton">Rotate</button>
+                <button type="button" data-toggle="popover" class="btn btn-default">Accept</button>
             </div>
         </div>
 
 
-         <div id="populateDiv" style="display:none; background-color:white" >
-                <button type="button" class="btn btn-primary">Populate</button>
-            
+        <div id="populateDiv" style="display:none; background-color:white">
+            <button type="button" class="btn btn-primary">Populate</button>
+
         </div>
-     <!--End 
-         /*   <div id="populateDiv" style="display:none; background-color:white" >
-                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                    Populate <span class="caret"></span>
-                  </button>
-                  <ul class="dropdown-menu" role="menu">
-                    
-                  </ul>
-        </div>*/temp menus-->
+        <!--End
+            /*   <div id="populateDiv" style="display:none; background-color:white" >
+                   <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                       Populate <span class="caret"></span>
+                     </button>
+                     <ul class="dropdown-menu" role="menu">
+
+                     </ul>
+           </div>*/temp menus-->
     </div>
-  
+
     <!--End temp menus-->
-     <div id="tempMenus">
+    <div id="tempMenus">
     </div>
     <div>
-    <canvas id="myCanvas" width="900" height="900" >
-Your browser does not support the HTML5 canvas tag.
-</canvas>
-    </div>
-   
-    <div style="position:fixed; top:100px; left:0px; padding:10px"  id="log-container">
-
-                    <div  style="font-size:small;">
-                      <p id="log" class="text-warning">...</p>
-                    </div>
-          
+        <canvas id="myCanvas" width="900" height="900">
+            Your browser does not support the HTML5 canvas tag.
+        </canvas>
     </div>
 
-<div id="modalPlaceholder"></div>
+    <div style="position:fixed; top:100px; left:0px; padding:10px" id="log-container">
 
-           
+        <div style="font-size:small;">
+            <p id="log" class="text-warning">...</p>
+        </div>
+
+    </div>
+
+    <div id="modalPlaceholder"></div>
 
 
-</asp:Content>
+

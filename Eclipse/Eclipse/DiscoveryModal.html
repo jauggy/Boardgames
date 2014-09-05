@@ -27,33 +27,36 @@
                 </nav>
 
                 <!--Body content-->
-                <div id="discovery-placeholder" class="container-fluid">
-                    <!--first row-->
+                <div class="container-fluid">
                     <div class="row">
-                        <div class="col-lg-6" style="border-right: 1px dashed #333;">
-                           
+                        <div class="col-lg-12">
+                            <div id="discovery-placeholder" style="margin-bottom:20px;">
+                            </div>
+                    </div>
+                   
+
+                    </div>
+                    <div class="row line-above">
+                        <div class="col-lg-12">
+
+                            <button class="btn btn-warning">Take 2 VP instead</button>
+                            </div>
                         </div>
 
 
-
-                     
                     </div>
 
-
-                  
                 </div>
 
-                <div class="modal-footer">
-                    <button class="btn btn-warning pull-left">Take 2 VP instead</button>
-                </div>
+            
 
-            </div>
+        </div>
 
 
 
         </div>
     </div>
-</div>
+
 
 
 
@@ -102,10 +105,10 @@
                 data: JSON.stringify(args), dataType: "json", type: "POST", contentType: 'application/json; charset=utf-8',
                 success: function (data) {
 
-                    alert('success');
+            
                     var model = data["d"];
 
-                    //DrawHex(model.Hex);
+                    DrawHex(model.Hex);
 
                     debugger;
                     if (model.NextHtml && model.NextHtml != "") {
@@ -120,7 +123,8 @@
 
                     }
                     else {
-                        RefreshNavbar();
+                        $('.modal').modal('hide');
+                        //location.reload();
                     }
                 }
             });

@@ -11,7 +11,7 @@ namespace Eclipse.Models.Discovery
     {
         public static DiscoveryToken CreateRandomDiscovery()
         {
-            int num = RandomGenerator.GetInt(16, 21);
+            int num = RandomGenerator.GetInt(14, 15);
 
             if (num <= 3)
             {

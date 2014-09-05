@@ -111,8 +111,8 @@
 
             </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary mainaction" id="upgrade-save">Upgrade to new blueprint</button>
+                        <button type="button" class="closemodal btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="upgrade-save">Upgrade to new blueprint</button>
                     </div>
             </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -183,17 +183,20 @@
             _availableId = $(this).attr('data-ID');
             SwapParts();
             event.stopImmediatePropagation();
+            return false;
         });
 
         $('#upgrade-workshop-list').on('click', '.btn', function (event) {
             _workshopId = $(this).attr('data-ID');
             SwapParts();
             event.stopImmediatePropagation();
+            return false;
         });
 
-        $('.modal').not('.btn').click(function (event) {
+        $('#upgrade-view').not('.btn').click(function (event) {
             _workshopId = null;
             _availableId = null;
+            return false;
         });
     }
 
@@ -261,21 +264,26 @@
             data: JSON.stringify(args), dataType: "json", type: "POST", contentType: 'application/json; charset=utf-8',
             success: function (data) {
                 var model = data["d"];
-                $('.modal').modal('hide');
+                location.reload();
             }
         });
+
+        return false;
     }
 
 
     $(document).ready(function () {
-        alert('upgradeview');
+      
         $('.upgrade-blueprint-select').on('click', 'a', function (event) {
    
             GetUpgradeUI($(this).text());
+            return false;
         });
 
         $('#upgrade-save').click(function (event) {
             Upgrade();
+            $('.dropdown-toggle').dropdown();
+            return false;
         });
 
         GetUpgradeUI('Interceptor');

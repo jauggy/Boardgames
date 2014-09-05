@@ -67,7 +67,9 @@
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\callout.css" />
     <Content Include="css\Custom.css" />
+    <Content Include="HexBoard.html" />
     <Content Include="js\custom.js" />
+    <Content Include="Master.html" />
     <Content Include="OverflowTest.html" />
     <Content Include="PlayerBlueprintView.html" />
     <Content Include="PlayerResourceView.html" />
@@ -76,7 +78,6 @@
     <Content Include="DiscoveryViews\ResourceDiscovery.html" />
     <Content Include="Scripts\jquery.actual.js" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Hexboard.aspx" />
     <Content Include="Images\ancient.png" />
     <Content Include="Images\discovery.png" />
     <Content Include="Images\discoveryshield.png" />
@@ -112,13 +113,6 @@
     <Content Include="EclipseService.asmx" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Hexboard.aspx.cs">
-      <DependentUpon>Hexboard.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Hexboard.aspx.designer.cs">
-      <DependentUpon>Hexboard.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Models\AI.cs" />
     <Compile Include="Models\BattleHelper.cs" />
     <Compile Include="Models\Box.cs" />
@@ -220,7 +214,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="Site.Master" />
+    <None Include="Site.Master" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

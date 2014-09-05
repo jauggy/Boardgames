@@ -1,0 +1,131 @@
+﻿
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head >
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+
+    <link rel="stylesheet" type="text/css" href="css/Custom.css" />
+    <link rel="stylesheet" type="text/css" href="css/callout.css" />
+    <script src="Scripts/jquery-2.0.3.min.js" type="text/javascript"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="Scripts/jquery.actual.js"></script>
+    <script src="js/custom.js"></script>
+
+</head>
+<body style="padding-top:70px;">
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
+
+            <div class="navbar-collapse collapse ">
+                <ul class="nav navbar-nav navbar-left">
+                    <li><span class="navbar-brand navbar-player-name" style="min-width:200px">Eclipse</span></li>
+
+
+                    <li><a id="populateTab" href="javascript:void(0)">Populate</a></li>
+                    <li class="mainaction" id="supplyboardTab"><a href="javascript:void(0)">Research</a></li>
+
+                    <li id="exploreTab" class="mainaction"><a href="javascript:void(0)">Explore</a></li>
+
+                    <li class="mainaction"><a id="upgradeTab" href="javascript:void(0)">Upgrade</a></li>
+                    <li class="mainaction"><a id="buildTab" href="javascript:void(0)">Build</a></li>
+                    <li class="dropdown mainaction">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Influence <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li id="influenceBoardToHex"><a href="javascript:void(0)">from player board to hex</a></li>
+                            <li id="influenceHexToHex"><a href="javascript:void(0)">from hex to hex</a></li>
+                            <li id="influenceHexToBoard"><a href="javascript:void(0)">from hex to player board</a></li>
+                        </ul>
+                    </li>
+
+
+
+
+                    <li class="mainaction">
+                        <a id="moveTab" href="javascript:void(0)">Move</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li id="nextPlayerTab"><a href="javascript:void(0)">Next Player</a></li>
+
+                    <li class="dropdown">
+                        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">Switch View <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li id="resourceViewTab"><a href="javascript:void(0)">Resource View</a></li>
+                            <li id="militaryViewTab"><a href="javascript:void(0)">Military View</a> </li>
+                            <li role="presentation" class="divider"></li>
+                            <li id="combatSimTab"><a href="javascript:void(0)">Combat Sim</a></li>
+                            <li role="presentation" class="divider"></li>
+                            <li id="playerboardTab"><a href="javascript:void(0)">Player board</a></li>
+                        </ul>
+                    </li>
+
+
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>
+    </div>
+
+
+        <div>
+            <div ID="ContentPlaceHolder1" >
+
+            </div>
+        </div>
+
+
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+           /* $('.nav li').not('.dropdown').on('click', function (event) {
+                $('.nav li').removeClass('active'); // remove active class from tabs
+                $(this).addClass('active'); // add active class to clicked tab
+            });*/
+        });
+
+        //Global ajax error handler
+        $(document).ajaxError(function myErrorHandler(event, xhr, ajaxOptions, thrownError) {
+            var err = eval("(" + xhr.responseText + ")");
+            alert("ajax error: " + err.Message);
+            //alert("There was an ajax error!");
+        });
+
+
+
+        //This allows stacking of modals.
+     /*   $(document).on('show.bs.modal', '.modal', function (event) {
+            var zIndex = 1040 + (10 * $('.modal:visible').length);
+            $(this).css('z-index', zIndex);
+            setTimeout(function () {
+                $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack');
+            }, 0);
+        });*/
+
+        document.documentElement.addEventListener('keydown', function (e) {
+            if ((e.keycode || e.which) == 32) {
+                //e.preventDefault();
+                NextPlayer();
+                e.preventDefault();
+               
+            }
+            else if(String.fromCharCode(event.keycode).toLowerCase()=='n')
+            {
+                NextPlayer();
+            }
+        }, false);
+
+        $(document).on('click', '.closemodal', function (event) {
+           location.reload();
+        })
+
+
+        $('#ContentPlaceHolder1').load('HexBoard.html');
+
+    </script>
+</body>
+</html>
