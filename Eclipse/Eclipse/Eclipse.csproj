@@ -147,6 +147,7 @@
     <Compile Include="Models\UI\DiscoveryUI.cs" />
     <Compile Include="Models\UI\DropDownMenu.cs" />
     <Compile Include="Models\UI\MainNavbarUI.cs" />
+    <Compile Include="Models\UI\MoveUI.cs" />
     <Compile Include="Models\UI\OptionUI.cs" />
     <Compile Include="Models\UI\PlayerBoardUI.cs" />
     <Compile Include="Models\UI\PlayerUI.cs" />
@@ -193,13 +194,6 @@
       <DependentUpon>EclipseService.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Site.Master.cs">
-      <DependentUpon>Site.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Site.Master.designer.cs">
-      <DependentUpon>Site.Master</DependentUpon>
-    </Compile>
     <Compile Include="Start.aspx.cs">
       <DependentUpon>Start.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -214,7 +208,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <None Include="Site.Master" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

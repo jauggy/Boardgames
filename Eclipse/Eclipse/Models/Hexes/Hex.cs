@@ -12,8 +12,8 @@ namespace Eclipse.Models.Hexes
 
     public class Hex
     {
-        private int _freeIndexMilitary = 0;
-        private int _freeIndexResource = 0;
+        private List<int> _takenIndexMilitary = new List<int>() ;
+        private List<int> _takenIndexResource = new List<int>();
 
         public List<Ship> Ships { get; set; }
         public List<PopulationSquare> PopulationSquares { get; set; }
@@ -33,7 +33,7 @@ namespace Eclipse.Models.Hexes
         public int Radius { get; set; }
         public List<HexSide> Sides { get; set; }
         public Player Controller { get; private set; }//Use add influence instead
-        public bool HasAncient { get { return Ships.Any(x => x.IsAncient); } }
+        public bool HasAncient { get ; private set; }
         public bool HasDiscoveryToken { get; private set; }
         public Hex()
             : this(new Point(0,0))
@@ -68,13 +68,28 @@ namespace Eclipse.Models.Hexes
             int i =0;
             if (viewType == HexView.Military)
             {
-                i = _freeIndexMilitary;
-                _freeIndexMilitary++;
+                while (i < 50)
+                {
+                    if(!_takenIndexMilitary.Contains(i))
+                    {
+                        _takenIndexMilitary.Add(i);
+                        break;
+                    }
+                    else { i++; }
+                }
             }
             else
             {
-                i = _freeIndexResource;
-                _freeIndexResource++;
+                while (i<50)
+                {
+                    if (!_takenIndexResource.Contains(i))
+                    {
+                        _takenIndexResource.Add(i);
+                        break;
+                    }
+                    else { i++; }
+                }
+
             }
 
             var hexHeight = CanvasHelper.GetHexHeight();
@@ -94,6 +109,13 @@ namespace Eclipse.Models.Hexes
         {
             ship.CanvasLocation = GetFreeCanvasLocation(HexView.Military);
             Ships.Add(ship);
+            HasAncient = Ships.Any(x => x.IsAncient);
+        }
+
+        public void RemoveShip(Ship ship)
+        {
+            Ships.Remove(ship);
+            HasAncient = Ships.Any(x => x.IsAncient);
         }
 
         public int GetRingLevel()
@@ -387,6 +409,8 @@ namespace Eclipse.Models.Hexes
             var neighbourPoints = directions.Select(x => x.AddPoint(this.AxialCoordinates));
             var neighbourHexes = HexBoard.GetInstance().GetHexes(neighbourPoints);
             var result =  neighbourHexes.Where(x => !x.IsVisible).ToList();
+            if (HexBoard.GetInstance().Level3HexesRemaining == 0)
+                result.RemoveAll(x => x.GetRingLevel() == 3);
             return result;
 
         }
@@ -507,7 +531,7 @@ namespace Eclipse.Models.Hexes
 
         public void AddDiscoveryToken(int discoveryTokens)
         {
-            HasDiscoveryToken = true; //discoveryTokens > 0;
+            HasDiscoveryToken =discoveryTokens>0;//discoveryTokens > 0;
         }
 
         public void ConvertGreyPop(PopulationType type)

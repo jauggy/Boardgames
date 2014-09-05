@@ -243,11 +243,12 @@ namespace Eclipse
         }
 
          [WebMethod(true)]
-        public void Upgrade( )
+        public UpgradeUI Upgrade( )
         {
             var ug = GameState.GetInstance().UpgradeUI;
             ug.ExecuteUpgrade();
             GameState.GetInstance().HasDoneMainAction = true;
+            return ug;
         }
 
         [WebMethod(true)]
@@ -355,10 +356,11 @@ namespace Eclipse
          }
 
           [WebMethod(true)]
-        public Hex MoveTo(int x, int y)
+        public MoveUI MoveTo(int x, int y)
         {
-            return HexBoard.GetInstance().MoveTo(x, y);
-        }
+            HexBoard.GetInstance().MoveTo(x, y);
+            return new MoveUI();
+         }
 
         [WebMethod(true)]
         public DiscoveryUI GetDiscoveryUI()
@@ -384,5 +386,12 @@ namespace Eclipse
            // GameState.GetInstance().DiscoveryUI.DiscoveryToken.ExecuteDiscovery();
             return true;
         }
+
+        [WebMethod(true)]
+        public bool Pass()
+            {
+                GameState.GetCurrentPlayer().Pass();
+                return true;
+            }
     }
 }

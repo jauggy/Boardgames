@@ -17,6 +17,11 @@ namespace Eclipse.Models.Unique
             hex.AddPinkPlanet(1);
         }
 
+        public override int GetNumberBuilds()
+        {
+            return 3;
+        }
+
         protected override List<string> GetStartingTechnolyNames()
         {
             return new List<String> { "Positron Computer" };

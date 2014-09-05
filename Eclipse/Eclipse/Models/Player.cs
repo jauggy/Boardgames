@@ -23,6 +23,8 @@ namespace Eclipse.Models
         public int PopulatesRemaining { get; set; }
         public int BuildsRemaining { get; set; }
         public int MovesRemaining { get; set; }
+        public int UpgradesRemaining { get; set; }
+        public bool HasPassed { get; private set; }
         public Player(UniqueMethods uniqueMethods, string color)
         {
             UniqueMethods = uniqueMethods;
@@ -39,10 +41,25 @@ namespace Eclipse.Models
 
         public void PreturnSetup()
         {
-            PopulatesRemaining = 2;
-            BuildsRemaining = 2;
-            MovesRemaining = this.UniqueMethods.GetNumberMovableShips();
+            if(HasPassed)
+            {
+                BuildsRemaining = 1;
+                MovesRemaining = 1;
+                UpgradesRemaining = 1;
+            }
+            else
+            {
+                BuildsRemaining = this.UniqueMethods.GetNumberBuilds();
+                MovesRemaining = this.UniqueMethods.GetNumberMovableShips();
+                UpgradesRemaining = this.UniqueMethods.GetNumberUpgrades();
+            }
+
             PlayerBoard.ResetLog();
+        }
+
+        public void PreRoundSetup()
+        {
+            PopulatesRemaining = 2;
         }
 
         public void SetupBoard()
@@ -148,5 +165,10 @@ namespace Eclipse.Models
             };
         }
 
+
+        public void Pass()
+        {
+            HasPassed = true;
+        }
     }
 }

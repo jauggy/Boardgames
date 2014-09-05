@@ -24,8 +24,11 @@ namespace Eclipse.Models.UI
         public bool HasDoneMainAction { get; set; }
         public String ValidationMessage { get { return GetValidationMessage(); } }
 
+        public int UpgradesRemaining { get; set; }
+
         public UpgradeUI(String shipType)
         {
+            UpgradesRemaining = GameState.GetCurrentPlayer().UpgradesRemaining;
             HasDoneMainAction = GameState.GetInstance().HasDoneMainAction;
             ShipType = shipType;
             var board =  GameState.GetInstance().CurrentPlayer.PlayerBoard;

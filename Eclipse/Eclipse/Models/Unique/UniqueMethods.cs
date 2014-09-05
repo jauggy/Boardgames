@@ -21,8 +21,15 @@ namespace Eclipse.Models
         //InitTechnologies
         //GetTradeRate
         //InitStartingStorage
-
+        public virtual int GetNumberUpgrades()
+        {
+            return 2;
+        }
         public virtual int GetNumberMovableShips()
+        {
+            return 2;
+        }
+        public virtual int GetNumberBuilds()
         {
             return 2;
         }

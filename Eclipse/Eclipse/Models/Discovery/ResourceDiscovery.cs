@@ -27,7 +27,7 @@ namespace Eclipse.Models.Discovery
 
         public override void ExecuteDiscovery(String args)
         {
-         //   base.ExecuteDiscovery();
+            GameState.GetCurrentPlayer().PlayerBoard.AdjustStorage(_popType, _amount);
         }
     }
 }

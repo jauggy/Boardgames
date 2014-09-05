@@ -46,6 +46,20 @@
                     <li class="mainaction">
                         <a id="moveTab" href="javascript:void(0)">Move</a>
                     </li>
+                    <li class="mainaction">
+                        <a id="passTab" href="javascript:void(0)">Pass</a>
+                    </li>
+
+                    <!--reactions-->
+                    <li class="reaction">
+                        <a id="upgrade2Tab" href="javascript:void(0)">!Upgrade</a>
+                    </li>
+                    <li class="reaction">
+                        <a id="buidl2Tab" href="javascript:void(0)">!Build</a>
+                    </li>
+                    <li class="reaction">
+                        <a id="Move2Tab" href="javascript:void(0)">!Move</a>
+                    </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li id="nextPlayerTab"><a href="javascript:void(0)">Next Player</a></li>
@@ -120,7 +134,7 @@
         }, false);
 
         $(document).on('click', '.closemodal', function (event) {
-           location.reload();
+            $('.modal').modal('hide');
         })
 
 

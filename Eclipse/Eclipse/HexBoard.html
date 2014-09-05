@@ -72,6 +72,7 @@
               var obj = document.getElementById('discoveryImg');
               ctx.drawImage(obj, x, y, size, size);
               ctx.font = '10px sans-serif';
+              ctx.fillStyle = 'black';
               ctx.textAlign = 'center';
               ctx.textBaseline = 'middle';
               ctx.fillText(text, point.X, point.Y);
@@ -138,6 +139,7 @@
 
           function DrawController(hex)
           {
+              debugger;
               if (hex.Controller) {
                   DrawCircle(hex.CanvasLocation, hex.Controller.Color);
               }
@@ -661,12 +663,24 @@
               else {
                   $('#populateTab').hide();
               }
-
+         
               if (model.HasDoneMainAction) {
                   $('.mainaction').css('display', 'none');
+                  $('.reaction').css('display', 'none');
               }
               else {
-                  $('.mainaction').css('display', 'inline');
+                  if (model.HasPassed)
+                  {
+                      $('.reaction').css('display', 'inline');
+                      $('.mainaction').css('display', 'none');
+                  }
+                    
+                  else
+                  {
+                      $('.mainaction').css('display', 'inline');
+                      $('.reaction').css('display', 'none');
+                  }
+                   
               }
 
               $('#log').html(model.Log);
@@ -684,12 +698,29 @@
                       var model = data["d"];
                       $(model).each(function (index, menu) {
                           ShowTempMenuBottom(menu, function (event) {
-                             // alert('asdf');
+                              args = { x: _lastHex.AxialCoordinates.X, y: _lastHex.AxialCoordinates.Y };
+                              $.ajax({
+                                  url: "EclipseService.asmx/MoveTo",
+                                  data: JSON.stringify(args), dataType: "json", type: "POST", async: false, contentType: 'application/json; charset=utf-8',
+                                  success: function (data2) {
+                                      debugger;
+                                      HideTempMenus();
+                                      GetMoveFromMenus();
+                                      var model2 = data2["d"];
+                                      for (var i = 0; i < model2.Hexes.length; i++) {
+                                          DrawHex(model2.Hexes[i]);
+                                      }
+                                      
+                                  }
+                              });
                           });
                       });
                   }
               });
           }
+
+
+
           function GetMoveFromMenus() {
               $.ajax({
                   url: "EclipseService.asmx/GetMoveFromMenus",

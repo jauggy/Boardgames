@@ -7,15 +7,15 @@
                 <nav class="navbar navbar-inverse" role="navigation">
                     <div class="container-fluid">
                         <div class="nav navbar-nav navbar-left" style="min-width:160px">
-                            <span class="navbar-brand">Brand</span>
+                            <span class="navbar-brand upgrade-brand">Brand</span>
 
                         </div>
                         <!-- Collect the nav links, forms, and other content for toggling -->
-                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-9">
+                        <div class="collapse navbar-collapse">
                             <ul class="nav navbar-nav">
                               
                                 <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span id="selectedPlayer"></span>Switch Blueprint <span class="caret"></span></a>
+                                    <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><span id="selectBlueprint"></span>Switch Blueprint <span class="caret"></span></a>
                                     <ul class="dropdown-menu upgrade-blueprint-select" role="menu">
                                         <li ><a href="javascript:void(0)">Interceptor</a></li>
                                         <li ><a href="javascript:void(0)">Cruiser</a></li>
@@ -111,6 +111,7 @@
 
             </div>
                     <div class="modal-footer">
+                        <span>Upgrades remaining: <span id="upgrade-remaining"></span></span>
                         <button type="button" class="closemodal btn btn-default" data-dismiss="modal">Close</button>
                         <button type="button" class="btn btn-primary" id="upgrade-save">Upgrade to new blueprint</button>
                     </div>
@@ -143,6 +144,7 @@
     function GetUpgradeUICallback(data)
     {
         var model = data["d"];
+        $('#upgrade-remaining').text(model.UpgradesRemaining);
         if (model.HasDoneMainAction)
         {
             $('.mainaction').hide();
@@ -156,7 +158,7 @@
         var temphtml = "";
         _shipParts = {};
         var shipName = model.ShipType;
-        $('.navbar-brand').text(shipName);
+        $('.upgrade-brand').text(shipName);
         for (var i = 0; i < model.AvailableShipParts.length; i++) {
             var part = model.AvailableShipParts[i];
             _shipParts[part.Name] = part;
@@ -194,9 +196,10 @@
         });
 
         $('#upgrade-view').not('.btn').click(function (event) {
+         
             _workshopId = null;
             _availableId = null;
-            return false;
+            //return false;
         });
     }
 
@@ -264,7 +267,13 @@
             data: JSON.stringify(args), dataType: "json", type: "POST", contentType: 'application/json; charset=utf-8',
             success: function (data) {
                 var model = data["d"];
-                location.reload();
+                if(model.UpgradesRemaining >0)
+                {
+                    GetUpgradeUICallback(data);
+                } else {
+                    $('.modal').modal('hide');
+                    RefreshNavbar();
+                }
             }
         });
 
@@ -287,7 +296,7 @@
         });
 
         GetUpgradeUI('Interceptor');
-
+        $('.dropdown-toggle').dropdown();
         $('#upgrade-view').modal();
     });
 </script>

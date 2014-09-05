@@ -11,11 +11,14 @@ namespace Eclipse.Models.UI
         public String CurrentPlayerName { get; set; }
         public String CurrentPlayerColor { get; set; }
         public int PopulatesRemaining { get; set; }
+        public bool HasPassed { get; set; }
         public String Log { get; set; }
+
         public MainNavbarUI()
         {
             var gameState = GameState.GetInstance();
             HasDoneMainAction = gameState.HasDoneMainAction;
+            HasPassed = gameState.CurrentPlayer.HasPassed;
             CurrentPlayerName = gameState.CurrentPlayer.Name;
             CurrentPlayerColor = gameState.CurrentPlayer.Color;
             PopulatesRemaining = gameState.CurrentPlayer.PopulatesRemaining;

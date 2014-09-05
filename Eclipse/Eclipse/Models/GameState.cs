@@ -86,13 +86,23 @@ namespace Eclipse.Models
             //board setup after players have their boards, otherwise we can't get blueprints
             HexBoard = new HexBoard();
             HexBoard.Setup();
-            
 
+            NextRound();
             NextPlayer();
+        }
+
+        public void NextRound()
+        {
+            Players.ForEach(x => x.PreRoundSetup());
+            
         }
 
         public void NextPlayer()
         {
+            if(Players.All(x=>x.HasPassed))
+            {
+                NextRound();
+            }
             HasDoneMainAction = false;
             _currentPlayerIndex++;
             if (_currentPlayerIndex >= Players.Count)

@@ -13,7 +13,9 @@ namespace Eclipse.Models.Hexes
 
         public  Hex LastExploredFromHex { get; private set; }
         public Hex LastSelectedHex { get; private set;}
+        public Hex LastMoveFromHex { get; private set; }
         public Ship LastSelectedShip { get; set; }
+        public int Level3HexesRemaining { get; private set; }
         public void Setup()
         {
             var startHex = new Hex();
@@ -41,6 +43,8 @@ namespace Eclipse.Models.Hexes
 
             PopulateCenterHex();
             
+            var outerSectorCount =  new List<int>{0,0,5,10,14,16,18};
+            Level3HexesRemaining = outerSectorCount[GameState.GetInstance().NumberPlayers];
         }
 
         public List<Hex> GetStartingHexes()
@@ -137,17 +141,20 @@ namespace Eclipse.Models.Hexes
 
         public List<Hex> GetMoveToHexes(int x, int y, String shipName)
         {
+
             var hex = FindHex(x, y, true);
-            LastSelectedShip = hex.Ships.First(q => q.Name == shipName);
+            LastMoveFromHex = hex;
+            var owner = GameState.GetCurrentPlayer();
+            LastSelectedShip = hex.Ships.First(q => q.Name == shipName && q.Owner==owner);
             return hex.GetAccessibleHexes();
         }
 
         public Hex MoveTo(int x, int y)
         {
-            LastSelectedHex.Ships.Remove(LastSelectedShip);
+            LastSelectedHex.RemoveShip(LastSelectedShip);
 
-            var hex = FindHex(x, y, false);
-            hex.Ships.Add(LastSelectedShip);
+            var hex = FindHex(x, y, true);
+            hex.AddShip(LastSelectedShip);
 
             return hex;
 
@@ -238,8 +245,9 @@ namespace Eclipse.Models.Hexes
             else
             {
                 PopulateLevel3Hex(hex);
+                Level3HexesRemaining--;
             }
-          //  hex.AddRandomAncientShips();
+         //   hex.AddRandomAncientShips();
             hex.AddRandomWormholes();
     
         }
@@ -253,6 +261,8 @@ namespace Eclipse.Models.Hexes
             hex.AddRandomPopSquare(advancedPop, true);
             var discoveryTokens = RandomGenerator.GetInt(new List<int> {4,4 });
             hex.AddDiscoveryToken(discoveryTokens);
+            var ancients = RandomGenerator.GetInt(new List<int> { 4, 3, 1 });
+            hex.AddAncientShip(ancients);
         }
 
         public void PopulateLevel2Hex(Hex hex)
@@ -263,6 +273,8 @@ namespace Eclipse.Models.Hexes
             hex.AddRandomPopSquare(advancedPop, true);
             var discoveryTokens = RandomGenerator.GetInt(new List<int> { 5, 6 });
             hex.AddDiscoveryToken(discoveryTokens);
+            var ancients = RandomGenerator.GetInt(new List<int> { 8, 2, 1 });
+            hex.AddAncientShip(ancients);
         }
 
 
@@ -275,6 +287,8 @@ namespace Eclipse.Models.Hexes
             hex.AddRandomPopSquare(advancedPop, true);
             var discoveryTokens = RandomGenerator.GetInt(new List<int> { 8, 9 });
             hex.AddDiscoveryToken(discoveryTokens);
+            var ancients = RandomGenerator.GetInt(new List<int> {14, 3, 1 });
+            hex.AddAncientShip(ancients);
         }
 
         public List<Hex> GetExploreFromHexes()
