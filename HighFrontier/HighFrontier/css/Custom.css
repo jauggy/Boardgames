@@ -1,0 +1,98 @@
+﻿
+.list-unstyled li{
+    margin-bottom:5px;
+}
+
+#pbBody .list-inline {
+  white-space:nowrap;
+  float:none;
+}
+
+
+#choose-pop-modal .ul{
+     float: none;
+    margin: 0 auto;
+}
+#pbBody .list-inline button{
+    width:100px;
+    white-space:normal;
+    height:60px ;
+}
+
+#pbBody li label{
+    width:100px;
+    white-space:normal;
+    height:60px ;
+}
+
+
+#pbBody small{
+    width:100px;
+
+    white-space:normal;
+     display: inline-block;
+}
+
+#pbBody .panel{
+    width:auto;
+    display:inline-block;
+}
+
+.modal .panel-body{
+        min-height:90px;
+}
+
+#pbBody td{
+    vertical-align:top;
+}
+
+#pbBody table{
+     table-layout:fixed;
+    overflow:auto; 
+    white-space: nowrap; 
+}
+
+#pbBody .scrollable-col{
+    float:none;
+    display:inline-block;
+    vertical-align:top;
+}
+
+#pbBody .scrollable-container{
+    white-space:nowrap;
+    overflow-x:auto;
+}
+
+#pbBody .resource-view .panel{
+    min-width:200px;
+}
+
+#upgrade-view .row li{
+    padding-bottom:10px;
+}
+
+#combat-sim-modal .row{
+    padding-bottom:10px;
+}
+
+ #combat-sim-modal .list-inline {
+  white-space:normal;
+  float:none;
+}
+
+  #combat-sim-modal .heading {
+  font-size:large;
+}
+
+  #combat-sim-modal .sim-ships .label{
+    display: inline-block;
+    margin-bottom:5px;
+  }
+
+ #build-modal li .btn{
+     width:150px;
+ }
+
+ #discovery-tech-list button{
+     width:200px;
+ }
