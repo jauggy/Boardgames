@@ -1,0 +1,62 @@
+﻿<Window x:Class="WpfApplication1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+        Title="MainWindow" Height="350" Width="525">
+    <Window.Resources>
+        <Storyboard x:Key="sb_center_to_down" Completed="Storyboard_Completed" CurrentStateInvalidated="Storyboard_CurrentStateInvalidated">
+            <DoubleAnimation From="0" To="1000" Duration="00:00:01" FillBehavior="HoldEnd" 
+               Storyboard.TargetName="greenborder" Storyboard.TargetProperty="(RenderTransform).(TranslateTransform.Y)">
+            </DoubleAnimation>
+
+            <DoubleAnimation From="-1000" To="0" Duration="00:00:01"  FillBehavior="HoldEnd"
+               Storyboard.TargetName="redborder" Storyboard.TargetProperty="(RenderTransform).(TranslateTransform.Y)">
+            </DoubleAnimation>
+        </Storyboard>
+
+        <Storyboard x:Key="sb_up_to_center" >
+            <DoubleAnimation From="-1000" To="0" Duration="00:00:01"  FillBehavior="HoldEnd"
+               Storyboard.TargetName="greenborder" Storyboard.TargetProperty="(RenderTransform).(TranslateTransform.Y)">
+            </DoubleAnimation>
+
+            <DoubleAnimation From="0" To="1000" Duration="00:00:01"  FillBehavior="HoldEnd"
+               Storyboard.TargetName="redborder" Storyboard.TargetProperty="(RenderTransform).(TranslateTransform.Y)">
+            </DoubleAnimation>
+            
+        </Storyboard>
+
+    </Window.Resources>
+    <i:Interaction.Triggers>
+        <ei:DataTrigger Binding="{Binding SlideGreen}" Value="True">
+            <ei:ControlStoryboardAction
+                                Storyboard="{StaticResource sb_up_to_center}" ControlStoryboardOption="Play" />
+        </ei:DataTrigger>
+        <ei:DataTrigger Binding="{Binding SlideGreen}" Value="False">
+            <ei:ControlStoryboardAction
+                                Storyboard="{StaticResource sb_center_to_down}" ControlStoryboardOption="Play" />
+        </ei:DataTrigger>
+    </i:Interaction.Triggers>
+    <Grid>
+        <StackPanel>
+            <Button Command="{Binding Click}">Test</Button>
+            <Grid>
+                <Border x:Name="redborder" Background="Red" BorderBrush="AliceBlue" Height="400">
+                    <Border.RenderTransform>
+                        <TranslateTransform Y="0"/>
+                    </Border.RenderTransform>
+                    <TextBlock Text="SDFSDFSDF"/>
+                </Border>
+                <Border x:Name="greenborder" Background="Green" BorderBrush="AliceBlue" Height="400">
+                    <Border.RenderTransform>
+                        <TranslateTransform Y="0"/>
+                    </Border.RenderTransform>
+                    <TextBlock Text="SDFSDFSDF"/>
+
+                </Border>
+            </Grid>
+
+        </StackPanel>
+        
+    </Grid>
+</Window>
