@@ -1,0 +1,34 @@
+﻿
+    <button onclick="return false;" id="discovery-part-button" class="btn btn-primary discovery-special">sdfg</button>
+
+
+
+
+<script type="text/javascript">
+    
+    function SpecialButtonClickedHandler(event) {
+        
+    }
+
+    $(document).ready(function () {
+        
+        $('#discovery-part-button').html(_discoveryModel.ShipPart.Name);
+
+        $('#discovery-part-button').popover({
+            placement: 'right',
+            html: true,
+            trigger: 'hover',
+            content: function (e) {
+
+                return '<div style="white-space:wrap;width:auto;display:block "><span>' + _discoveryModel.ShipPart.Description + '<span></div>';
+
+            }
+        });
+         
+        
+
+
+
+
+    });
+</script>

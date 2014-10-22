@@ -1,0 +1,11 @@
+﻿<h4><small id="discovery-current-storage" style="margin-right:10px"></small> <small id="discovery-current-production">Money Storage: 8</small></h4>
+<button id="discovery-description" class="btn btn-primary discovery-special">+8 Materials</button>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        
+        $('#discovery-description').html(_discoveryModel.Description);
+        $('#discovery-current-storage').html(_discoveryModel.CurrentStorage);
+        $('#discovery-current-production').html(_discoveryModel.CurrentProduction);
+    });
+</script>

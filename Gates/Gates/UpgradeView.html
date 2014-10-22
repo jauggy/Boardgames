@@ -1,0 +1,302 @@
+﻿
+<div class="modal fade" id="upgrade-view" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width:100%">
+        <div class="modal-content">
+       
+            <div class="modal-body">
+                <nav class="navbar navbar-inverse" role="navigation">
+                    <div class="container-fluid">
+                        <div class="nav navbar-nav navbar-left" style="min-width:160px">
+                            <span class="navbar-brand upgrade-brand">Brand</span>
+
+                        </div>
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse">
+                            <ul class="nav navbar-nav">
+                              
+                                <li class="dropdown">
+                                    <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><span id="selectBlueprint"></span>Switch Blueprint <span class="caret"></span></a>
+                                    <ul class="dropdown-menu upgrade-blueprint-select" role="menu">
+                                        <li ><a href="javascript:void(0)">Interceptor</a></li>
+                                        <li ><a href="javascript:void(0)">Cruiser</a></li>
+                                        <li ><a href="javascript:void(0)">Dreadnought</a></li>
+                                        <li ><a href="javascript:void(0)">Starbase</a></li>
+                                    </ul>
+                                </li>
+
+
+
+                            </ul>
+
+                            <ul class="nav navbar-nav navbar-right">
+                                <li>
+                                    <a class="closemodal" href="javascript:void(0)">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div><!-- /.navbar-collapse -->
+
+
+                    </div><!-- /.container-fluid -->
+                </nav>
+
+
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-3"></div>
+                        <div class="col-lg-3">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    Original Blueprint
+                                </div>
+                                <div id="upgrade-original-desc" class="panel-body ">
+                                    Missile: 3
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    New Blueprint
+                                </div>
+                                <div id="upgrade-workshop-desc" class="panel-body ">
+                                    Missile: 3
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+
+                        </div>
+                        <div class="col-lg-6">
+                            <span id="upgrade-validation" class="text-danger">You are asdf</span>
+                        </div>
+                    </div>
+                    <!--Ship parts for new blueprint-->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="bs-callout bs-callout-primary">
+                                <h4>Ship Parts for New Blueprint</h4></br>
+                                <ul id="upgrade-workshop-list" class="list-inline">
+                                    <li>
+                                        <label class="btn btn-primary">Tech name</label>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="bs-callout bs-callout-danger">
+                                <h4>Available Ship Parts</h4></br>
+                                <ul id="upgrade-available-list" class="list-inline" style="white-space:normal">
+                                    <li>
+                                        <label class="btn btn-danger">Tech name</label>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+            </div>
+                    <div class="modal-footer">
+                        <span>Upgrades remaining: <span id="upgrade-remaining"></span></span>
+                        <button type="button" class="closemodal btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="upgrade-save">Upgrade to new blueprint</button>
+                    </div>
+            </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+
+
+<script type="text/javascript">
+    var _model;
+    var _shipParts="";
+    var _availableId;
+    var _workshopId;
+
+    function GetUpgradeUI(shipName) {
+        var args = { shipType: shipName };
+        $.ajax({
+            url: "EclipseService.asmx/GetUpgradeUI",
+            data: JSON.stringify(args), dataType: "json", type: "POST", contentType: 'application/json; charset=utf-8',
+            success: GetUpgradeUICallback
+                
+        });
+
+    }
+
+    function GetUpgradeUICallback(data)
+    {
+        var model = data["d"];
+        $('#upgrade-remaining').text(model.UpgradesRemaining);
+        if (model.HasDoneMainAction)
+        {
+            $('.mainaction').hide();
+        }
+        _model = model;
+        $('#upgrade-validation').html(model.ValidationMessage);
+        if (model.ValidationMessage.length > 0)
+            $('#upgrade-save').addClass('disabled');
+        else
+            $('#upgrade-save').removeClass('disabled');
+        var temphtml = "";
+        _shipParts = {};
+        var shipName = model.ShipType;
+        $('.upgrade-brand').text(shipName);
+        for (var i = 0; i < model.AvailableShipParts.length; i++) {
+            var part = model.AvailableShipParts[i];
+            _shipParts[part.Name] = part;
+            temphtml += PartToHtml(part);
+        }
+        $('#upgrade-available-list').html(temphtml);
+
+        temphtml = "";
+                
+        for (var i = 0; i < model.WorkshopShipParts.length; i++) {
+            var part = model.WorkshopShipParts[i];
+            _shipParts[part.Name] = part;
+            temphtml+=PartToHtml(part);
+        }
+        $('#upgrade-workshop-list').html(temphtml);
+        
+        InitPopovers();
+
+        $('#upgrade-original-desc').html(model.OriginalDescription);
+        $('#upgrade-workshop-desc').html(model.WorkshopDescription);
+
+
+        $('#upgrade-available-list').on('click', '.btn', function (event) {
+            _availableId = $(this).attr('data-ID');
+            SwapParts();
+            event.stopImmediatePropagation();
+            return false;
+        });
+
+        $('#upgrade-workshop-list').on('click', '.btn', function (event) {
+            _workshopId = $(this).attr('data-ID');
+            SwapParts();
+            event.stopImmediatePropagation();
+            return false;
+        });
+
+        $('#upgrade-view').not('.btn').click(function (event) {
+         
+            _workshopId = null;
+            _availableId = null;
+            //return false;
+        });
+    }
+
+    function SwapParts() {
+        
+        if (_workshopId != null &&_workshopId!=0   && _availableId != null) {
+            
+            var args = { workshopId: _workshopId, availableId: _availableId };
+            _workshopId = null;
+            _availableId = null;
+            $.ajax({
+                url: "EclipseService.asmx/SwapUpgradeParts",
+                data: JSON.stringify(args), dataType: "json", type: "POST", contentType: 'application/json; charset=utf-8',
+                success: GetUpgradeUICallback
+            });
+
+            
+        }
+    }
+
+    function PartToHtml(part) {
+        var li = '<li>     <button data-name="'+part.Name+'" onclick="return false;" data-id="' + part.ID + '" class="btn btn-primary" data-toggle="popover">' + part.Name + '</br>' + part.ShortDescription + '</button>   </li>';
+        if (part.IsBonus)
+            li = li.replace('btn-primary', 'btn-success');
+        if (part.ID < 0)
+        {
+
+            if (part.IsBasic)
+                li = li.replace('btn-primary', 'btn-warning');
+            else
+                li = li.replace('btn-primary', 'btn-danger');
+
+        }
+        return li;
+    }
+
+    function InitPopovers() {
+         $('#upgrade-view').find('[data-toggle="popover"]').mouseenter(function (event) {
+             _lastTechName = $(event.currentTarget).attr('data-name');
+         });
+         $('#upgrade-view').find('[data-toggle="popover"]').each(function(index, obj){
+             
+             $(obj).popover({
+                 placement: 'top',
+                 html: true,
+                 trigger: 'hover',
+                 content: function (event) {
+                     var html = $('#tech-description').html();
+                     var partName = $(obj).attr('data-name');
+                     return _shipParts[partName].Description;
+                    
+                 }
+             });
+         });
+             
+     
+    }
+
+    function Upgrade() {
+        HideMainActions();
+        var args = {};
+        $.ajax({
+           
+            url: "EclipseService.asmx/Upgrade",
+            data: JSON.stringify(args), dataType: "json", type: "POST", contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                var model = data["d"];
+                if(model.UpgradesRemaining >0)
+                {
+                    GetUpgradeUICallback(data);
+                } else {
+                    $('.modal').modal('hide');
+                    RefreshNavbar();
+                }
+            }
+        });
+
+        return false;
+    }
+
+
+    $(document).ready(function () {
+      
+        $('.upgrade-blueprint-select').on('click', 'a', function (event) {
+   
+            GetUpgradeUI($(this).text());
+            return false;
+        });
+
+        $('#upgrade-save').click(function (event) {
+            Upgrade();
+            $('.dropdown-toggle').dropdown();
+            return false;
+        });
+
+        GetUpgradeUI('Interceptor');
+        $('.dropdown-toggle').dropdown();
+        $('#upgrade-view').modal();
+    });
+</script>

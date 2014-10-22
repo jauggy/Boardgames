@@ -1,0 +1,100 @@
+ <div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+        <div class="modal-dialog" style="width: 1000px;">
+            <div class="modal-content">
+
+                <div class="modal-body">
+                    <nav class="navbar navbar-default" role="navigation">
+
+
+
+                        <div>
+                            <ul class="nav navbar-nav" role="navigation">
+                                <li id="currenttab" class="active tablink"><a href="#">Current</a></li>
+                                <li id="historytab" class="tablink"><a href="#">History</a></li>
+
+                            </ul>
+
+                        </div>
+                    </nav>
+
+                    <div class="tabview" id="currentTabView" style="padding-left: 10px; padding-right: 10px; font-size: small">
+                        <div id="thresholdSummary"></div>
+                        </br></br>
+                      
+                    <table class="table table-striped" id="currentThresholdsTable">
+                        <thead>
+
+
+                            <tr>
+                                <td>
+                                    <strong>Threshold Name</strong>
+                                </td>
+
+
+                                <td>
+                                    <strong>Low Limit</strong>
+                                </td>
+
+                                <td>
+                                    <strong>High Limit</strong>
+                                </td>
+
+                                <td>
+                                    <strong>Action</strong>
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4">
+                                    <span id="addThresholdErrorMessage" style="color: red; display: none"></span>
+                                </td>
+                            </tr>
+
+                        </tfoot>
+                    </table>
+
+
+                    </div>
+
+                    <div class="tabview" id="historyTabView" style="padding-left: 10px; padding-right: 10px; font-size: small">
+                        <table class="table table-striped" id="historyTable">
+                            <thead>
+
+
+                                <tr>
+                                    <td>
+                                        <strong>Threshold Name</strong>
+                                    </td>
+
+
+                                    <td>
+                                        <strong>Low Limit</strong>
+                                    </td>
+
+                                    <td>
+                                        <strong>High Limit</strong>
+                                    </td>
+
+                                    <td>
+                                        <strong>Detail</strong>
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div id="currentTabFooter" style="display: inline">
+                        <button type="button" id="addThresholdButton" class="pull-left btn btn-inverse" data-dismiss="modal">Add Threshold</button>
+                        <button type="button" id="resetThresholdButton" class="pull-left btn btn-default" data-toggle="modal">Reset to default</button>
+                    </div>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>

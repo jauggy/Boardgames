@@ -1,0 +1,37 @@
+﻿<label for="discovery-tech-list">Choose a technology:</label>
+<ul id="discovery-tech-list" class="list-unstyled">
+    <li><button class="btn btn-primary">Tech 1</button></li>
+    <li><button class="btn btn-primary">Tech 1</button></li>
+    <li><button class="btn btn-primary">Tech 1</button></li>
+</ul>
+
+<script type="text/javascript">
+    var techDescriptions = {};
+
+
+
+    $(document).ready(function () {
+       
+        //_discoveryModel is defined by parent containers
+        var btnHtml = "";
+        
+        for(var i =0; i< _discoveryModel.Technologies.length;i++)
+        {
+            var tech = _discoveryModel.Technologies[i];
+            btnHtml += ' <li><button class="btn btn-primary discovery-special">' + tech.Name + '</button></li>'
+           techDescriptions[tech.Name] = tech.Description;
+        }
+        $('#discovery-tech-list').html(btnHtml);
+        $('#discovery-tech-list').find('.btn').popover({
+            placement: 'right',
+            html: true,
+            trigger: 'hover',
+            content: function (e) {
+
+                return '<div style="white-space:wrap;width:auto;display:block "><span>' + techDescriptions[$(this).text()] + '<span></div>';
+
+            }
+        });
+
+    });
+</script>
