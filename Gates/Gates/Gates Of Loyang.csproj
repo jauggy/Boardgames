@@ -65,9 +65,11 @@
     <Content Include="css\callout.css" />
     <Content Include="css\Custom.css" />
     <Content Include="Hand.html" />
+    <Content Include="HandService.asmx" />
     <Content Include="js\custom.js" />
     <Content Include="Master.html" />
     <Content Include="DiscoveryViews\ResourceDiscovery.html" />
+    <Content Include="Models\Cards\MarketStalls.txt" />
     <Content Include="Scripts\jquery.actual.js" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Images\ancient.png" />
@@ -101,8 +103,21 @@
     <Content Include="EclipseService.asmx" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Card.cs" />
+    <Compile Include="HandService.asmx.cs">
+      <DependentUpon>HandService.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Models\Cards\Card.cs" />
+    <Compile Include="Models\Cards\CasualCustomerCard.cs" />
+    <Compile Include="Models\Cards\FieldCard.cs" />
+    <Compile Include="Models\Cards\HelperCard.cs" />
+    <Compile Include="Models\Cards\MarketStallCard.cs" />
+    <Compile Include="Models\Cards\RegularCustomerCard.cs" />
+    <Compile Include="Models\Courtyard.cs" />
     <Compile Include="Models\Deck.cs" />
+    <Compile Include="Models\GameState.cs" />
+    <Compile Include="Models\Player.cs" />
+    <Compile Include="Models\Vegetable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="EclipseService.asmx.cs">
       <DependentUpon>EclipseService.asmx</DependentUpon>

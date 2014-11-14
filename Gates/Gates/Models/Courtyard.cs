@@ -5,14 +5,8 @@ using System.Web;
 
 namespace GatesOfLoyang.Models
 {
-    public class Deck
+    public class Courtyard
     {
         public List<Card> Cards { get; set; }
-
-        public Deck()
-        {
-            //Init deck with cards...
-        }
-
     }
 }
