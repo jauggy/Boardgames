@@ -1,0 +1,45 @@
+So now it's 
+P1: 7
+P2: 0
+P3: 0
+
+Choices:
+Take 1 point.
+Take a payoff.
+
+Payoffs:
+7/-1
+Positive/Negative body lang
+
+2/0
+New boardgame
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1
+Anything
+
+So idea for game. Three players equal turns.
+Josh 1 progress: 7 pts
+Josh 2 progress: 1 pts
+Josh 3 progress: 2 pts
+
+So player 1 will score based on the next Josh that progresses. Then player 2. Last round when someone hits 20 points.
+I think that Josh 2 should be 1 pt banked. So he would only get it next time he score a 2 pointer or 7 pointer. Hmm. Might be too complicated. Maybe just make it that it counts as 0 if on score 19.
+
+1pter
+
+2pter
+
+7pter
