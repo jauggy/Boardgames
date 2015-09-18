@@ -1,24 +1,19 @@
-So now it's 
-P1: 7
-P2: 0
-P3: 0
+Payoffs
 
-Choices:
-Take 1 point.
-Take a payoff.
 
-Payoffs:
-7/-1
-Positive/Negative body lang
-.../Not there
+Autowin
+Positive body lang Poy
 
-2/0
++8
+Positive body lang Anne
+
++2
 New boardgame
-Win at Innovation versus metalworking
-Win at Splendor 3p using high tier strategy
-Monday morning below 73.0kg
+Parcel delivered
+M above 0
 
-
+-4
+Negative body lang Anne or Poy
 
 
 
