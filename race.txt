@@ -1,44 +1,18 @@
-Payoffs
+p1
++10 positive b lang Anne 
+-10 -ve body lang Anne
+-200 Ferdi wedding day
 
+p2
+-20 Unexpected -ve event
++5 Opiate High
++1 gaytime/Indo food (max 1 per day)
++1 lasagne/thai food
++2 boardgame friday
++20 beginning of holiday
+-10 Workday
 
-Autowin
-Positive body lang Poy
-
-+8
-Positive body lang Anne
-
-+2
-New boardgame
-Parcel delivered
-M above 0
-
--4
-Negative body lang Anne or Poy
-
-
-
-
-
-
-
-
-
-
-
-
-1
-Anything
-
-So idea for game. Three players equal turns.
-Josh 1 progress: 7 pts
-Josh 2 progress: 1 pts
-Josh 3 progress: 2 pts
-
-So player 1 will score based on the next Josh that progresses. Then player 2. Last round when someone hits 20 points.
-I think that Josh 2 should be 1 pt banked. So he would only get it next time he score a 2 pointer or 7 pointer. Hmm. Might be too complicated. Maybe just make it that it counts as 0 if on score 19.
-
-1pter
-
-2pter
-
-7pter
+p3
++2 mtg card purchase
+-2 Delay of mtg cards
++100 replacement for Ploy
